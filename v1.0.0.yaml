@@ -1,0 +1,1175 @@
+openapi: 3.0.0
+info:
+  title: FieldMaxPro v3 Api
+  description: FieldMaxPro v3 Api reworked in nodejs
+  version: 1.0.0
+  
+servers: 
+  - url: https://fieldmaxprov-3-node-api-2rado.ondigitalocean.app
+    description: Internal staging server for testing; hosted on DigitalOcean
+    
+tags: 
+  - name: auth
+    description: Everything about Authentication
+  - name: test
+    description: Test routes for use in development only
+  - name: setup
+    description: Routes for company setup details  
+    
+paths:
+  #
+  #login routes
+  #
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: Returns a json web token for authorization on other endpoints.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string  
+              example:
+                username: demo.fieldrep
+                password: password1234  
+             
+      responses:
+        '200':
+          description: object containing required access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessToken' 
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.
+          
+  /auth/login/mobile:
+    post:
+      tags:
+        - auth
+      summary: Returns a json web token for authorization on other endpoints for mobile devices.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginReqObjMobile'
+            example:
+              username: demo.fieldrep
+              password: password1234
+              versionnumber: '1002'
+              googledeviceid: AI023883dgfue8383n323b34234dh48h8590201
+              deviceimei: '334283949950505095989895'
+              devicename: SM953
+                 
+      responses:
+        '200':
+          description: object containing required access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessToken' 
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.
+        '406':
+          description: You can only be logged in from one device at a time
+          
+  /auth/logout/mobile:
+    post:
+      tags:
+        - auth
+      summary: safely logs out mobile devices.
+      security:
+        - bearerAuth: []        
+      responses:
+        '200':
+          description: object containing status info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+        '401':
+          description: Invalid Jwt Token.        
+          
+  #
+  #test routes
+  #        
+  /auth/test/jwt:
+    get:
+      tags:
+        - test
+      summary: Returns user decoded from jwt.
+      security:
+        - bearerAuth: []        
+      responses:
+        '200':
+          description: object containing basuc user info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserObject' 
+        '400':
+          description: Bad Request.
+        '401':
+          description: Invalid Jwt Token.        
+                  
+  /auth/test/roles:
+    get:
+      tags:
+        - test
+      summary: Returns user decoded from jwt, if user has premission to view outlets.
+      security:
+        - bearerAuth: []        
+      responses:
+        '200':
+          description: object containing basuc user info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserObject' 
+        '401':
+          description: Invalid permissions, you do not have the required permissions to complete this request/action.     
+          
+  #        
+  #setup routes        
+  #
+  /setup/company:
+    get:
+      tags:
+        - setup
+      summary: gets all companies
+      security:
+        - bearerAuth: []
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/CompanyResObj' 
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.
+  
+    post:
+      tags:
+        - setup
+      summary: creates a new company
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddCompanyReqObj'
+             
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyResObj' 
+ 
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.
+  
+  /setup/company/{id}:        
+    patch:
+      tags:
+        - setup
+      summary: updates an existing company
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of company to be updated
+          required: true
+          schema:
+            type: integer
+            example: 12
+            
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyReqObj'
+             
+      responses:
+        '201':
+          description: object containing required access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyResObj' 
+  
+        '400':
+          description: Cannot take action on document that does not exist!
+        '401':
+          description: Unauthorized.        
+          
+    delete:
+      tags:
+        - setup
+      summary: deletes a company
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of company to be deleted
+          required: true
+          schema:
+            type: integer
+            example: 12
+             
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Cannot take action on document that does not exist!
+        '401':
+          description: Unauthorized.              
+          
+  /setup/distributor:
+    get:
+      tags:
+        - setup
+      summary: gets all distributors.
+      security:
+        - bearerAuth: []
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/DistributorResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.
+  
+    post:
+      tags:
+        - setup
+      summary: creates a distributor
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DistributorReqObj'
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DistributorResObj' 
+ 
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+          
+  /setup/distributor/{id}:        
+    patch:
+      tags:
+        - setup
+      summary: updates a distributor
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of company to be updated
+          required: true
+          schema:
+            type: integer
+            example: 12
+            
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyReqObj'
+             
+      responses:
+        '201':
+          description: object containing required access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyResObj' 
+  
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.        
+          
+    delete:
+      tags:
+        - setup
+      summary: deletes a distributor.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of company to be updated
+          required: true
+          schema:
+            type: integer
+            example: 12
+             
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.      
+          
+  /setup/location:
+    get:
+      tags:
+        - setup
+      summary: gets all locations, based on query parameters
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: query
+          description: id of company to be updated
+          required: true
+          schema:
+            type: integer
+            example: 12  
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/CompanyResObj' 
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.          
+          
+          
+  #
+  # Outlet routes
+  #
+  /outlets/count:
+    get:
+      tags:
+        - outlets
+        - count
+      summary: Returns a JSON object that contains total outlets filtered or unfiltered belonging to a company.
+      security:
+        - bearerAuth: []
+      
+      responses:
+        '200':
+          description: object containing required access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutletsCountResObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.      
+          
+          
+  /outlets/most-covered:
+    get:
+      tags:
+        - outlets
+        - most-covered
+      summary: Returns a JSON object that contains the locations with the good oulets coverage and its count.
+      security: 
+      - bearerAuth: []
+      
+      responses:
+        '200':
+          description: object containing outlets locations and its count
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutletsMostCovered' 
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+    
+  /outlets/least-covered:
+    get:
+      tags:
+        - outlets
+        - least-covered
+      summary: Returns a JSON objects that contains the locations with poor outlets coverage and its count.
+      security:
+      - bearerAuth: []
+      
+      responses:
+        '200':
+          description: object containing outlets locations and its count
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutletsLeastCovered' 
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+    
+  /outlets/{id}:
+    get:
+      tags:
+        - outlets
+      summary: Returns a json object that contains details of an outlet.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of the outlet
+          required: true
+          schema:
+            type: integer
+            example: 1337
+      responses:
+        '200':
+          description: object containing outlets locations and its count
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutletObj'
+                 
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+   
+          
+  /outlets/location:
+    get:
+      tags:
+        - outlets
+        - location
+      summary: Returns a json object that contains details of all outlets in a locaton.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: location
+          in: query
+          description: id of the location
+          required: true
+          schema:
+            type: integer
+            example: 121
+      responses:
+        '200':
+          description: object containing outlets locations and its count
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  outlets:
+                    type: schema
+                    $ref: '#/components/schemas/OutletObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+  
+  /outlets/{id}/type:
+    get:
+      tags:
+        - outlet
+        - type
+      summary: Returns a JSON Object containing the type of an outlet
+      security:
+        - bearerAuth: []
+      parameters: 
+        - in: path
+          name: id
+          description: id of the outlet
+          required: true
+          schema:
+            type: integer
+            example: 5
+      responses:
+        '200':
+          description: object containing the outlet type
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  OutletType:
+                    type: schema
+                    $ref: '#/components/schemas/OutletTypeResObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+  
+  /outlets/{id}/channel:
+    get:
+      tags:
+        - outlet
+        - channel
+      summary: Returns a JSON Object containing the channel of an outlet
+      security:
+        - bearerAuth: []
+      parameters: 
+        - in: path
+          name: id
+          description: id of the outlet
+          required: true
+          schema:
+            type: integer
+            example: 5
+      responses:
+        '200':
+          description: object containing the outlet channel
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  OutletChannel:
+                    type: schema
+                    $ref: '#/components/schemas/OutletChannelResObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+  
+  /outlets/distribution-type:
+    get:
+      tags:
+        - outlet
+        - type
+        - distribution
+      summary: Returns a JSON Object containing the distribution of outlets with reference to their type.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: object containing the outlets type distribution
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  outletsDistribution:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/OutletTypeDistributionResObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+      
+        
+  /outlets/distribution-channel:
+    get:
+      tags:
+        - outlet
+        - channel
+        - distribution
+      summary: Returns a JSON Object containing the distribution of outlets with reference to their channel.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: object containing the outlets channel distribution
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  outletsDistribution:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/OutletChannelDistributionResObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+  
+  /outlets/growth-trend:
+    get:
+      tags:
+        - outlets
+        - growth
+        - trend
+      summary: Returns a JSON Object containing the growth trend of outlets.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - in: query
+          name: criteria
+          description: filter to group the growth (yearly, monthly or weekly)
+          required: true
+          schema:
+            type: string
+            enum: ['', YEARLY, MONTHLY, WEEKLY]
+            example: 'YEARLY'
+        
+        - in: query  
+          name: month
+          description: month of the year to be filtered by and is required if criteria is MONTHLY OR WEEKLY
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 12
+            example: 4
+        
+        - in: query  
+          name: year
+          description: year to be filtered by and is required if criteria is YEARLY, MONTHLY OR WEEKLY
+          required: false
+          schema:
+            type: string
+            example: '2021'
+            
+      responses:
+        '200':
+          description: object containing the outlets growth.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/OutletsGrowthResObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.  
+      
+      
+#
+# Calendar routes
+#
+  
+  /calendar/details:
+    get:
+      tags:
+        - calendar
+        - calendar details
+      summary: get the details of the schedules for a selected date range.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - in: query
+          name: date
+          description: date range to get the schedule details.
+          required: true
+          schema:
+            type: string
+            example: '2021-03-28,2021-05-09'
+      responses:
+        '200':
+          description: object containing the calendar details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: schema
+                    $ref: '#/components/schemas/CalendarDetailsResObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+
+  /calendar/schedules:
+    get:
+      tags:
+        - calendar
+        - schedules
+      summary: get the list of schedules and their respective detals for a selected date range.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - in: query
+          name: date
+          description: date range to get the schedule list.
+          required: true
+          schema:
+            type: string
+            example: '2021-03-28,2021-05-09'
+      responses:
+        '200':
+          description: object containing the schedules
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                      $ref: '#/components/schemas/ScheduleListResObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+
+    post:
+      tags:
+        - calendar
+        - schedules
+      summary: create a schedule for a field rep.
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateScheduleObj'
+            
+      responses:
+        '201':
+          description: object containing the created schedule
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/CreateScheduleResObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+
+  /calendar/upload-schedules:
+    post:
+      tags:
+        - upload
+        - bulk
+        - schedules
+      summary: upload a list of schedules to be created via a csv template file.
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Schedules have been successfully created
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+        '500':
+          description: Internal server error while creating schedules
+
+      
+      
+  
+components:
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      
+  schemas:
+    AccessToken:
+      properties:
+        access_token:
+          type: string
+      required:  
+        - access_token
+        
+    UserObject:
+      properties:
+        id:
+          type: integer
+        userRoleId:
+          type: string
+        fieldRepUser:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        emailAddress:
+          type: string
+        locationId:
+          type: string
+        locationType:
+          type: string
+        fmpCompanyId:
+          type: string
+          
+    LoginReqObjMobile:
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        versionnumber:
+          type: string
+        googledeviceid:
+          type: string
+        deviceimei:
+          type: string
+        devicename:
+          type: string
+          
+    AddCompanyReqObj:
+      properties:
+        brandname:
+          type: string
+          example: 'new test company'
+        current:
+          type: integer
+          example: 1
+        brandcolor:
+          type: string
+          example: '#fff'
+          
+    UpdateCompanyReqObj:
+      properties:
+        brandname:
+          type: string
+          example: 'Test Company'
+        brandcolor:
+          type: string     
+          example: '#fff'
+    
+    CompanyResObj:
+      properties:
+        id:
+          type: integer
+          example: 21
+        brandName:
+          type: string
+          example: 'Anix Limited'
+        current:
+          type: integer 
+          example: 1
+        brandColor:
+          type: string
+          example: '#fff'
+        fmpCompanyId:
+          type: integer
+          example: 10002
+          
+    DistributorReqObj:
+      properties:
+        distributorname:
+          type: string
+          example: 'Anix Limited'
+        distributordescription:
+          type: string
+          example: 'Anix Limited description'  
+        operatinglocation:
+          type: integer
+          example: 105
+        distributorerpcode:
+          type: string
+          example: 'sap-345677'  
+               
+          
+    DistributorResObj:
+      properties:
+        id:
+          type: integer
+          example: 21
+        distributorname:
+          type: string
+          example: 'Anix Limited'
+        distributordescription:
+          type: string
+          example: 'Anix Limited description'  
+        operatinglocation:
+          type: integer
+          example: 105
+        parentdistributorid:
+          type: integer
+          example: 14  
+        distributorerpcode:
+          type: string
+          example: 'sap-345677'  
+        fmpCompanyId:
+          type: integer
+          example: 10002
+          
+    
+    OutletsCountResObj:
+      properties:
+        outlets_Count:
+          type: integer
+          example: 186
+     
+    OutletObj:
+      properties:
+        outlet:
+          type: schema
+          $ref: '#/components/schemas/OutletResObj'
+          
+          
+          
+    OutletResObj:
+      properties:
+        id:
+          type: integer
+          example: 6413
+        outlet_Name:
+          type: string
+          example: "Wendy's mart"
+        contact_Name:
+          type: string
+          example: "Wendy Mart"
+        contact_Phone:
+          type: string
+          example: '09066331244'
+        field_Rep: 
+          type: string
+          example: "Wendy Etafo"
+        Outlet_Type: 
+          type: string
+          example: 'Retailers'
+        Outlet_Channel:
+          type: string
+          example: 'Neighbourhood'
+        location:
+          type: string
+          example: "Magodo Phase 2"
+          
+    OutletsCoverageResObj:
+      properties:
+        outlet_town:
+          type: string
+          example: 'Lagos '
+        outlets_location:
+          type: string
+          example: "Ago Palace - Lagos"
+        location_Id:
+          type: integer
+          example: 108
+        outlets_Count:
+          type: string 
+          example: '25'
+          
+    OutletsMostCovered:
+      properties:
+        mostCoveredLocations:
+            type: array
+            items:
+              $ref: '#/components/schemas/OutletsCoverageResObj'
+              
+    OutletsLeastCovered:
+      properties:
+        leastCoveredLocations:
+            type: array
+            items:
+              $ref: '#/components/schemas/OutletsCoverageResObj'
+              
+    OutletTypeResObj:
+      properties:
+        outlets_id:
+          type: integer
+          example: 5
+        outlets_outletname:
+          type: string
+          example: 'Immaculate Store'
+        outlettype_id:
+          type: integer
+          example: 4
+        outlet_Type:
+          type: string
+          example: "Supermarket"
+          
+    OutletChannelResObj:
+      properties:
+        outlets_id:
+          type: integer
+          example: 5
+        outlets_outletname:
+          type: string
+          example: 'Immaculate Store'
+        outletchannel_id:
+          type: integer
+          example: 1
+        outlet_Channel:
+          type: string
+          example: "Retail"
+          
+    OutletTypeDistributionResObj:
+      properties:
+        count:
+          type: string
+          example: '68'
+        Outlet_Type:
+          type: string
+          example: 'Wholesalers'
+          
+    
+    OutletChannelDistributionResObj:
+      properties:
+        count:
+          type: string
+          example: '186'
+        Outlet_Channel:
+          type: string
+          example: 'Neighbourhood'
+          
+    
+    OutletsGrowthResObj:
+      required: ['outlets_Count', 'month', 'quarter', 'year']
+      properties:
+        outlets_Count:
+          type: string
+          example: "1"
+        day: 
+          type: integer
+          example: 26
+        week:
+          type: integer
+          example: 17
+        month: 
+          type: integer
+          example: 4
+        quarter:
+          type: integer
+          example: 2
+        year:
+          type: integer
+          example: 2021
+          
+    CalendarDetailsResObj:
+      properties:
+        date_Range:
+          type: string
+          example: '2021-03-28,2021-05-09'
+        scheduled_Visits:
+          type: integer
+          example: 14
+        completed_Visits:
+          type: integer
+          example: 8
+        total_Unvisited:
+          type: integer
+          example: 6
+          
+    ScheduleListObj:
+      properties:
+        first_Name:
+          type: string
+          example: 'Oluwaseun'
+        last_Name:
+          type: string
+          example: 'Oludele'
+        outlet_Name:
+          type: string
+          example: 'Ambrose Nigeria Limited'
+        schedule_Date:
+          type: string
+          example: '2021-05-07T08:39:00.000Z'
+        visited:
+          type: integer
+          example: 1
+    
+    ScheduleListResObj:
+      properties:
+        scheduleList:
+          type: array
+          items:
+            $ref : '#/components/schemas/ScheduleListObj'
+      
+    CreateScheduleObj:
+      properties:
+        fieldStaffId:
+          type: string
+          example: '49'
+        outletId:
+          type: string
+          example: 1
+        scheduleDate:
+          type: string
+          example: "2021-06-17 13:03:00"
+    
+    CreateScheduleResObj:
+      properties:
+        id:
+          type: integer
+          example: 24826
+        outlet:
+          type: integer
+          example: 1
+        fmpCompanyId:
+          type: integer
+          example: 10004
+        fieldRepStaff:
+          type: integer
+          example: 49
+        scheduleDate:
+          type: string
+          example: "2021-06-17T12:03:00.000Z"
