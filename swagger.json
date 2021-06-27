@@ -719,6 +719,81 @@
         }
       }
     },
+    "/setup/sale-team/{id}" : {
+      "patch" : {
+        "tags" : [ "setup" ],
+        "summary" : "updates a sale team",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of sale team to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SaleTeamReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SaleTeamResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "setup" ],
+        "summary" : "deletes a sale team.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of sale team to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
     "/outlets/count" : {
       "get" : {
         "tags" : [ "outlets", "count" ],
