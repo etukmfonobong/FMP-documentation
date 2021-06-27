@@ -1752,6 +1752,54 @@
             "$ref" : "#/components/schemas/PaginationMetaObj"
           }
         }
+      },
+      "SaleTeamReqObj" : {
+        "properties" : {
+          "teamname" : {
+            "type" : "string",
+            "example" : "volta"
+          },
+          "teamdescription" : {
+            "type" : "string",
+            "example" : "volta description"
+          }
+        }
+      },
+      "SaleTeamResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "teamname" : {
+            "type" : "string",
+            "example" : "volta"
+          },
+          "teamdescription" : {
+            "type" : "string",
+            "example" : "volta description"
+          },
+          "teamsalestarget" : {
+            "type" : "integer",
+            "example" : 177
+          },
+          "teampskutarget" : {
+            "type" : "integer",
+            "example" : 20
+          },
+          "teamoutlettarget" : {
+            "type" : "integer",
+            "example" : 100
+          },
+          "stateid" : {
+            "type" : "integer",
+            "example" : 1
+          }
+        }
       }
     }
   }
