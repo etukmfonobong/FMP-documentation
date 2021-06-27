@@ -542,6 +542,116 @@
             "description" : "Unauthorized."
           }
         }
+      },
+      "post" : {
+        "tags" : [ "setup" ],
+        "summary" : "creates a new location",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AddLocationReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LocationResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/setup/location/{id}" : {
+      "patch" : {
+        "tags" : [ "setup" ],
+        "summary" : "updates an existing location",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of location to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateLocationReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LocationResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!"
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "setup" ],
+        "summary" : "deletes a location",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of location to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!"
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
       }
     },
     "/outlets/count" : {
@@ -1540,6 +1650,38 @@
             "example" : 1
           },
           "currentPage" : {
+            "type" : "integer",
+            "example" : 1
+          }
+        }
+      },
+      "AddLocationReqObj" : {
+        "properties" : {
+          "locationname" : {
+            "type" : "string",
+            "example" : "volta"
+          },
+          "locationtypesid" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "parentlocationid" : {
+            "type" : "integer",
+            "example" : 1
+          }
+        }
+      },
+      "UpdateLocationReqObj" : {
+        "properties" : {
+          "locationname" : {
+            "type" : "string",
+            "example" : "volta"
+          },
+          "locationtypesid" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "parentlocationid" : {
             "type" : "integer",
             "example" : 1
           }
