@@ -530,10 +530,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/CompanyResObj"
-                  }
+                  "$ref" : "#/components/schemas/LocationPaginatedResObj"
                 }
               }
             }
@@ -1524,6 +1521,58 @@
           }
         }
       },
+      "PaginationMetaObj" : {
+        "properties" : {
+          "totalItems" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "itemCount" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "itemsPerPage" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "totalPages" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "currentPage" : {
+            "type" : "integer",
+            "example" : 1
+          }
+        }
+      },
+      "LocationResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "locationname" : {
+            "type" : "string",
+            "example" : "volta"
+          },
+          "locationtypesid" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "parentlocationid" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "stateid" : {
+            "type" : "integer",
+            "example" : 1
+          }
+        }
+      },
       "CreateScheduleResObj" : {
         "properties" : {
           "id" : {
@@ -1548,12 +1597,17 @@
           }
         }
       },
-      "locations" : {
+      "LocationPaginatedResObj" : {
         "type" : "object",
         "properties" : {
-          "id" : {
-            "type" : "integer",
-            "format" : "int64"
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/LocationResObj"
+            }
+          },
+          "meta" : {
+            "$ref" : "#/components/schemas/PaginationMetaObj"
           }
         }
       }
