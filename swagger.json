@@ -357,7 +357,7 @@
     },
     "/setup/distributor" : {
       "get" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup distributors" ],
         "summary" : "gets all distributors.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -385,7 +385,7 @@
         }
       },
       "post" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup distributors" ],
         "summary" : "creates a distributor",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -422,7 +422,7 @@
     },
     "/setup/distributor/{id}" : {
       "patch" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup distributors" ],
         "summary" : "updates a distributor",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -467,7 +467,7 @@
         }
       },
       "delete" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup distributors" ],
         "summary" : "deletes a distributor.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -497,7 +497,7 @@
     },
     "/setup/location" : {
       "get" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup locations" ],
         "summary" : "gets all locations, based on query parameters",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -568,7 +568,7 @@
         }
       },
       "post" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup locations" ],
         "summary" : "creates a new location",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -605,7 +605,7 @@
     },
     "/setup/location/{id}" : {
       "patch" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup locations" ],
         "summary" : "updates an existing location",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -650,7 +650,7 @@
         }
       },
       "delete" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup locations" ],
         "summary" : "deletes a location",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -680,7 +680,7 @@
     },
     "/setup/sale-team" : {
       "get" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup sale teams" ],
         "summary" : "gets all sales teams.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -708,7 +708,7 @@
         }
       },
       "post" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup sale teams" ],
         "summary" : "creates a sale team",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -745,7 +745,7 @@
     },
     "/setup/sale-team/{id}" : {
       "patch" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup sale teams" ],
         "summary" : "updates a sale team",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -790,7 +790,7 @@
         }
       },
       "delete" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup sale teams" ],
         "summary" : "deletes a sale team.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -820,7 +820,7 @@
     },
     "/setup/outlet/channel" : {
       "get" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup outlet channels" ],
         "summary" : "gets all outlet channels.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -848,7 +848,7 @@
         }
       },
       "post" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup outlet channels" ],
         "summary" : "creates an outlet channel",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -885,7 +885,7 @@
     },
     "/setup/outlet/channel/{id}" : {
       "patch" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup outlet channels" ],
         "summary" : "updates an existing outlet channel",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -930,7 +930,7 @@
         }
       },
       "delete" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup outlet channels" ],
         "summary" : "deletes an outlet channel.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -960,7 +960,7 @@
     },
     "/setup/outlet/type" : {
       "get" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup outlet types" ],
         "summary" : "gets all outlet type.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -988,7 +988,7 @@
         }
       },
       "post" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup outlet types" ],
         "summary" : "creates an outlet type",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -1025,7 +1025,7 @@
     },
     "/setup/outlet/type/{id}" : {
       "patch" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup outlet types" ],
         "summary" : "updates an existing outlet type",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -1070,7 +1070,7 @@
         }
       },
       "delete" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup outlet types" ],
         "summary" : "deletes an outlet type.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -1100,7 +1100,7 @@
     },
     "/setup/contact/title" : {
       "get" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup contact titles" ],
         "summary" : "gets all contact titles.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -1128,7 +1128,7 @@
         }
       },
       "post" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup contact titles" ],
         "summary" : "creates a contact title",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -1165,7 +1165,7 @@
     },
     "/setup/contact/title/{id}" : {
       "patch" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup contact titles" ],
         "summary" : "updates an existing contact title",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -1210,7 +1210,7 @@
         }
       },
       "delete" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup contact titles" ],
         "summary" : "deletes an contact title.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -1240,7 +1240,7 @@
     },
     "/setup/contact/category" : {
       "get" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup contact categories" ],
         "summary" : "gets all contact categories.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -1268,7 +1268,7 @@
         }
       },
       "post" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup contact categories" ],
         "summary" : "creates a contact category",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -1305,7 +1305,7 @@
     },
     "/setup/contact/category/{id}" : {
       "patch" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup contact categories" ],
         "summary" : "updates an existing contact category",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -1350,7 +1350,7 @@
         }
       },
       "delete" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup contact categories" ],
         "summary" : "deletes an contact category.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -1380,7 +1380,7 @@
     },
     "/setup/product/category" : {
       "get" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup product categories" ],
         "summary" : "gets all product categories.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -1408,7 +1408,7 @@
         }
       },
       "post" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup product categories" ],
         "summary" : "creates a product category",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -1445,7 +1445,7 @@
     },
     "/setup/product/category/{id}" : {
       "patch" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup product categories" ],
         "summary" : "updates an existing product category",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -1490,7 +1490,7 @@
         }
       },
       "delete" : {
-        "tags" : [ "setup" ],
+        "tags" : [ "setup product categories" ],
         "summary" : "deletes an product category.",
         "security" : [ {
           "bearerAuth" : [ ]
