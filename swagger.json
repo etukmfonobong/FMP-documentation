@@ -18,6 +18,30 @@
   }, {
     "name" : "setup",
     "description" : "Routes for company setup details"
+  }, {
+    "name" : "setup distributors",
+    "description" : "Routes to setup company's distributor details"
+  }, {
+    "name" : "setup locations",
+    "description" : "Routes to setup company's location details"
+  }, {
+    "name" : "setup sale teams",
+    "description" : "Routes to setup company's sale team details"
+  }, {
+    "name" : "setup outlet channels",
+    "description" : "Routes to setup company's outlet channel details"
+  }, {
+    "name" : "setup outlet types",
+    "description" : "Routes to setup company's outlet type details"
+  }, {
+    "name" : "setup contact titles",
+    "description" : "Routes to setup company's contact title details"
+  }, {
+    "name" : "setup contact categories",
+    "description" : "Routes to setup company's contact category details"
+  }, {
+    "name" : "setup product categories",
+    "description" : "Routes to setup company's product category details"
   } ],
   "paths" : {
     "/auth/login" : {
