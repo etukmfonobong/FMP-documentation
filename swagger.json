@@ -774,7 +774,287 @@
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
-          "description" : "id of sale team to be updated",
+          "description" : "id of sale team to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/setup/outlet/channel" : {
+      "get" : {
+        "tags" : [ "setup" ],
+        "summary" : "gets all outlet channels.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/SetupOutletChannelResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "setup" ],
+        "summary" : "creates an outlet channel",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SetupOutletChannelReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SetupOutletChannelResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          }
+        }
+      }
+    },
+    "/setup/outlet/channel/{id}" : {
+      "patch" : {
+        "tags" : [ "setup" ],
+        "summary" : "updates an existing outlet channel",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of outlet channel to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SetupOutletChannelReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SetupOutletChannelResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "setup" ],
+        "summary" : "deletes an outlet channel.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of outlet channel to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/setup/outlet/type" : {
+      "get" : {
+        "tags" : [ "setup" ],
+        "summary" : "gets all outlet type.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/SetupOutletTypeResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "setup" ],
+        "summary" : "creates an outlet type",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SetupOutletTypeReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SetupOutletTypeResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorize"
+          }
+        }
+      }
+    },
+    "/setup/outlet/type/{id}" : {
+      "patch" : {
+        "tags" : [ "setup" ],
+        "summary" : "updates an existing outlet type",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of outlet type to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SetupOutletTypeReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SetupOutletTypeResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "setup" ],
+        "summary" : "deletes an outlet type.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of outlet type to be deleted",
           "required" : true,
           "schema" : {
             "type" : "integer",
@@ -2026,6 +2306,110 @@
           "minimumposm" : {
             "type" : "integer",
             "example" : 49
+          }
+        }
+      },
+      "ContactTitleReqObj" : {
+        "properties" : {
+          "titlename" : {
+            "type" : "string",
+            "example" : "Dr"
+          },
+          "longdescription" : {
+            "type" : "string",
+            "example" : "Doctor"
+          }
+        }
+      },
+      "ContactTitleResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 10002
+          },
+          "titlename" : {
+            "type" : "string",
+            "example" : "Dr"
+          },
+          "longdescription" : {
+            "type" : "string",
+            "example" : "Doctor"
+          }
+        }
+      },
+      "ContactCategoryReqObj" : {
+        "properties" : {
+          "contactcategoryname" : {
+            "type" : "string",
+            "example" : "Doctors"
+          },
+          "contactcategorydescription" : {
+            "type" : "string",
+            "example" : "Doctor Contacts"
+          }
+        }
+      },
+      "ContactCategoryResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 10002
+          },
+          "contactcategoryname" : {
+            "type" : "string",
+            "example" : "Doctors"
+          },
+          "contactcategorydescription" : {
+            "type" : "string",
+            "example" : "Doctor Contacts"
+          }
+        }
+      },
+      "ProductCategoryReqObj" : {
+        "properties" : {
+          "parentcategoryid" : {
+            "type" : "integer",
+            "example" : 0
+          },
+          "productcategoryname" : {
+            "type" : "string",
+            "example" : "Diabetes"
+          },
+          "productcategorydescription" : {
+            "type" : "string",
+            "example" : "Diabetes"
+          }
+        }
+      },
+      "ProductCategoryResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 10002
+          },
+          "parentcategoryid" : {
+            "type" : "integer",
+            "example" : 0
+          },
+          "productcategoryname" : {
+            "type" : "string",
+            "example" : "Diabetes"
+          },
+          "productcategorydescription" : {
+            "type" : "string",
+            "example" : "Diabetes"
           }
         }
       }
