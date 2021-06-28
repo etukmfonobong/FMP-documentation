@@ -1220,7 +1220,7 @@
       },
       "delete" : {
         "tags" : [ "setup contact titles" ],
-        "summary" : "deletes an contact title.",
+        "summary" : "deletes a contact title.",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
@@ -1360,7 +1360,7 @@
       },
       "delete" : {
         "tags" : [ "setup contact categories" ],
-        "summary" : "deletes an contact category.",
+        "summary" : "deletes a contact category.",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
@@ -1500,7 +1500,7 @@
       },
       "delete" : {
         "tags" : [ "setup product categories" ],
-        "summary" : "deletes an product category.",
+        "summary" : "deletes a product category.",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
