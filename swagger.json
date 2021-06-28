@@ -1105,7 +1105,7 @@
       },
       "post" : {
         "tags" : [ "setup" ],
-        "summary" : "creates an contact titles",
+        "summary" : "creates a contact title",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
@@ -1134,7 +1134,7 @@
             "description" : "Bad Request"
           },
           "401" : {
-            "description" : "Unauthorize"
+            "description" : "Unauthorized"
           }
         }
       }
@@ -1195,6 +1195,286 @@
           "name" : "id",
           "in" : "path",
           "description" : "id of contact title to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/setup/contact/category" : {
+      "get" : {
+        "tags" : [ "setup" ],
+        "summary" : "gets all contact categories.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ContactCategoryResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "setup" ],
+        "summary" : "creates a contact category",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ContactCategoryReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ContactCategoryResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          }
+        }
+      }
+    },
+    "/setup/contact/category/{id}" : {
+      "patch" : {
+        "tags" : [ "setup" ],
+        "summary" : "updates an existing contact category",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of contact category to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ContactCategoryReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ContactCategoryResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "setup" ],
+        "summary" : "deletes an contact category.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of contact category to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/setup/product/category" : {
+      "get" : {
+        "tags" : [ "setup" ],
+        "summary" : "gets all product categories.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ProductCategoryResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "setup" ],
+        "summary" : "creates a product category",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ProductCategoryReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProductCategoryResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          }
+        }
+      }
+    },
+    "/setup/product/category/{id}" : {
+      "patch" : {
+        "tags" : [ "setup" ],
+        "summary" : "updates an existing product category",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of product category to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ProductCategoryReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProductCategoryResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "setup" ],
+        "summary" : "deletes an product category.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of product category to be deleted",
           "required" : true,
           "schema" : {
             "type" : "integer",
