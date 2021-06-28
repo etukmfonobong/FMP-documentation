@@ -1940,6 +1940,94 @@
             "example" : 1
           }
         }
+      },
+      "SetupOutletChannelReqObj" : {
+        "properties" : {
+          "outletchannelname" : {
+            "type" : "string",
+            "example" : "Neighbourhood"
+          },
+          "outletchanneldescription" : {
+            "type" : "string",
+            "example" : "Neighbourhood"
+          }
+        }
+      },
+      "SetupOutletChannelResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 10002
+          },
+          "outletchannelname" : {
+            "type" : "string",
+            "example" : "Neighbourhood"
+          },
+          "outletchanneldescription" : {
+            "type" : "string",
+            "example" : "Neighbourhood"
+          }
+        }
+      },
+      "SetupOutletTypeReqObj" : {
+        "properties" : {
+          "outlettypename" : {
+            "type" : "string",
+            "example" : "Store"
+          },
+          "outlettypedescription" : {
+            "type" : "string",
+            "example" : "Store"
+          },
+          "outletchannelid" : {
+            "type" : "integer",
+            "example" : 4
+          }
+        }
+      },
+      "SetupOutletTypeResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 10002
+          },
+          "outlettypename" : {
+            "type" : "string",
+            "example" : "Store"
+          },
+          "outlettypedescription" : {
+            "type" : "string",
+            "example" : "Store"
+          },
+          "outletchannelid" : {
+            "type" : "integer",
+            "example" : 4
+          },
+          "monthlyvisits" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "minimumpsku" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "minimumnbsku" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "minimumposm" : {
+            "type" : "integer",
+            "example" : 49
+          }
+        }
       }
     }
   }
