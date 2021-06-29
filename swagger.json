@@ -515,7 +515,7 @@
           "name" : "parentlocationid",
           "in" : "query",
           "description" : "id of parent location",
-          "required" : true,
+          "required" : false,
           "schema" : {
             "type" : "integer",
             "example" : 105
@@ -524,7 +524,7 @@
           "name" : "locationname",
           "in" : "query",
           "description" : "location name",
-          "required" : true,
+          "required" : false,
           "schema" : {
             "type" : "string",
             "example" : "volta"
@@ -533,7 +533,7 @@
           "name" : "locationtypesid",
           "in" : "query",
           "description" : "location type",
-          "required" : true,
+          "required" : false,
           "schema" : {
             "type" : "integer",
             "example" : 8
