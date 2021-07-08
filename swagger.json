@@ -6,8 +6,8 @@
     "version" : "1.0.0"
   },
   "servers" : [ {
-    "url" : "https://fieldmaxprov-3-node-api-2rado.ondigitalocean.app",
-    "description" : "Internal staging server for testing; hosted on DigitalOcean"
+    "url" : "https://fmp-node-api.herokuapp.com",
+    "description" : "Temporary Internal staging server for testing; hosted on Heroku"
   } ],
   "tags" : [ {
     "name" : "auth",
