@@ -43,6 +43,9 @@
     "name" : "setup product categories",
     "description" : "Routes to setup company's product category details"
   }, {
+    "name" : "setup product brands",
+    "description" : "Routes to setup company's product brand details"
+  }, {
     "name" : "outlets",
     "description" : "Routes for outlet details"
   }, {
@@ -51,9 +54,6 @@
   }, {
     "name" : "schedules",
     "description" : "Routes for schedules"
-  }, {
-    "name" : "setup product brands",
-    "description" : "Routes to setup company's product brand details"
   } ],
   "paths" : {
     "/auth/login" : {
