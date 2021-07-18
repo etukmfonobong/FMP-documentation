@@ -51,6 +51,9 @@
   }, {
     "name" : "schedules",
     "description" : "Routes for schedules"
+  }, {
+    "name" : "setup product brands",
+    "description" : "Routes to setup company's product brand details"
   } ],
   "paths" : {
     "/auth/login" : {
@@ -2823,17 +2826,15 @@
       },
       "ProductCategoryReqObj" : {
         "properties" : {
-          "parentcategoryid" : {
-            "type" : "integer",
-            "example" : 0
-          },
           "productcategoryname" : {
             "type" : "string",
-            "example" : "Diabetes"
+            "example" : "Diabetes",
+            "description" : "name of product category"
           },
           "productcategorydescription" : {
             "type" : "string",
-            "example" : "Diabetes"
+            "example" : "Diabetes",
+            "description" : "description of product category"
           }
         }
       },
@@ -2841,23 +2842,76 @@
         "properties" : {
           "id" : {
             "type" : "integer",
-            "example" : 49
+            "example" : 49,
+            "description" : "id of product category"
           },
           "fmpcompanyid" : {
             "type" : "integer",
-            "example" : 10002
+            "example" : 10002,
+            "description" : "id of company that this product category belongs to"
           },
           "parentcategoryid" : {
             "type" : "integer",
-            "example" : 0
+            "example" : 0,
+            "description" : "id of the parent category that this product category falls under or belongs to; the value of 0 (zero) in this field, means that the product category has no parent "
           },
           "productcategoryname" : {
             "type" : "string",
-            "example" : "Diabetes"
+            "example" : "Diabetes",
+            "description" : "name of product category"
           },
           "productcategorydescription" : {
             "type" : "string",
-            "example" : "Diabetes"
+            "example" : "Diabetes",
+            "description" : "description of product category"
+          }
+        }
+      },
+      "ProductBrandsReqObj" : {
+        "properties" : {
+          "parentcategoryid" : {
+            "type" : "integer",
+            "example" : 0,
+            "description" : "id of product category that this product brand belongs to"
+          },
+          "productcategoryname" : {
+            "type" : "string",
+            "example" : "Accuchek",
+            "description" : "name of product brand"
+          },
+          "productcategorydescription" : {
+            "type" : "string",
+            "example" : "Accuchek",
+            "description" : "description of product brand"
+          }
+        }
+      },
+      "ProductBrandsResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49,
+            "description" : "id of product brand"
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 10002,
+            "description" : "id of company that this product brand belongs to"
+          },
+          "parentcategoryid" : {
+            "type" : "integer",
+            "example" : 55,
+            "description" : "id of the product category that this product brand falls under or belongs to"
+          },
+          "productcategoryname" : {
+            "type" : "string",
+            "example" : "Accuchek",
+            "description" : "name of product brand"
+          },
+          "productcategorydescription" : {
+            "type" : "string",
+            "example" : "Accuchek",
+            "description" : "descrption of product brand"
           }
         }
       }
