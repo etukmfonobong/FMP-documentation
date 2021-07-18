@@ -1530,6 +1530,36 @@
         }
       }
     },
+    "/setup/product/brand" : {
+      "get" : {
+        "tags" : [ "setup product brands" ],
+        "summary" : "gets all product brands.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ProductBrandsResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
     "/outlets/count" : {
       "get" : {
         "tags" : [ "outlets aggregation" ],
