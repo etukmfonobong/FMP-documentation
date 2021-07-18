@@ -1598,7 +1598,7 @@
     "/setup/product/brand/{id}" : {
       "get" : {
         "tags" : [ "setup product brands" ],
-        "summary" : "get specific product brand",
+        "summary" : "gets a specific product brand",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
