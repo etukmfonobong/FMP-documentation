@@ -2221,7 +2221,7 @@
       "parentLocation" : {
         "name" : "parentlocationid",
         "in" : "query",
-        "description" : "id of parent location",
+        "description" : "id of parent location to filter by",
         "required" : false,
         "schema" : {
           "type" : "integer",
@@ -2231,7 +2231,7 @@
       "locationName" : {
         "name" : "locationname",
         "in" : "query",
-        "description" : "location name to search",
+        "description" : "location name to filter by",
         "required" : false,
         "schema" : {
           "type" : "string",
@@ -2241,11 +2241,61 @@
       "locationType" : {
         "name" : "locationtypesid",
         "in" : "query",
-        "description" : "id of location type to search",
+        "description" : "id of location type to filter by",
         "required" : false,
         "schema" : {
           "type" : "integer",
           "example" : 8
+        }
+      },
+      "user" : {
+        "name" : "user",
+        "in" : "query",
+        "description" : "id of user to filter by",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "example" : 29
+        }
+      },
+      "distributor" : {
+        "name" : "distributor",
+        "in" : "query",
+        "description" : "id of distributor to filter by",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "example" : 2
+        }
+      },
+      "salesTeam" : {
+        "name" : "salesTeam",
+        "in" : "query",
+        "description" : "id of salesteam to filter by",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "example" : 2
+        }
+      },
+      "products" : {
+        "name" : "products",
+        "in" : "query",
+        "description" : "id of product to filter by",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "example" : 2
+        }
+      },
+      "date" : {
+        "name" : "date",
+        "in" : "query",
+        "description" : "date range to filter by expected in fomart \"YYYY-MM-DD,YYYY-MM-DD\" with the start date on the left and the end date on the right",
+        "required" : false,
+        "schema" : {
+          "type" : "string",
+          "example" : "2020-11-01,2020-11-05"
         }
       },
       "page" : {
@@ -2255,7 +2305,7 @@
         "required" : false,
         "schema" : {
           "type" : "integer",
-          "example" : 8
+          "example" : 2
         }
       },
       "limit" : {
