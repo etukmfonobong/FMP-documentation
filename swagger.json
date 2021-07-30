@@ -3167,6 +3167,50 @@
             "description" : "descrption of product brand"
           }
         }
+      },
+      "NoteCategoryReqObj" : {
+        "properties" : {
+          "notecategoryname" : {
+            "type" : "string",
+            "example" : "Customer Feedback",
+            "description" : "name of note category"
+          },
+          "notecategorydescription" : {
+            "type" : "string",
+            "example" : "Customer Feedback",
+            "description" : "description of note category"
+          }
+        }
+      },
+      "NoteCategoryResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49,
+            "description" : "id of note category"
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 10002,
+            "description" : "id of company that this note category belongs to"
+          },
+          "notecategoryname" : {
+            "type" : "string",
+            "example" : "Customer Feedback",
+            "description" : "name of note category"
+          },
+          "notecategorydescription" : {
+            "type" : "string",
+            "example" : "Customer Feedback",
+            "description" : "description of note category"
+          },
+          "notecategorytype" : {
+            "type" : "string",
+            "enum" : [ "Visit", "Medical Detailing", "Combined" ],
+            "example" : "Visit",
+            "description" : "type of note category"
+          }
+        }
       }
     }
   }
