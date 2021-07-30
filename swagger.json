@@ -1682,7 +1682,7 @@
     "/setup/note/category" : {
       "get" : {
         "tags" : [ "setup note category" ],
-        "summary" : "gets all product brands.",
+        "summary" : "gets all note categories.",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
@@ -1694,7 +1694,7 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/ProductBrandsResObj"
+                    "$ref" : "#/components/schemas/NoteCategoryResObj"
                   }
                 }
               }
