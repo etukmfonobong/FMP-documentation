@@ -3205,10 +3205,45 @@
             "description" : "description of note category"
           },
           "notecategorytype" : {
+            "type" : "string"
+          }
+        }
+      },
+      "PaymentTypesReqObj" : {
+        "properties" : {
+          "paymenttypename" : {
             "type" : "string",
-            "enum" : [ "Visit", "Medical Detailing", "Combined" ],
-            "example" : "Visit",
-            "description" : "type of note category"
+            "example" : "POS",
+            "description" : "name of payment type"
+          },
+          "paymenttypedescription" : {
+            "type" : "string",
+            "example" : "POS",
+            "description" : "description of payment type"
+          }
+        }
+      },
+      "PaymentTypesResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49,
+            "description" : "id of payment type"
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 10002,
+            "description" : "id of company that this payment type belongs to"
+          },
+          "paymenttypename" : {
+            "type" : "string",
+            "example" : "POS",
+            "description" : "name of payment type"
+          },
+          "paymenttypedescription" : {
+            "type" : "string",
+            "example" : "POS",
+            "description" : "description of payment type"
           }
         }
       }
