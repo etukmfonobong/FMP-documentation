@@ -515,50 +515,15 @@
           "bearerAuth" : [ ]
         } ],
         "parameters" : [ {
-          "name" : "parentlocationid",
-          "in" : "query",
-          "description" : "id of parent location",
-          "required" : false,
-          "schema" : {
-            "type" : "integer",
-            "example" : 105
-          }
+          "$ref" : "#/components/parameters/parentLocation"
         }, {
-          "name" : "locationname",
-          "in" : "query",
-          "description" : "location name",
-          "required" : false,
-          "schema" : {
-            "type" : "string",
-            "example" : "volta"
-          }
+          "$ref" : "#/components/parameters/locationName"
         }, {
-          "name" : "locationtypesid",
-          "in" : "query",
-          "description" : "location type",
-          "required" : false,
-          "schema" : {
-            "type" : "integer",
-            "example" : 8
-          }
+          "$ref" : "#/components/parameters/locationType"
         }, {
-          "name" : "page",
-          "in" : "query",
-          "description" : "page number to view",
-          "required" : false,
-          "schema" : {
-            "type" : "integer",
-            "example" : 8
-          }
+          "$ref" : "#/components/parameters/page"
         }, {
-          "name" : "limit",
-          "in" : "query",
-          "description" : "number of results per page",
-          "required" : false,
-          "schema" : {
-            "type" : "integer",
-            "example" : 8
-          }
+          "$ref" : "#/components/parameters/limit"
         } ],
         "responses" : {
           "200" : {
@@ -2253,7 +2218,7 @@
       }
     },
     "parameters" : {
-      "parentlocation" : {
+      "parentLocation" : {
         "name" : "parentlocationid",
         "in" : "query",
         "description" : "id of parent location",
@@ -2263,7 +2228,7 @@
           "example" : 105
         }
       },
-      "locationname" : {
+      "locationName" : {
         "name" : "locationname",
         "in" : "query",
         "description" : "location name to search",
@@ -2273,7 +2238,7 @@
           "example" : "volta"
         }
       },
-      "locationtype" : {
+      "locationType" : {
         "name" : "locationtypesid",
         "in" : "query",
         "description" : "id of location type to search",
