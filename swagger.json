@@ -46,6 +46,15 @@
     "name" : "setup product brands",
     "description" : "Routes to setup company's product brand details"
   }, {
+    "name" : "setup note category",
+    "description" : "Routes to setup note category"
+  }, {
+    "name" : "setup brand elements",
+    "description" : "Routes to setup brand elements"
+  }, {
+    "name" : "setup payment types",
+    "description" : "Routes to setup payment types"
+  }, {
     "name" : "outlets",
     "description" : "Routes for outlet details"
   }, {
