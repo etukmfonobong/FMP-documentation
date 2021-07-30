@@ -2266,7 +2266,7 @@
       "locationname" : {
         "name" : "locationname",
         "in" : "query",
-        "description" : "location name",
+        "description" : "location name to search",
         "required" : false,
         "schema" : {
           "type" : "string",
@@ -2276,7 +2276,7 @@
       "locationtype" : {
         "name" : "locationtypesid",
         "in" : "query",
-        "description" : "location type",
+        "description" : "id of location type to search",
         "required" : false,
         "schema" : {
           "type" : "integer",
