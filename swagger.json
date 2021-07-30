@@ -2252,6 +2252,58 @@
         "bearerFormat" : "JWT"
       }
     },
+    "parameters" : {
+      "parentlocation" : {
+        "name" : "parentlocationid",
+        "in" : "query",
+        "description" : "id of parent location",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "example" : 105
+        }
+      },
+      "locationname" : {
+        "name" : "locationname",
+        "in" : "query",
+        "description" : "location name",
+        "required" : false,
+        "schema" : {
+          "type" : "string",
+          "example" : "volta"
+        }
+      },
+      "locationtype" : {
+        "name" : "locationtypesid",
+        "in" : "query",
+        "description" : "location type",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "example" : 8
+        }
+      },
+      "page" : {
+        "name" : "page",
+        "in" : "query",
+        "description" : "page number to view",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "example" : 8
+        }
+      },
+      "limit" : {
+        "name" : "limit",
+        "in" : "query",
+        "description" : "number of results per page",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "example" : 8
+        }
+      }
+    },
     "schemas" : {
       "AccessToken" : {
         "properties" : {
@@ -3091,54 +3143,6 @@
             "description" : "descrption of product brand"
           }
         }
-      },
-      "filterParams" : {
-        "properties" : [ {
-          "name" : "parentlocationid",
-          "in" : "query",
-          "description" : "id of parent location",
-          "required" : false,
-          "schema" : {
-            "type" : "integer",
-            "example" : 105
-          }
-        }, {
-          "name" : "locationname",
-          "in" : "query",
-          "description" : "location name",
-          "required" : false,
-          "schema" : {
-            "type" : "string",
-            "example" : "volta"
-          }
-        }, {
-          "name" : "locationtypesid",
-          "in" : "query",
-          "description" : "location type",
-          "required" : false,
-          "schema" : {
-            "type" : "integer",
-            "example" : 8
-          }
-        }, {
-          "name" : "page",
-          "in" : "query",
-          "description" : "page number to view",
-          "required" : false,
-          "schema" : {
-            "type" : "integer",
-            "example" : 8
-          }
-        }, {
-          "name" : "limit",
-          "in" : "query",
-          "description" : "number of results per page",
-          "required" : false,
-          "schema" : {
-            "type" : "integer",
-            "example" : 8
-          }
-        } ]
       }
     }
   }
