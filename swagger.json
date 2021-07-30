@@ -1710,7 +1710,7 @@
       },
       "post" : {
         "tags" : [ "setup note category" ],
-        "summary" : "creates a product brand",
+        "summary" : "creates a note category",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
@@ -1719,7 +1719,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/ProductBrandsReqObj"
+                "$ref" : "#/components/schemas/NoteCategoryReqObj"
               }
             }
           }
@@ -1730,7 +1730,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/ProductBrandsResObj"
+                  "$ref" : "#/components/schemas/NoteCategoryResObj"
                 }
               }
             }
@@ -1747,14 +1747,14 @@
     "/setup/note/category/{id}" : {
       "get" : {
         "tags" : [ "setup note category" ],
-        "summary" : "gets a specific product brand",
+        "summary" : "gets a specific note category",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
-          "description" : "id of product brand to fetch",
+          "description" : "id of note category to fetch",
           "required" : true,
           "schema" : {
             "type" : "integer",
@@ -1767,7 +1767,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/ProductBrandsResObj"
+                  "$ref" : "#/components/schemas/NoteCategoryResObj"
                 }
               }
             }
@@ -1782,14 +1782,14 @@
       },
       "patch" : {
         "tags" : [ "setup note category" ],
-        "summary" : "updates an existing product brand",
+        "summary" : "updates an existing note category",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
-          "description" : "id of product brand to be updated",
+          "description" : "id of note category to be updated",
           "required" : true,
           "schema" : {
             "type" : "integer",
@@ -1801,7 +1801,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/ProductBrandsReqObj"
+                "$ref" : "#/components/schemas/NoteCategoryReqObj"
               }
             }
           }
@@ -1812,7 +1812,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/ProductBrandsResObj"
+                  "$ref" : "#/components/schemas/NoteCategoryResObj"
                 }
               }
             }
@@ -1827,14 +1827,14 @@
       },
       "delete" : {
         "tags" : [ "setup note category" ],
-        "summary" : "deletes a product brand.",
+        "summary" : "deletes a note category.",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
-          "description" : "id of product brand to be deleted",
+          "description" : "id of note category to be deleted",
           "required" : true,
           "schema" : {
             "type" : "integer",
