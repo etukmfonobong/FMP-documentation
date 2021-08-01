@@ -3842,6 +3842,58 @@
             "description" : "weigth this brand element carries"
           }
         }
+      },
+      "VisitSummaryResObj" : {
+        "properties" : {
+          "actualVsPlannedVisits" : {
+            "properties" : {
+              "actualVisits" : {
+                "type" : "integer",
+                "example" : 478,
+                "description" : "number of visits completed"
+              },
+              "plannedVisits" : {
+                "type" : "integer",
+                "example" : 861,
+                "description" : "number of visits scheduled/planned"
+              },
+              "visitCompletionPercentage" : {
+                "type" : "integer",
+                "example" : 55.51684088269454,
+                "description" : "id of brand element"
+              }
+            }
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 10002,
+            "description" : "id of company that this brand element belongs to"
+          },
+          "brandelementname" : {
+            "type" : "string",
+            "example" : "Table",
+            "description" : "name of brand element"
+          },
+          "weight" : {
+            "type" : "integer",
+            "example" : 10,
+            "description" : "weigth this brand element carries"
+          }
+        }
+      },
+      "actualVsPlannedVisits" : {
+        "actualVisits" : 478,
+        "plannedVisits" : 861,
+        "visitCompletionPercentage" : 55.51684088269454
+      },
+      "outletsVisited" : 129,
+      "averageTimeSpent" : {
+        "minutes" : 23,
+        "seconds" : 23.416490486257942
+      },
+      "visitExceptions" : {
+        "value" : 54,
+        "percentage" : 11.416490486257928
       }
     }
   }
