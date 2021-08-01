@@ -3421,6 +3421,44 @@
             "description" : "description of payment type"
           }
         }
+      },
+      "BrandElementsReqObj" : {
+        "properties" : {
+          "brandelementname" : {
+            "type" : "string",
+            "example" : "Table",
+            "description" : "name of brand element"
+          },
+          "weight" : {
+            "type" : "integer",
+            "example" : 10,
+            "description" : "weigth this brand element carries"
+          }
+        }
+      },
+      "BrandElementsResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49,
+            "description" : "id of brand element"
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 10002,
+            "description" : "id of company that this brand element belongs to"
+          },
+          "brandelementname" : {
+            "type" : "string",
+            "example" : "Table",
+            "description" : "name of brand element"
+          },
+          "weight" : {
+            "type" : "integer",
+            "example" : 10,
+            "description" : "weigth this brand element carries"
+          }
+        }
       }
     }
   }
