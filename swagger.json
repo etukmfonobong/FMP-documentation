@@ -2032,7 +2032,7 @@
     "/setup/payment-types" : {
       "get" : {
         "tags" : [ "setup payment types" ],
-        "summary" : "gets all brand elements.",
+        "summary" : "gets all payment types.",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
@@ -2044,7 +2044,7 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/BrandElementsResObj"
+                    "$ref" : "#/components/schemas/PaymentTypesReqObj"
                   }
                 }
               }
