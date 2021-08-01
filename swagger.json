@@ -1857,7 +1857,7 @@
     "/setup/brand-elements" : {
       "get" : {
         "tags" : [ "setup brand elements" ],
-        "summary" : "gets all note categories.",
+        "summary" : "gets all brand elements.",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
@@ -1869,7 +1869,7 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/NoteCategoryResObj"
+                    "$ref" : "#/components/schemas/BrandElementsResObj"
                   }
                 }
               }
@@ -1885,7 +1885,7 @@
       },
       "post" : {
         "tags" : [ "setup brand elements" ],
-        "summary" : "creates a note category",
+        "summary" : "creates a brand element",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
@@ -1894,7 +1894,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/NoteCategoryReqObj"
+                "$ref" : "#/components/schemas/BrandElementsReqObj"
               }
             }
           }
@@ -1905,7 +1905,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/NoteCategoryResObj"
+                  "$ref" : "#/components/schemas/BrandElementsResObj"
                 }
               }
             }
@@ -1922,14 +1922,14 @@
     "/setup/brand-elements/{id}" : {
       "get" : {
         "tags" : [ "setup brand elements" ],
-        "summary" : "gets a specific note category",
+        "summary" : "gets a specific brand element",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
-          "description" : "id of note category to fetch",
+          "description" : "id of brand element to fetch",
           "required" : true,
           "schema" : {
             "type" : "integer",
@@ -1942,7 +1942,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/NoteCategoryResObj"
+                  "$ref" : "#/components/schemas/BrandElementsResObj"
                 }
               }
             }
@@ -1957,14 +1957,14 @@
       },
       "patch" : {
         "tags" : [ "setup brand elements" ],
-        "summary" : "updates an existing note category",
+        "summary" : "updates an existing brand element",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
-          "description" : "id of note category to be updated",
+          "description" : "id of brand element to be updated",
           "required" : true,
           "schema" : {
             "type" : "integer",
@@ -1976,7 +1976,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/NoteCategoryReqObj"
+                "$ref" : "#/components/schemas/BrandElementsReqObj"
               }
             }
           }
@@ -1987,7 +1987,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/NoteCategoryResObj"
+                  "$ref" : "#/components/schemas/BrandElementsResObj"
                 }
               }
             }
@@ -2002,14 +2002,14 @@
       },
       "delete" : {
         "tags" : [ "setup brand elements" ],
-        "summary" : "deletes a note category.",
+        "summary" : "deletes a brand element.",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
-          "description" : "id of note category to be deleted",
+          "description" : "id of brand element to be deleted",
           "required" : true,
           "schema" : {
             "type" : "integer",
