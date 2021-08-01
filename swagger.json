@@ -61,6 +61,9 @@
     "name" : "outlets aggregation",
     "description" : "Routes for aggregated data on outlets"
   }, {
+    "name" : "visits aggregation",
+    "description" : "Routes for aggregated data on visits"
+  }, {
     "name" : "schedules",
     "description" : "Routes for schedules"
   } ],
