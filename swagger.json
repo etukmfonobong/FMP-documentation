@@ -3864,36 +3864,40 @@
               }
             }
           },
-          "fmpcompanyid" : {
+          "outletsVisited" : {
             "type" : "integer",
-            "example" : 10002,
-            "description" : "id of company that this brand element belongs to"
+            "example" : 129,
+            "description" : "number of outlets visited"
           },
-          "brandelementname" : {
-            "type" : "string",
-            "example" : "Table",
-            "description" : "name of brand element"
+          "averageTimeSpent" : {
+            "properties" : {
+              "minutes" : {
+                "type" : "integer",
+                "example" : 478,
+                "description" : "minutes of time spent"
+              },
+              "seconds" : {
+                "type" : "integer",
+                "example" : 861,
+                "description" : "seconds of time spent"
+              }
+            }
           },
-          "weight" : {
-            "type" : "integer",
-            "example" : 10,
-            "description" : "weigth this brand element carries"
+          "visitExceptions" : {
+            "properties" : {
+              "value" : {
+                "type" : "integer",
+                "example" : 54,
+                "description" : "number of visits with exceptions"
+              },
+              "percentage" : {
+                "type" : "integer",
+                "example" : 11,
+                "description" : "percentage of visit exceptions relative to total completed visits"
+              }
+            }
           }
         }
-      },
-      "actualVsPlannedVisits" : {
-        "actualVisits" : 478,
-        "plannedVisits" : 861,
-        "visitCompletionPercentage" : 55.51684088269454
-      },
-      "outletsVisited" : 129,
-      "averageTimeSpent" : {
-        "minutes" : 23,
-        "seconds" : 23.416490486257942
-      },
-      "visitExceptions" : {
-        "value" : 54,
-        "percentage" : 11.416490486257928
       }
     }
   }
