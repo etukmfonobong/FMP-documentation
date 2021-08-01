@@ -2222,7 +2222,7 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/PaymentTypesReqObj"
+                    "$ref" : "#/components/schemas/VisitSummaryResObj"
                   }
                 }
               }
