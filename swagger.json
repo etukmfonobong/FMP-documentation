@@ -2060,7 +2060,7 @@
       },
       "post" : {
         "tags" : [ "setup payment types" ],
-        "summary" : "creates a brand element",
+        "summary" : "creates a payment type",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
@@ -2069,7 +2069,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/BrandElementsReqObj"
+                "$ref" : "#/components/schemas/PaymentTypesReqObj"
               }
             }
           }
@@ -2080,7 +2080,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/BrandElementsResObj"
+                  "$ref" : "#/components/schemas/PaymentTypesResObj"
                 }
               }
             }
@@ -2097,14 +2097,14 @@
     "/setup/payment-types/{id}" : {
       "get" : {
         "tags" : [ "setup payment types" ],
-        "summary" : "gets a specific brand element",
+        "summary" : "gets a specific payment type",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
-          "description" : "id of brand element to fetch",
+          "description" : "id of payment type to fetch",
           "required" : true,
           "schema" : {
             "type" : "integer",
@@ -2117,7 +2117,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/BrandElementsResObj"
+                  "$ref" : "#/components/schemas/PaymentTypesResObj"
                 }
               }
             }
@@ -2132,14 +2132,14 @@
       },
       "patch" : {
         "tags" : [ "setup payment types" ],
-        "summary" : "updates an existing brand element",
+        "summary" : "updates an existing payment type",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
-          "description" : "id of brand element to be updated",
+          "description" : "id of payment type to be updated",
           "required" : true,
           "schema" : {
             "type" : "integer",
@@ -2151,7 +2151,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/BrandElementsReqObj"
+                "$ref" : "#/components/schemas/PaymentTypesReqObj"
               }
             }
           }
@@ -2162,7 +2162,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/BrandElementsResObj"
+                  "$ref" : "#/components/schemas/PaymentTypesResObj"
                 }
               }
             }
@@ -2177,14 +2177,14 @@
       },
       "delete" : {
         "tags" : [ "setup payment types" ],
-        "summary" : "deletes a brand element.",
+        "summary" : "deletes a payment type.",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
-          "description" : "id of brand element to be deleted",
+          "description" : "id of payment type to be deleted",
           "required" : true,
           "schema" : {
             "type" : "integer",
