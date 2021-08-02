@@ -2267,6 +2267,36 @@
         }
       }
     },
+    "/visits/coverage" : {
+      "get" : {
+        "tags" : [ "visits aggregation" ],
+        "summary" : "gets visit coverage",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/VisitsCoveragePaginatedResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
     "/outlets/count" : {
       "get" : {
         "tags" : [ "outlets aggregation" ],
