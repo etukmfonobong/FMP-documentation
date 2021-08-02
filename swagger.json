@@ -2237,6 +2237,36 @@
         }
       }
     },
+    "/visits/schedules" : {
+      "get" : {
+        "tags" : [ "visits aggregation" ],
+        "summary" : "gets visit schedules",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/VisitsSchedulesPaginatedResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
     "/outlets/count" : {
       "get" : {
         "tags" : [ "outlets aggregation" ],
