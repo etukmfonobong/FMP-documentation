@@ -3899,6 +3899,20 @@
           }
         }
       },
+      "VisitsSchedulesPaginatedResObj" : {
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/VisitsSchedulesResObj"
+            }
+          },
+          "meta" : {
+            "$ref" : "#/components/schemas/PaginationMetaObj"
+          }
+        }
+      },
       "VisitsSchedulesResObj" : {
         "properties" : {
           "visitId" : {
