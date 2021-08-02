@@ -4155,7 +4155,7 @@
           },
           "location" : {
             "type" : "string",
-            "example" : "1602585756",
+            "example" : "Akowonjo",
             "description" : "outlet location name"
           },
           "visits" : {
