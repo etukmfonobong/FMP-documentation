@@ -3981,6 +3981,55 @@
             "description" : "disitance from outlet in miles"
           }
         }
+      },
+      "VisitsCoverageResObj" : {
+        "properties" : {
+          "outletId" : {
+            "type" : "integer",
+            "example" : 1326,
+            "description" : "id of outlet"
+          },
+          "outletName" : {
+            "type" : "string",
+            "example" : "Demo Alh. Nuru Outlet",
+            "description" : "name of outlet"
+          },
+          "phoneNumber" : {
+            "type" : "string",
+            "example" : "08066643411",
+            "description" : "phone number of outlet contact"
+          },
+          "firstName" : {
+            "type" : "string",
+            "example" : "Moses",
+            "description" : "first name of outlet contact"
+          },
+          "lastName" : {
+            "type" : "string",
+            "example" : "Emmanuel",
+            "description" : "last name of outlet contact"
+          },
+          "outletTypes" : {
+            "type" : "string",
+            "example" : "Wholesalers",
+            "description" : "type of outlet"
+          },
+          "outletChannel" : {
+            "type" : "string",
+            "example" : "Neighbourhood",
+            "description" : "channel of outlet"
+          },
+          "location" : {
+            "type" : "string",
+            "example" : "1602585756",
+            "description" : "outlet location name"
+          },
+          "visits" : {
+            "type" : "string",
+            "example" : "1",
+            "description" : "number of visits"
+          }
+        }
       }
     }
   }
