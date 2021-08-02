@@ -1,3 +1,3973 @@
 {
-  "swagger" : "2.0"
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "FieldMaxPro v3 Api",
+    "description" : "FieldMaxPro v3 Api reworked in nodejs",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://fmp-node-api.herokuapp.com",
+    "description" : "Temporary Internal staging server for testing; hosted on Heroku"
+  } ],
+  "tags" : [ {
+    "name" : "auth",
+    "description" : "Everything about Authentication"
+  }, {
+    "name" : "test",
+    "description" : "Test routes for use in development only"
+  }, {
+    "name" : "setup",
+    "description" : "Routes for company setup details"
+  }, {
+    "name" : "setup distributors",
+    "description" : "Routes to setup company's distributor details"
+  }, {
+    "name" : "setup locations",
+    "description" : "Routes to setup company's location details"
+  }, {
+    "name" : "setup sale teams",
+    "description" : "Routes to setup company's sale team details"
+  }, {
+    "name" : "setup outlet channels",
+    "description" : "Routes to setup company's outlet channel details"
+  }, {
+    "name" : "setup outlet types",
+    "description" : "Routes to setup company's outlet type details"
+  }, {
+    "name" : "setup contact titles",
+    "description" : "Routes to setup company's contact title details"
+  }, {
+    "name" : "setup contact categories",
+    "description" : "Routes to setup company's contact category details"
+  }, {
+    "name" : "setup product categories",
+    "description" : "Routes to setup company's product category details"
+  }, {
+    "name" : "setup product brands",
+    "description" : "Routes to setup company's product brand details"
+  }, {
+    "name" : "setup note category",
+    "description" : "Routes to setup note category"
+  }, {
+    "name" : "setup brand elements",
+    "description" : "Routes to setup brand elements"
+  }, {
+    "name" : "setup payment types",
+    "description" : "Routes to setup payment types"
+  }, {
+    "name" : "outlets",
+    "description" : "Routes for outlet details"
+  }, {
+    "name" : "outlets aggregation",
+    "description" : "Routes for aggregated data on outlets"
+  }, {
+    "name" : "visits aggregation",
+    "description" : "Routes for aggregated data on visits"
+  }, {
+    "name" : "schedules",
+    "description" : "Routes for schedules"
+  } ],
+  "paths" : {
+    "/auth/login" : {
+      "post" : {
+        "tags" : [ "auth" ],
+        "summary" : "Returns a json web token for authorization on other endpoints.",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "username" : {
+                    "type" : "string"
+                  },
+                  "password" : {
+                    "type" : "string"
+                  }
+                },
+                "example" : {
+                  "username" : "demo.superadmin",
+                  "password" : "password1234"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "object containing required access token",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AccessToken"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/auth/login/mobile" : {
+      "post" : {
+        "tags" : [ "auth" ],
+        "summary" : "Returns a json web token for authorization on other endpoints for mobile devices.",
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/LoginReqObjMobile"
+              },
+              "example" : {
+                "username" : "demo.fieldrep",
+                "password" : "password1234",
+                "versionnumber" : "1002",
+                "googledeviceid" : "AI023883dgfue8383n323b34234dh48h8590201",
+                "deviceimei" : "334283949950505095989895",
+                "devicename" : "SM953"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "object containing required access token",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/AccessToken"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          },
+          "406" : {
+            "description" : "You can only be logged in from one device at a time"
+          }
+        }
+      }
+    },
+    "/auth/logout/mobile" : {
+      "post" : {
+        "tags" : [ "auth" ],
+        "summary" : "safely logs out mobile devices.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing status info",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Invalid Jwt Token."
+          }
+        }
+      }
+    },
+    "/auth/test/jwt" : {
+      "get" : {
+        "tags" : [ "test" ],
+        "summary" : "Returns user decoded from jwt.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing basuc user info",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserObject"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Invalid Jwt Token."
+          }
+        }
+      }
+    },
+    "/auth/test/roles" : {
+      "get" : {
+        "tags" : [ "test" ],
+        "summary" : "Returns user decoded from jwt, if user has premission to view outlets.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing basuc user info",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserObject"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Invalid permissions, you do not have the required permissions to complete this request/action."
+          }
+        }
+      }
+    },
+    "/setup/company" : {
+      "get" : {
+        "tags" : [ "setup" ],
+        "summary" : "gets all companies",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/CompanyResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "setup" ],
+        "summary" : "creates a new company",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AddCompanyReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CompanyResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/setup/company/{id}" : {
+      "patch" : {
+        "tags" : [ "setup" ],
+        "summary" : "updates an existing company",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of company to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateCompanyReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "object containing required access token",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CompanyResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!"
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "setup" ],
+        "summary" : "deletes a company",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of company to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!"
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/setup/distributor" : {
+      "get" : {
+        "tags" : [ "setup distributors" ],
+        "summary" : "gets all distributors.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/DistributorResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "setup distributors" ],
+        "summary" : "creates a distributor",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/DistributorReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DistributorResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          }
+        }
+      }
+    },
+    "/setup/distributor/{id}" : {
+      "patch" : {
+        "tags" : [ "setup distributors" ],
+        "summary" : "updates a distributor",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of company to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateCompanyReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "object containing required access token",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CompanyResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "setup distributors" ],
+        "summary" : "deletes a distributor.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of company to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/setup/location" : {
+      "get" : {
+        "tags" : [ "setup locations" ],
+        "summary" : "gets all locations, based on query parameters",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/parentLocation"
+        }, {
+          "$ref" : "#/components/parameters/locationName"
+        }, {
+          "$ref" : "#/components/parameters/locationType"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LocationPaginatedResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "setup locations" ],
+        "summary" : "creates a new location",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AddLocationReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LocationResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/setup/location/{id}" : {
+      "patch" : {
+        "tags" : [ "setup locations" ],
+        "summary" : "updates an existing location",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of location to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateLocationReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LocationResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!"
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "setup locations" ],
+        "summary" : "deletes a location",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of location to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!"
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/setup/sale-team" : {
+      "get" : {
+        "tags" : [ "setup sale teams" ],
+        "summary" : "gets all sales teams.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/SaleTeamResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "setup sale teams" ],
+        "summary" : "creates a sale team",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SaleTeamReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SaleTeamResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          }
+        }
+      }
+    },
+    "/setup/sale-team/{id}" : {
+      "patch" : {
+        "tags" : [ "setup sale teams" ],
+        "summary" : "updates a sale team",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of sale team to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SaleTeamReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SaleTeamResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "setup sale teams" ],
+        "summary" : "deletes a sale team.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of sale team to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/setup/outlet/channel" : {
+      "get" : {
+        "tags" : [ "setup outlet channels" ],
+        "summary" : "gets all outlet channels.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/SetupOutletChannelResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "setup outlet channels" ],
+        "summary" : "creates an outlet channel",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SetupOutletChannelReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SetupOutletChannelResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          }
+        }
+      }
+    },
+    "/setup/outlet/channel/{id}" : {
+      "patch" : {
+        "tags" : [ "setup outlet channels" ],
+        "summary" : "updates an existing outlet channel",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of outlet channel to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SetupOutletChannelReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SetupOutletChannelResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "setup outlet channels" ],
+        "summary" : "deletes an outlet channel.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of outlet channel to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/setup/outlet/type" : {
+      "get" : {
+        "tags" : [ "setup outlet types" ],
+        "summary" : "gets all outlet type.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/SetupOutletTypeResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "setup outlet types" ],
+        "summary" : "creates an outlet type",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SetupOutletTypeReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SetupOutletTypeResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorize"
+          }
+        }
+      }
+    },
+    "/setup/outlet/type/{id}" : {
+      "patch" : {
+        "tags" : [ "setup outlet types" ],
+        "summary" : "updates an existing outlet type",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of outlet type to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SetupOutletTypeReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SetupOutletTypeResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "setup outlet types" ],
+        "summary" : "deletes an outlet type.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of outlet type to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/setup/contact/title" : {
+      "get" : {
+        "tags" : [ "setup contact titles" ],
+        "summary" : "gets all contact titles.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ContactTitleResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "setup contact titles" ],
+        "summary" : "creates a contact title",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ContactTitleReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ContactTitleResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          }
+        }
+      }
+    },
+    "/setup/contact/title/{id}" : {
+      "patch" : {
+        "tags" : [ "setup contact titles" ],
+        "summary" : "updates an existing contact title",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of contact title to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ContactTitleReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ContactTitleResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "setup contact titles" ],
+        "summary" : "deletes a contact title.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of contact title to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/setup/contact/category" : {
+      "get" : {
+        "tags" : [ "setup contact categories" ],
+        "summary" : "gets all contact categories.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ContactCategoryResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "setup contact categories" ],
+        "summary" : "creates a contact category",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ContactCategoryReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ContactCategoryResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          }
+        }
+      }
+    },
+    "/setup/contact/category/{id}" : {
+      "patch" : {
+        "tags" : [ "setup contact categories" ],
+        "summary" : "updates an existing contact category",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of contact category to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ContactCategoryReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ContactCategoryResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "setup contact categories" ],
+        "summary" : "deletes a contact category.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of contact category to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/setup/product/category" : {
+      "get" : {
+        "tags" : [ "setup product categories" ],
+        "summary" : "gets all product categories.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ProductCategoryResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "setup product categories" ],
+        "summary" : "creates a product category",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ProductCategoryReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProductCategoryResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          }
+        }
+      }
+    },
+    "/setup/product/category/{id}" : {
+      "patch" : {
+        "tags" : [ "setup product categories" ],
+        "summary" : "updates an existing product category",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of product category to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ProductCategoryReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProductCategoryResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "setup product categories" ],
+        "summary" : "deletes a product category.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of product category to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/setup/product/brand" : {
+      "get" : {
+        "tags" : [ "setup product brands" ],
+        "summary" : "gets all product brands.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ProductBrandsResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "setup product brands" ],
+        "summary" : "creates a product brand",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ProductBrandsReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProductBrandsResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          }
+        }
+      }
+    },
+    "/setup/product/brand/{id}" : {
+      "get" : {
+        "tags" : [ "setup product brands" ],
+        "summary" : "gets a specific product brand",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of product brand to fetch",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProductBrandsResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "setup product brands" ],
+        "summary" : "updates an existing product brand",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of product brand to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ProductBrandsReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ProductBrandsResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "setup product brands" ],
+        "summary" : "deletes a product brand.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of product brand to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/setup/note/category" : {
+      "get" : {
+        "tags" : [ "setup note category" ],
+        "summary" : "gets all note categories.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/NoteCategoryResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "setup note category" ],
+        "summary" : "creates a note category",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NoteCategoryReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NoteCategoryResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          }
+        }
+      }
+    },
+    "/setup/note/category/{id}" : {
+      "get" : {
+        "tags" : [ "setup note category" ],
+        "summary" : "gets a specific note category",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of note category to fetch",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NoteCategoryResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "setup note category" ],
+        "summary" : "updates an existing note category",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of note category to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NoteCategoryReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NoteCategoryResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "setup note category" ],
+        "summary" : "deletes a note category.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of note category to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/setup/brand-elements" : {
+      "get" : {
+        "tags" : [ "setup brand elements" ],
+        "summary" : "gets all brand elements.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/BrandElementsResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "setup brand elements" ],
+        "summary" : "creates a brand element",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/BrandElementsReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BrandElementsResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          }
+        }
+      }
+    },
+    "/setup/brand-elements/{id}" : {
+      "get" : {
+        "tags" : [ "setup brand elements" ],
+        "summary" : "gets a specific brand element",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of brand element to fetch",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BrandElementsResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "setup brand elements" ],
+        "summary" : "updates an existing brand element",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of brand element to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/BrandElementsReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/BrandElementsResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "setup brand elements" ],
+        "summary" : "deletes a brand element.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of brand element to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/setup/payment-types" : {
+      "get" : {
+        "tags" : [ "setup payment types" ],
+        "summary" : "gets all payment types.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/PaymentTypesReqObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "setup payment types" ],
+        "summary" : "creates a payment type",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PaymentTypesReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PaymentTypesResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          }
+        }
+      }
+    },
+    "/setup/payment-types/{id}" : {
+      "get" : {
+        "tags" : [ "setup payment types" ],
+        "summary" : "gets a specific payment type",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of payment type to fetch",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PaymentTypesResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "patch" : {
+        "tags" : [ "setup payment types" ],
+        "summary" : "updates an existing payment type",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of payment type to be updated",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "requestBody" : {
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PaymentTypesReqObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PaymentTypesResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "setup payment types" ],
+        "summary" : "deletes a payment type.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of payment type to be deleted",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/visits/summary" : {
+      "get" : {
+        "tags" : [ "visits aggregation" ],
+        "summary" : "gets visit summary stats (actual/planned visits, outlets visited, visit exceptions).",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/VisitSummaryResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/outlets/count" : {
+      "get" : {
+        "tags" : [ "outlets aggregation" ],
+        "summary" : "Returns a JSON object that contains total outlets filtered or unfiltered belonging to a company.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing required access token",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OutletsCountResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/outlets/most-covered" : {
+      "get" : {
+        "tags" : [ "outlets aggregation" ],
+        "summary" : "Returns a JSON object that contains the locations with the good oulets coverage and its count.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing outlets locations and its count",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OutletsMostCovered"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/outlets/least-covered" : {
+      "get" : {
+        "tags" : [ "outlets aggregation" ],
+        "summary" : "Returns a JSON objects that contains the locations with poor outlets coverage and its count.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing outlets locations and its count",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OutletsLeastCovered"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/outlets/location" : {
+      "get" : {
+        "tags" : [ "outlets aggregation" ],
+        "summary" : "Returns a json object that contains details of all outlets in a locaton.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "location",
+          "in" : "query",
+          "description" : "id of the location",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 121
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing outlets locations and its count",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "outlets" : {
+                      "$ref" : "#/components/schemas/OutletObj"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/outlets/growth-trend" : {
+      "get" : {
+        "tags" : [ "outlets aggregation" ],
+        "summary" : "Returns a JSON Object containing the growth trend of outlets.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "criteria",
+          "description" : "filter to group the growth (yearly, monthly or weekly)",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "", "YEARLY", "MONTHLY", "WEEKLY" ],
+            "example" : "YEARLY"
+          }
+        }, {
+          "in" : "query",
+          "name" : "month",
+          "description" : "month of the year to be filtered by and is required if criteria is MONTHLY OR WEEKLY",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "minimum" : 1,
+            "maximum" : 12,
+            "example" : 4
+          }
+        }, {
+          "in" : "query",
+          "name" : "year",
+          "description" : "year to be filtered by and is required if criteria is YEARLY, MONTHLY OR WEEKLY",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "2021"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the outlets growth.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/OutletsGrowthResObj"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/outlets/{id}" : {
+      "get" : {
+        "tags" : [ "outlets" ],
+        "summary" : "Returns a json object that contains details of an outlet.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of the outlet",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 1337
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing outlets locations and its count",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/OutletObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/outlets/{id}/type" : {
+      "get" : {
+        "tags" : [ "outlets" ],
+        "summary" : "Returns a JSON Object containing the type of an outlet",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "description" : "id of the outlet",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 5
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the outlet type",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "OutletType" : {
+                      "$ref" : "#/components/schemas/OutletTypeResObj"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/outlets/{id}/channel" : {
+      "get" : {
+        "tags" : [ "outlets" ],
+        "summary" : "Returns a JSON Object containing the channel of an outlet",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "description" : "id of the outlet",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 5
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the outlet channel",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "OutletChannel" : {
+                      "$ref" : "#/components/schemas/OutletChannelResObj"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/outlets/distribution-type" : {
+      "get" : {
+        "tags" : [ "outlets aggregation" ],
+        "summary" : "Returns a JSON Object containing the distribution of outlets with reference to their type.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the outlets type distribution",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "outletsDistribution" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/OutletTypeDistributionResObj"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/outlets/distribution-channel" : {
+      "get" : {
+        "tags" : [ "outlets aggregation" ],
+        "summary" : "Returns a JSON Object containing the distribution of outlets with reference to their channel.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the outlets channel distribution",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "outletsDistribution" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/OutletChannelDistributionResObj"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/calendar/details" : {
+      "get" : {
+        "tags" : [ "schedules" ],
+        "summary" : "get the details of the schedules for a selected date range.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "date",
+          "description" : "date range to get the schedule details.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "2021-03-28,2021-05-09"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the calendar details",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "$ref" : "#/components/schemas/CalendarDetailsResObj"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/calendar/schedules" : {
+      "get" : {
+        "tags" : [ "schedules" ],
+        "summary" : "get the list of schedules and their respective detals for a selected date range.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "date",
+          "description" : "date range to get the schedule list.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "2021-03-28,2021-05-09"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the schedules",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "$ref" : "#/components/schemas/ScheduleListResObj"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/calendar/schedule" : {
+      "post" : {
+        "tags" : [ "schedules" ],
+        "summary" : "create a schedule for a field rep.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateScheduleObj"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "object containing the created schedule",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreateScheduleResObj"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/calendar/upload-schedules" : {
+      "post" : {
+        "tags" : [ "schedules" ],
+        "summary" : "upload a list of schedules to be created via a csv template file.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "file" : {
+                    "type" : "string",
+                    "format" : "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Schedules have been successfully created"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          },
+          "500" : {
+            "description" : "Internal server error while creating schedules"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "securitySchemes" : {
+      "bearerAuth" : {
+        "type" : "http",
+        "scheme" : "bearer",
+        "bearerFormat" : "JWT"
+      }
+    },
+    "parameters" : {
+      "parentLocation" : {
+        "name" : "parentlocationid",
+        "in" : "query",
+        "description" : "id of parent location to filter by",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "example" : 105
+        }
+      },
+      "locationName" : {
+        "name" : "locationname",
+        "in" : "query",
+        "description" : "location name to filter by",
+        "required" : false,
+        "schema" : {
+          "type" : "string",
+          "example" : "volta"
+        }
+      },
+      "locationType" : {
+        "name" : "locationtypesid",
+        "in" : "query",
+        "description" : "id of location type to filter by",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "example" : 8
+        }
+      },
+      "user" : {
+        "name" : "user",
+        "in" : "query",
+        "description" : "id of user to filter by",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "example" : 29
+        }
+      },
+      "distributor" : {
+        "name" : "distributor",
+        "in" : "query",
+        "description" : "id of distributor to filter by",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "example" : 2
+        }
+      },
+      "salesTeam" : {
+        "name" : "salesTeam",
+        "in" : "query",
+        "description" : "id of salesteam to filter by",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "example" : 2
+        }
+      },
+      "products" : {
+        "name" : "products",
+        "in" : "query",
+        "description" : "id of product to filter by",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "example" : 2
+        }
+      },
+      "date" : {
+        "name" : "date",
+        "in" : "query",
+        "description" : "date range to filter by expected in fomart \"YYYY-MM-DD,YYYY-MM-DD\" with the start date on the left and the end date on the right",
+        "required" : false,
+        "schema" : {
+          "type" : "string",
+          "example" : "2020-11-01,2020-11-05"
+        }
+      },
+      "page" : {
+        "name" : "page",
+        "in" : "query",
+        "description" : "page number to view",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "example" : 2
+        }
+      },
+      "limit" : {
+        "name" : "limit",
+        "in" : "query",
+        "description" : "number of results per page",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "example" : 8
+        }
+      }
+    },
+    "schemas" : {
+      "AccessToken" : {
+        "properties" : {
+          "access_token" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "access_token" ]
+      },
+      "UserObject" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "userRoleId" : {
+            "type" : "string"
+          },
+          "fieldRepUser" : {
+            "type" : "string"
+          },
+          "username" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "emailAddress" : {
+            "type" : "string"
+          },
+          "locationId" : {
+            "type" : "string"
+          },
+          "locationType" : {
+            "type" : "string"
+          },
+          "fmpCompanyId" : {
+            "type" : "string"
+          }
+        }
+      },
+      "LoginReqObjMobile" : {
+        "properties" : {
+          "username" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "versionnumber" : {
+            "type" : "string"
+          },
+          "googledeviceid" : {
+            "type" : "string"
+          },
+          "deviceimei" : {
+            "type" : "string"
+          },
+          "devicename" : {
+            "type" : "string"
+          }
+        }
+      },
+      "AddCompanyReqObj" : {
+        "properties" : {
+          "brandname" : {
+            "type" : "string",
+            "example" : "new test company"
+          },
+          "current" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "brandcolor" : {
+            "type" : "string",
+            "example" : "#fff"
+          }
+        }
+      },
+      "UpdateCompanyReqObj" : {
+        "properties" : {
+          "brandname" : {
+            "type" : "string",
+            "example" : "Test Company"
+          },
+          "brandcolor" : {
+            "type" : "string",
+            "example" : "#fff"
+          }
+        }
+      },
+      "CompanyResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 21
+          },
+          "brandName" : {
+            "type" : "string",
+            "example" : "Anix Limited"
+          },
+          "current" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "brandColor" : {
+            "type" : "string",
+            "example" : "#fff"
+          },
+          "fmpCompanyId" : {
+            "type" : "integer",
+            "example" : 10002
+          }
+        }
+      },
+      "DistributorReqObj" : {
+        "properties" : {
+          "distributorname" : {
+            "type" : "string",
+            "example" : "Anix Limited"
+          },
+          "distributordescription" : {
+            "type" : "string",
+            "example" : "Anix Limited description"
+          },
+          "operatinglocation" : {
+            "type" : "integer",
+            "example" : 105
+          },
+          "distributorerpcode" : {
+            "type" : "string",
+            "example" : "sap-345677"
+          }
+        }
+      },
+      "DistributorResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 21
+          },
+          "distributorname" : {
+            "type" : "string",
+            "example" : "Anix Limited"
+          },
+          "distributordescription" : {
+            "type" : "string",
+            "example" : "Anix Limited description"
+          },
+          "operatinglocation" : {
+            "type" : "integer",
+            "example" : 105
+          },
+          "parentdistributorid" : {
+            "type" : "integer",
+            "example" : 14
+          },
+          "distributorerpcode" : {
+            "type" : "string",
+            "example" : "sap-345677"
+          },
+          "fmpCompanyId" : {
+            "type" : "integer",
+            "example" : 10002
+          }
+        }
+      },
+      "OutletsCountResObj" : {
+        "properties" : {
+          "outlets_Count" : {
+            "type" : "integer",
+            "example" : 186
+          }
+        }
+      },
+      "OutletObj" : {
+        "properties" : {
+          "outlet" : {
+            "type" : "schema",
+            "$ref" : "#/components/schemas/OutletResObj"
+          }
+        }
+      },
+      "OutletResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 6413
+          },
+          "outlet_Name" : {
+            "type" : "string",
+            "example" : "Wendy's mart"
+          },
+          "contact_Name" : {
+            "type" : "string",
+            "example" : "Wendy Mart"
+          },
+          "contact_Phone" : {
+            "type" : "string",
+            "example" : "09066331244"
+          },
+          "field_Rep" : {
+            "type" : "string",
+            "example" : "Wendy Etafo"
+          },
+          "Outlet_Type" : {
+            "type" : "string",
+            "example" : "Retailers"
+          },
+          "Outlet_Channel" : {
+            "type" : "string",
+            "example" : "Neighbourhood"
+          },
+          "location" : {
+            "type" : "string",
+            "example" : "Magodo Phase 2"
+          }
+        }
+      },
+      "OutletsCoverageResObj" : {
+        "properties" : {
+          "outlet_town" : {
+            "type" : "string",
+            "example" : "Lagos "
+          },
+          "outlets_location" : {
+            "type" : "string",
+            "example" : "Ago Palace - Lagos"
+          },
+          "location_Id" : {
+            "type" : "integer",
+            "example" : 108
+          },
+          "outlets_Count" : {
+            "type" : "string",
+            "example" : "25"
+          }
+        }
+      },
+      "OutletsMostCovered" : {
+        "properties" : {
+          "mostCoveredLocations" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/OutletsCoverageResObj"
+            }
+          }
+        }
+      },
+      "OutletsLeastCovered" : {
+        "properties" : {
+          "leastCoveredLocations" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/OutletsCoverageResObj"
+            }
+          }
+        }
+      },
+      "OutletTypeResObj" : {
+        "properties" : {
+          "outlets_id" : {
+            "type" : "integer",
+            "example" : 5
+          },
+          "outlets_outletname" : {
+            "type" : "string",
+            "example" : "Immaculate Store"
+          },
+          "outlettype_id" : {
+            "type" : "integer",
+            "example" : 4
+          },
+          "outlet_Type" : {
+            "type" : "string",
+            "example" : "Supermarket"
+          }
+        }
+      },
+      "OutletChannelResObj" : {
+        "properties" : {
+          "outlets_id" : {
+            "type" : "integer",
+            "example" : 5
+          },
+          "outlets_outletname" : {
+            "type" : "string",
+            "example" : "Immaculate Store"
+          },
+          "outletchannel_id" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "outlet_Channel" : {
+            "type" : "string",
+            "example" : "Retail"
+          }
+        }
+      },
+      "OutletTypeDistributionResObj" : {
+        "properties" : {
+          "count" : {
+            "type" : "string",
+            "example" : "68"
+          },
+          "Outlet_Type" : {
+            "type" : "string",
+            "example" : "Wholesalers"
+          }
+        }
+      },
+      "OutletChannelDistributionResObj" : {
+        "properties" : {
+          "count" : {
+            "type" : "string",
+            "example" : "186"
+          },
+          "Outlet_Channel" : {
+            "type" : "string",
+            "example" : "Neighbourhood"
+          }
+        }
+      },
+      "OutletsGrowthResObj" : {
+        "required" : [ "outlets_Count", "month", "quarter", "year" ],
+        "properties" : {
+          "outlets_Count" : {
+            "type" : "string",
+            "example" : "1"
+          },
+          "day" : {
+            "type" : "integer",
+            "example" : 26
+          },
+          "week" : {
+            "type" : "integer",
+            "example" : 17
+          },
+          "month" : {
+            "type" : "integer",
+            "example" : 4
+          },
+          "quarter" : {
+            "type" : "integer",
+            "example" : 2
+          },
+          "year" : {
+            "type" : "integer",
+            "example" : 2021
+          }
+        }
+      },
+      "CalendarDetailsResObj" : {
+        "properties" : {
+          "date_Range" : {
+            "type" : "string",
+            "example" : "2021-03-28,2021-05-09"
+          },
+          "scheduled_Visits" : {
+            "type" : "integer",
+            "example" : 14
+          },
+          "completed_Visits" : {
+            "type" : "integer",
+            "example" : 8
+          },
+          "total_Unvisited" : {
+            "type" : "integer",
+            "example" : 6
+          }
+        }
+      },
+      "ScheduleListObj" : {
+        "properties" : {
+          "first_Name" : {
+            "type" : "string",
+            "example" : "Oluwaseun"
+          },
+          "last_Name" : {
+            "type" : "string",
+            "example" : "Oludele"
+          },
+          "outlet_Name" : {
+            "type" : "string",
+            "example" : "Ambrose Nigeria Limited"
+          },
+          "schedule_Date" : {
+            "type" : "string",
+            "example" : "2021-05-07T08:39:00.000Z"
+          },
+          "visited" : {
+            "type" : "integer",
+            "example" : 1
+          }
+        }
+      },
+      "ScheduleListResObj" : {
+        "properties" : {
+          "scheduleList" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ScheduleListObj"
+            }
+          }
+        }
+      },
+      "CreateScheduleObj" : {
+        "properties" : {
+          "fieldStaffId" : {
+            "type" : "string",
+            "example" : "49"
+          },
+          "outletId" : {
+            "type" : "string",
+            "example" : 1
+          },
+          "scheduleDate" : {
+            "type" : "string",
+            "example" : "2021-06-17 13:03:00"
+          }
+        }
+      },
+      "PaginationMetaObj" : {
+        "properties" : {
+          "totalItems" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "itemCount" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "itemsPerPage" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "totalPages" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "currentPage" : {
+            "type" : "integer",
+            "example" : 1
+          }
+        }
+      },
+      "AddLocationReqObj" : {
+        "properties" : {
+          "locationname" : {
+            "type" : "string",
+            "example" : "volta"
+          },
+          "locationtypesid" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "parentlocationid" : {
+            "type" : "integer",
+            "example" : 1
+          }
+        }
+      },
+      "UpdateLocationReqObj" : {
+        "properties" : {
+          "locationname" : {
+            "type" : "string",
+            "example" : "volta"
+          },
+          "locationtypesid" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "parentlocationid" : {
+            "type" : "integer",
+            "example" : 1
+          }
+        }
+      },
+      "LocationResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "locationname" : {
+            "type" : "string",
+            "example" : "volta"
+          },
+          "locationtypesid" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "parentlocationid" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "stateid" : {
+            "type" : "integer",
+            "example" : 1
+          }
+        }
+      },
+      "CreateScheduleResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 24826
+          },
+          "outlet" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "fmpCompanyId" : {
+            "type" : "integer",
+            "example" : 10004
+          },
+          "fieldRepStaff" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "scheduleDate" : {
+            "type" : "string",
+            "example" : "2021-06-17T12:03:00.000Z"
+          }
+        }
+      },
+      "LocationPaginatedResObj" : {
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/LocationResObj"
+            }
+          },
+          "meta" : {
+            "$ref" : "#/components/schemas/PaginationMetaObj"
+          }
+        }
+      },
+      "SaleTeamReqObj" : {
+        "properties" : {
+          "teamname" : {
+            "type" : "string",
+            "example" : "volta"
+          },
+          "teamdescription" : {
+            "type" : "string",
+            "example" : "volta description"
+          }
+        }
+      },
+      "SaleTeamResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "teamname" : {
+            "type" : "string",
+            "example" : "volta"
+          },
+          "teamdescription" : {
+            "type" : "string",
+            "example" : "volta description"
+          },
+          "teamsalestarget" : {
+            "type" : "integer",
+            "example" : 177
+          },
+          "teampskutarget" : {
+            "type" : "integer",
+            "example" : 20
+          },
+          "teamoutlettarget" : {
+            "type" : "integer",
+            "example" : 100
+          },
+          "stateid" : {
+            "type" : "integer",
+            "example" : 1
+          }
+        }
+      },
+      "SetupOutletChannelReqObj" : {
+        "properties" : {
+          "outletchannelname" : {
+            "type" : "string",
+            "example" : "Neighbourhood"
+          },
+          "outletchanneldescription" : {
+            "type" : "string",
+            "example" : "Neighbourhood"
+          }
+        }
+      },
+      "SetupOutletChannelResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 10002
+          },
+          "outletchannelname" : {
+            "type" : "string",
+            "example" : "Neighbourhood"
+          },
+          "outletchanneldescription" : {
+            "type" : "string",
+            "example" : "Neighbourhood"
+          }
+        }
+      },
+      "SetupOutletTypeReqObj" : {
+        "properties" : {
+          "outlettypename" : {
+            "type" : "string",
+            "example" : "Store"
+          },
+          "outlettypedescription" : {
+            "type" : "string",
+            "example" : "Store"
+          },
+          "outletchannelid" : {
+            "type" : "integer",
+            "example" : 4
+          }
+        }
+      },
+      "SetupOutletTypeResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 10002
+          },
+          "outlettypename" : {
+            "type" : "string",
+            "example" : "Store"
+          },
+          "outlettypedescription" : {
+            "type" : "string",
+            "example" : "Store"
+          },
+          "outletchannelid" : {
+            "type" : "integer",
+            "example" : 4
+          },
+          "monthlyvisits" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "minimumpsku" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "minimumnbsku" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "minimumposm" : {
+            "type" : "integer",
+            "example" : 49
+          }
+        }
+      },
+      "ContactTitleReqObj" : {
+        "properties" : {
+          "titlename" : {
+            "type" : "string",
+            "example" : "Dr"
+          },
+          "longdescription" : {
+            "type" : "string",
+            "example" : "Doctor"
+          }
+        }
+      },
+      "ContactTitleResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 10002
+          },
+          "titlename" : {
+            "type" : "string",
+            "example" : "Dr"
+          },
+          "longdescription" : {
+            "type" : "string",
+            "example" : "Doctor"
+          }
+        }
+      },
+      "ContactCategoryReqObj" : {
+        "properties" : {
+          "contactcategoryname" : {
+            "type" : "string",
+            "example" : "Doctors"
+          },
+          "contactcategorydescription" : {
+            "type" : "string",
+            "example" : "Doctor Contacts"
+          }
+        }
+      },
+      "ContactCategoryResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 10002
+          },
+          "contactcategoryname" : {
+            "type" : "string",
+            "example" : "Doctors"
+          },
+          "contactcategorydescription" : {
+            "type" : "string",
+            "example" : "Doctor Contacts"
+          }
+        }
+      },
+      "ProductCategoryReqObj" : {
+        "properties" : {
+          "productcategoryname" : {
+            "type" : "string",
+            "example" : "Diabetes",
+            "description" : "name of product category"
+          },
+          "productcategorydescription" : {
+            "type" : "string",
+            "example" : "Diabetes",
+            "description" : "description of product category"
+          }
+        }
+      },
+      "ProductCategoryResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49,
+            "description" : "id of product category"
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 10002,
+            "description" : "id of company that this product category belongs to"
+          },
+          "parentcategoryid" : {
+            "type" : "integer",
+            "example" : 0,
+            "description" : "id of the parent category that this product category falls under or belongs to; the value of 0 (zero) in this field, means that the product category has no parent "
+          },
+          "productcategoryname" : {
+            "type" : "string",
+            "example" : "Diabetes",
+            "description" : "name of product category"
+          },
+          "productcategorydescription" : {
+            "type" : "string",
+            "example" : "Diabetes",
+            "description" : "description of product category"
+          }
+        }
+      },
+      "ProductBrandsReqObj" : {
+        "properties" : {
+          "parentcategoryid" : {
+            "type" : "integer",
+            "example" : 0,
+            "description" : "id of product category that this product brand belongs to"
+          },
+          "productcategoryname" : {
+            "type" : "string",
+            "example" : "Accuchek",
+            "description" : "name of product brand"
+          },
+          "productcategorydescription" : {
+            "type" : "string",
+            "example" : "Accuchek",
+            "description" : "description of product brand"
+          }
+        }
+      },
+      "ProductBrandsResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49,
+            "description" : "id of product brand"
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 10002,
+            "description" : "id of company that this product brand belongs to"
+          },
+          "parentcategoryid" : {
+            "type" : "integer",
+            "example" : 55,
+            "description" : "id of the product category that this product brand falls under or belongs to"
+          },
+          "productcategoryname" : {
+            "type" : "string",
+            "example" : "Accuchek",
+            "description" : "name of product brand"
+          },
+          "productcategorydescription" : {
+            "type" : "string",
+            "example" : "Accuchek",
+            "description" : "descrption of product brand"
+          }
+        }
+      },
+      "NoteCategoryReqObj" : {
+        "properties" : {
+          "notecategoryname" : {
+            "type" : "string",
+            "example" : "Customer Feedback",
+            "description" : "name of note category"
+          },
+          "notecategorydescription" : {
+            "type" : "string",
+            "example" : "Customer Feedback",
+            "description" : "description of note category"
+          }
+        }
+      },
+      "NoteCategoryResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49,
+            "description" : "id of note category"
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 10002,
+            "description" : "id of company that this note category belongs to"
+          },
+          "notecategoryname" : {
+            "type" : "string",
+            "example" : "Customer Feedback",
+            "description" : "name of note category"
+          },
+          "notecategorydescription" : {
+            "type" : "string",
+            "example" : "Customer Feedback",
+            "description" : "description of note category"
+          },
+          "notecategorytype" : {
+            "type" : "string"
+          }
+        }
+      },
+      "PaymentTypesReqObj" : {
+        "properties" : {
+          "paymenttypename" : {
+            "type" : "string",
+            "example" : "POS",
+            "description" : "name of payment type"
+          },
+          "paymenttypedescription" : {
+            "type" : "string",
+            "example" : "POS",
+            "description" : "description of payment type"
+          }
+        }
+      },
+      "PaymentTypesResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49,
+            "description" : "id of payment type"
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 10002,
+            "description" : "id of company that this payment type belongs to"
+          },
+          "paymenttypename" : {
+            "type" : "string",
+            "example" : "POS",
+            "description" : "name of payment type"
+          },
+          "paymenttypedescription" : {
+            "type" : "string",
+            "example" : "POS",
+            "description" : "description of payment type"
+          }
+        }
+      },
+      "BrandElementsReqObj" : {
+        "properties" : {
+          "brandelementname" : {
+            "type" : "string",
+            "example" : "Table",
+            "description" : "name of brand element"
+          },
+          "weight" : {
+            "type" : "integer",
+            "example" : 10,
+            "description" : "weigth this brand element carries"
+          }
+        }
+      },
+      "BrandElementsResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 49,
+            "description" : "id of brand element"
+          },
+          "fmpcompanyid" : {
+            "type" : "integer",
+            "example" : 10002,
+            "description" : "id of company that this brand element belongs to"
+          },
+          "brandelementname" : {
+            "type" : "string",
+            "example" : "Table",
+            "description" : "name of brand element"
+          },
+          "weight" : {
+            "type" : "integer",
+            "example" : 10,
+            "description" : "weigth this brand element carries"
+          }
+        }
+      },
+      "VisitSummaryResObj" : {
+        "properties" : {
+          "actualVsPlannedVisits" : {
+            "properties" : {
+              "actualVisits" : {
+                "type" : "integer",
+                "example" : 478,
+                "description" : "number of visits completed"
+              },
+              "plannedVisits" : {
+                "type" : "integer",
+                "example" : 861,
+                "description" : "number of visits scheduled/planned"
+              },
+              "visitCompletionPercentage" : {
+                "type" : "integer",
+                "example" : 55.51684088269454,
+                "description" : "id of brand element"
+              }
+            }
+          },
+          "outletsVisited" : {
+            "type" : "integer",
+            "example" : 129,
+            "description" : "number of outlets visited"
+          },
+          "averageTimeSpent" : {
+            "properties" : {
+              "minutes" : {
+                "type" : "integer",
+                "example" : 478,
+                "description" : "minutes of time spent"
+              },
+              "seconds" : {
+                "type" : "integer",
+                "example" : 861,
+                "description" : "seconds of time spent"
+              }
+            }
+          },
+          "visitExceptions" : {
+            "properties" : {
+              "value" : {
+                "type" : "integer",
+                "example" : 54,
+                "description" : "number of visits with exceptions"
+              },
+              "percentage" : {
+                "type" : "integer",
+                "example" : 11,
+                "description" : "percentage of visit exceptions relative to total completed visits"
+              }
+            }
+          }
+        }
+      },
+      "VisitsSchedulesResObj" : {
+        "properties" : {
+          "visitId" : {
+            "type" : "integer",
+            "example" : 49,
+            "description" : "visist id of schedule"
+          },
+          "visitType" : {
+            "type" : "string",
+            "example" : "Sales",
+            "description" : "visist type of schedule"
+          },
+          "outletId" : {
+            "type" : "integer",
+            "example" : 1471,
+            "description" : "outlet id of schedule"
+          },
+          "outletName" : {
+            "type" : "string",
+            "example" : "Zulu Stores Limited",
+            "description" : "name of outlet the schedule is attached to"
+          },
+          "locationName" : {
+            "type" : "string",
+            "example" : "Magodo Phase 1",
+            "description" : "name of the location the scheduled outlet belongs to"
+          },
+          "userId" : {
+            "type" : "integer",
+            "example" : 20,
+            "description" : "id of user that the schedule was created for"
+          },
+          "firstName" : {
+            "type" : "string",
+            "example" : "Oluwaseun",
+            "description" : "first name of user that the schedule was created for"
+          },
+          "lastName" : {
+            "type" : "string",
+            "example" : "Oludele",
+            "description" : "last name of user that the schedule was created for"
+          },
+          "dateVisited" : {
+            "type" : "string",
+            "example" : "2020-10-13T10:42:36.000Z",
+            "description" : "date a visit was made for the schedule"
+          },
+          "startTime" : {
+            "type" : "string",
+            "example" : "1602585756",
+            "description" : "start time of visit attached to the schedule"
+          },
+          "stopTime" : {
+            "type" : "string",
+            "example" : "1602586830",
+            "description" : "stop time of visit attached to the schedule"
+          },
+          "durationInSeconds" : {
+            "type" : "string",
+            "example" : "1074",
+            "description" : "duration of visit attached to the schedule"
+          },
+          "distanceFromOutlet" : {
+            "type" : "integer",
+            "example" : 51,
+            "description" : "disitance from outlet in miles"
+          }
+        }
+      }
+    }
+  }
 }
