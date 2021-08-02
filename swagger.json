@@ -4045,6 +4045,20 @@
           }
         }
       },
+      "VisitsExceptionsPaginatedResObj" : {
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/VisitsExceptionResObj"
+            }
+          },
+          "meta" : {
+            "$ref" : "#/components/schemas/PaginationMetaObj"
+          }
+        }
+      },
       "VisitsExceptionResObj" : {
         "properties" : {
           "visitId" : {
