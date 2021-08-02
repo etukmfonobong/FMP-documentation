@@ -2935,6 +2935,36 @@
           "example" : 8
         }
       },
+      "location" : {
+        "name" : "location",
+        "in" : "query",
+        "description" : "id of location to filter by",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "example" : 131
+        }
+      },
+      "outletType" : {
+        "name" : "outletType",
+        "in" : "query",
+        "description" : "id of outletType to filter by",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "example" : 5
+        }
+      },
+      "outletChannel" : {
+        "name" : "outletChannel",
+        "in" : "query",
+        "description" : "id of outletChannel to filter by",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "example" : 4
+        }
+      },
       "user" : {
         "name" : "user",
         "in" : "query",
