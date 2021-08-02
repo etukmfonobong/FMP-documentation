@@ -4128,6 +4128,20 @@
           }
         }
       },
+      "ActiveFieldRepsPaginatedResObj" : {
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ActiveFieldRepsResObj"
+            }
+          },
+          "meta" : {
+            "$ref" : "#/components/schemas/PaginationMetaObj"
+          }
+        }
+      },
       "ActiveFieldRepsResObj" : {
         "properties" : {
           "userId" : {
