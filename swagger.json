@@ -2263,6 +2263,25 @@
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
+        } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
@@ -2292,6 +2311,25 @@
         "summary" : "gets visit coverage",
         "security" : [ {
           "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
         } ],
         "responses" : {
           "200" : {
@@ -2323,6 +2361,25 @@
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
+        } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
@@ -2352,6 +2409,25 @@
         "summary" : "gets active field reps",
         "security" : [ {
           "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
         } ],
         "responses" : {
           "200" : {
