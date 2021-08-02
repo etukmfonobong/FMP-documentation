@@ -3982,6 +3982,20 @@
           }
         }
       },
+      "VisitsCoveragePaginatedResObj" : {
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/VisitsCoverageResObj"
+            }
+          },
+          "meta" : {
+            "$ref" : "#/components/schemas/PaginationMetaObj"
+          }
+        }
+      },
       "VisitsCoverageResObj" : {
         "properties" : {
           "outletId" : {
