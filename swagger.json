@@ -4044,6 +4044,75 @@
             "description" : "number of visits"
           }
         }
+      },
+      "VisitsExceptionResObj" : {
+        "properties" : {
+          "visitId" : {
+            "type" : "integer",
+            "example" : 164,
+            "description" : "id of visit"
+          },
+          "visitType" : {
+            "type" : "string",
+            "example" : "Sales",
+            "description" : "type of visit"
+          },
+          "outletId" : {
+            "type" : "integer",
+            "example" : 1327,
+            "description" : "id of outlet attached to the visit"
+          },
+          "outletName" : {
+            "type" : "string",
+            "example" : "Magodo Supermarket",
+            "description" : "name of outlet attached to the visit"
+          },
+          "locationName" : {
+            "type" : "string",
+            "example" : "Dopemu",
+            "description" : "outlet location name"
+          },
+          "userId" : {
+            "type" : "integer",
+            "example" : 17,
+            "description" : "id of user/fieldrep"
+          },
+          "firstName" : {
+            "type" : "string",
+            "example" : "Mayowa",
+            "description" : "first name of user/fieldrep"
+          },
+          "lastName" : {
+            "type" : "string",
+            "example" : "Ade",
+            "description" : "last name of user/fieldrep"
+          },
+          "dateVisited" : {
+            "type" : "string",
+            "example" : "2020-10-13T10:42:36.000Z",
+            "description" : "date visit occurred"
+          },
+          "startTime" : {
+            "type" : "string",
+            "example" : "1602585756",
+            "description" : "start time of visit"
+          },
+          "stopTime" : {
+            "type" : "string",
+            "example" : "1602586830",
+            "description" : "stop time of visit"
+          },
+          "durationInSeconds" : {
+            "type" : "string",
+            "example" : "1074",
+            "description" : "duration of visit"
+          },
+          "distanceFromOutlet" : {
+            "type" : "integer",
+            "example" : 13374600,
+            "description" : "disitance from outlet in miles"
+          }
+        }
       }
     }
   }
