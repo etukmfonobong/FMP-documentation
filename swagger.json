@@ -2762,6 +2762,394 @@
         }
       }
     },
+    "/outlets/email/{id}" : {
+      "get" : {
+        "tags" : [ "outlets", "email", "contact" ],
+        "summary" : "Returns a JSON Object containing the contact email of an outlet",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "description" : "id of the outlet",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 5
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the outlet email",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "$ref" : "#/components/schemas/OutletEmailResObj"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/outlets/images/{id}" : {
+      "get" : {
+        "tags" : [ "outlets", "images" ],
+        "summary" : "Returns a JSON Object containing the image url of an outlet",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "description" : "id of the outlet",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 5
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the outlet image url",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "$ref" : "#/components/schemas/OutletImageResObj"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/outlets/shelfimages/{id}" : {
+      "get" : {
+        "tags" : [ "outlets", "images", "shelf" ],
+        "summary" : "Returns a JSON Object containing the shelf images of an outlet",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "description" : "id of the outlet",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 5
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the outlet's available shelf images",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "outlet_id" : {
+                            "type" : "string",
+                            "example" : 1335
+                          },
+                          "image_type" : {
+                            "type" : "string",
+                            "example" : "shelf"
+                          },
+                          "description" : {
+                            "type" : "string",
+                            "example" : "Sample visit image"
+                          },
+                          "filename" : {
+                            "type" : "string",
+                            "example" : "https://fieldmaxpro-gdm.s3-us-west-2.amazonaws.com/11-2020/13111C486A.jpg"
+                          },
+                          "thumb_filename" : {
+                            "type" : "string",
+                            "example" : "https://fieldmaxpro-gdm.s3-us-west-2.amazonaws.com/11-2020/thumb_13111C486A.jpg"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/outlets/merchandisingimages/{id}" : {
+      "get" : {
+        "tags" : [ "outlets", "images", "merchandising" ],
+        "summary" : "Returns a JSON Object containing the merchandising images of an outlet",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "description" : "id of the outlet",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 5
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the outlet's available merchandising images",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "outlet_id" : {
+                            "type" : "string",
+                            "example" : 1335
+                          },
+                          "image_type" : {
+                            "type" : "string",
+                            "example" : "merchandising"
+                          },
+                          "description" : {
+                            "type" : "string",
+                            "example" : "Sample visit image"
+                          },
+                          "filename" : {
+                            "type" : "string",
+                            "example" : "https://fieldmaxpro-gdm.s3-us-west-2.amazonaws.com/11-2020/13111C486A.jpg"
+                          },
+                          "thumb_filename" : {
+                            "type" : "string",
+                            "example" : "https://fieldmaxpro-gdm.s3-us-west-2.amazonaws.com/11-2020/thumb_13111C486A.jpg"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/outlets/getproductfacing/{id}" : {
+      "get" : {
+        "tags" : [ "outlets", "facing" ],
+        "summary" : "Returns a JSON Object containing the product facing of a product",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "description" : "id of the outlet",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 5
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the outlet product's facing",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "$ref" : "#/components/schemas/OutletProductFacingResObj"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/outlets/products/{id}" : {
+      "get" : {
+        "tags" : [ "outlets", "products", "available" ],
+        "summary" : "Returns a JSON Object containing the available products of an outlet",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "description" : "id of the outlet",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 5
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the outlet's available products",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "$ref" : "#/components/schemas/OutletProductAvailabilityResObj"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/outlets/geo-location/{id}" : {
+      "get" : {
+        "tags" : [ "outlets", "geo-location", "co-ordinates", "map" ],
+        "summary" : "Returns a JSON Object containing the geo-location co-ordinates of an outlet",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "description" : "id of the outlet",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 5
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the outlet's geo-location",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "id" : {
+                          "type" : "integer",
+                          "example" : 5
+                        },
+                        "outlet_name" : {
+                          "type" : "string",
+                          "example" : "Immaculate Store"
+                        },
+                        "geo-location" : {
+                          "type" : "string",
+                          "example" : "[7.3167383,9.1452654]"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/outlets/getmapdistribution" : {
+      "get" : {
+        "tags" : [ "outlets", "facing" ],
+        "summary" : "Returns a JSON Object containing the map distribution of outlets",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing an array of map's distribution of outlets",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/OutletMapDistributionResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
     "/outlets/distribution-type" : {
       "get" : {
         "tags" : [ "outlets aggregation" ],
@@ -2828,6 +3216,166 @@
           },
           "401" : {
             "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/outlets/{id}/outlet-contact" : {
+      "get" : {
+        "tags" : [ "outlets", "contact" ],
+        "summary" : "Returns a JSON Object containing the outlet's contact.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "description" : "id of the outlet",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 5
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the outlets contact",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "$ref" : "#/components/schemas/OutletContactResObj"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/outlets/{id}/outlet-contacts" : {
+      "get" : {
+        "tags" : [ "outlets", "contacts" ],
+        "summary" : "Returns a JSON Object containing a list of the outlet's contacts.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "description" : "id of the outlet",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 5
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the outlet's contacts",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "$ref" : "#/components/schemas/OutletContactsResObj"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/outlets/bulkcreate" : {
+      "post" : {
+        "tags" : [ "outlets", "create" ],
+        "summary" : "upload a list of outlets to be created via a csv template file.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "file" : {
+                    "type" : "string",
+                    "format" : "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Outlets have been successfully created"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          },
+          "500" : {
+            "description" : "Internal server error while creating schedules"
+          }
+        }
+      }
+    },
+    "/outlets/bulkedit" : {
+      "post" : {
+        "tags" : [ "schedules" ],
+        "summary" : "upload a list of schedules to be edited via a csv template file.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "file" : {
+                    "type" : "string",
+                    "format" : "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Outlets have been successfully edited"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          },
+          "500" : {
+            "description" : "Internal server error while creating schedules"
           }
         }
       }
@@ -2975,7 +3523,7 @@
           }
         },
         "responses" : {
-          "200" : {
+          "201" : {
             "description" : "Schedules have been successfully created"
           },
           "400" : {
@@ -3485,6 +4033,194 @@
           "year" : {
             "type" : "integer",
             "example" : 2021
+          }
+        }
+      },
+      "OutletEmailResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 5
+          },
+          "email" : {
+            "type" : "string",
+            "example" : "outlets@test.com"
+          }
+        }
+      },
+      "OutletImageResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 5
+          },
+          "image" : {
+            "type" : "string",
+            "example" : "https://fieldmaxpro-gdm.s3-us-west-2.amazonaws.com/09-2020/2209EAA427.jpg"
+          }
+        }
+      },
+      "OutletContactResObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 5
+          },
+          "contact_name" : {
+            "type" : "string",
+            "example" : "Mr Imma"
+          },
+          "contact_phone" : {
+            "type" : "string",
+            "example" : "08037516750"
+          }
+        }
+      },
+      "OutletProductFacingResObj" : {
+        "properties" : {
+          "product_id" : {
+            "type" : "integer",
+            "example" : 111
+          },
+          "product_facing" : {
+            "type" : "integer",
+            "example" : 0
+          }
+        }
+      },
+      "OutletMapDistributionResObj" : {
+        "properties" : {
+          "product_id" : {
+            "type" : "integer",
+            "example" : 111
+          },
+          "outlet_name" : {
+            "type" : "string",
+            "example" : "Demo Alh. Nuru Outlet"
+          },
+          "geo_location" : {
+            "type" : "string",
+            "example" : "[3.2798375,6.6203598]"
+          }
+        }
+      },
+      "OutletContactsResObj" : {
+        "properties" : {
+          "category" : {
+            "type" : "object",
+            "properties" : {
+              "contactcategoryname" : {
+                "type" : "string",
+                "example" : "Doctors"
+              },
+              "contactcategorydescription" : {
+                "type" : "string",
+                "example" : "Doctor Contacts"
+              }
+            }
+          },
+          "contacts" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/OutletContactsObj"
+            }
+          }
+        }
+      },
+      "OutletContactsObj" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 1524
+          },
+          "outlet_name" : {
+            "type" : "string",
+            "example" : "Ojugbo Holdings Ltd"
+          },
+          "category" : {
+            "type" : "integer",
+            "example" : 2
+          },
+          "title" : {
+            "type" : "string",
+            "example" : "Dr."
+          },
+          "lastname" : {
+            "type" : "string",
+            "example" : "Acholonu"
+          },
+          "othernames" : {
+            "type" : "string",
+            "example" : "Kufrey James"
+          },
+          "phone_number" : {
+            "type" : "string",
+            "example" : "08453123456"
+          },
+          "gender" : {
+            "type" : "string",
+            "example" : "M"
+          },
+          "image_url" : {
+            "type" : "string",
+            "example" : "https://fieldmaxpro-gdm.s3-us-west-2.amazonaws.com/09-2020/2209EAA427.jpg"
+          },
+          "date_created" : {
+            "type" : "string",
+            "example" : "2020-11-04T08:14:02.000Z"
+          }
+        }
+      },
+      "OutletProductAvailabilityResObj" : {
+        "properties" : {
+          "outlet_info" : {
+            "type" : "object",
+            "properties" : {
+              "id" : {
+                "type" : "integer",
+                "example" : 6413
+              },
+              "outlet_name" : {
+                "type" : "string",
+                "example" : "Wendy's mart"
+              }
+            }
+          },
+          "total_products" : {
+            "type" : "integer",
+            "example" : 14
+          },
+          "outlet_products" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "id" : {
+                  "type" : "integer",
+                  "example" : 111
+                },
+                "product_name" : {
+                  "type" : "string",
+                  "example" : "INSUMAN COMBO 1000IU/10ML INJSU"
+                },
+                "quantity_available" : {
+                  "type" : "integer",
+                  "example" : 0
+                },
+                "unit_price" : {
+                  "type" : "integer",
+                  "example" : 500
+                },
+                "retail_price" : {
+                  "type" : "integer",
+                  "example" : 450
+                },
+                "date_added" : {
+                  "type" : "string",
+                  "example" : "2021-06-17T10:55:44.000Z"
+                }
+              }
+            }
           }
         }
       },
