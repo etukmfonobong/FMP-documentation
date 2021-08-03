@@ -58,6 +58,9 @@
     "name" : "outlets",
     "description" : "Routes for outlet details"
   }, {
+    "name" : "outlets images",
+    "description" : "Routes for outlet images"
+  }, {
     "name" : "outlets aggregation",
     "description" : "Routes for aggregated data on outlets"
   }, {
