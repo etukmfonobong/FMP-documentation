@@ -2809,7 +2809,7 @@
     },
     "/outlets/images/{id}" : {
       "get" : {
-        "tags" : [ "outlets", "images" ],
+        "tags" : [ "outlets images" ],
         "summary" : "Returns a JSON Object containing the image url of an outlet",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -2851,7 +2851,7 @@
     },
     "/outlets/shelfimages/{id}" : {
       "get" : {
-        "tags" : [ "outlets", "images", "shelf" ],
+        "tags" : [ "outlets images" ],
         "summary" : "Returns a JSON Object containing the shelf images of an outlet",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -2918,7 +2918,7 @@
     },
     "/outlets/merchandisingimages/{id}" : {
       "get" : {
-        "tags" : [ "outlets", "images", "merchandising" ],
+        "tags" : [ "outlets images" ],
         "summary" : "Returns a JSON Object containing the merchandising images of an outlet",
         "security" : [ {
           "bearerAuth" : [ ]
