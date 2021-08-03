@@ -2767,7 +2767,7 @@
     },
     "/outlets/email/{id}" : {
       "get" : {
-        "tags" : [ "outlets", "email", "contact" ],
+        "tags" : [ "outlets" ],
         "summary" : "Returns a JSON Object containing the contact email of an outlet",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -2985,7 +2985,7 @@
     },
     "/outlets/getproductfacing/{id}" : {
       "get" : {
-        "tags" : [ "outlets", "facing" ],
+        "tags" : [ "outlets" ],
         "summary" : "Returns a JSON Object containing the product facing of a product",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -3027,7 +3027,7 @@
     },
     "/outlets/products/{id}" : {
       "get" : {
-        "tags" : [ "outlets", "products", "available" ],
+        "tags" : [ "outlets" ],
         "summary" : "Returns a JSON Object containing the available products of an outlet",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -3069,7 +3069,7 @@
     },
     "/outlets/geo-location/{id}" : {
       "get" : {
-        "tags" : [ "outlets", "geo-location", "co-ordinates", "map" ],
+        "tags" : [ "outlets" ],
         "summary" : "Returns a JSON Object containing the geo-location co-ordinates of an outlet",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -3125,7 +3125,7 @@
     },
     "/outlets/getmapdistribution" : {
       "get" : {
-        "tags" : [ "outlets", "facing" ],
+        "tags" : [ "outlets" ],
         "summary" : "Returns a JSON Object containing the map distribution of outlets",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -3225,7 +3225,7 @@
     },
     "/outlets/{id}/outlet-contact" : {
       "get" : {
-        "tags" : [ "outlets", "contact" ],
+        "tags" : [ "outlets" ],
         "summary" : "Returns a JSON Object containing the outlet's contact.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -3267,7 +3267,7 @@
     },
     "/outlets/{id}/outlet-contacts" : {
       "get" : {
-        "tags" : [ "outlets", "contacts" ],
+        "tags" : [ "outlets" ],
         "summary" : "Returns a JSON Object containing a list of the outlet's contacts.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -3309,7 +3309,7 @@
     },
     "/outlets/bulkcreate" : {
       "post" : {
-        "tags" : [ "outlets", "create" ],
+        "tags" : [ "outlets" ],
         "summary" : "upload a list of outlets to be created via a csv template file.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -3347,7 +3347,7 @@
     },
     "/outlets/bulkedit" : {
       "patch" : {
-        "tags" : [ "outlets", "edit" ],
+        "tags" : [ "outlets" ],
         "summary" : "upload a list of outlets to be edited via a csv template file.",
         "security" : [ {
           "bearerAuth" : [ ]
