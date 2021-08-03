@@ -3343,9 +3343,9 @@
       }
     },
     "/outlets/bulkedit" : {
-      "post" : {
-        "tags" : [ "schedules" ],
-        "summary" : "upload a list of schedules to be edited via a csv template file.",
+      "patch" : {
+        "tags" : [ "outlets", "edit" ],
+        "summary" : "upload a list of outlets to be edited via a csv template file.",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
