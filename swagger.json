@@ -5203,6 +5203,69 @@
             "description" : "total number of outlets covered/visited"
           }
         }
+      },
+      "TargetVisitsCountResObj" : {
+        "properties" : {
+          "targetVisitsCount" : {
+            "type" : "integer",
+            "example" : 102,
+            "description" : "total number of target visits"
+          }
+        }
+      },
+      "ProductiveVisitsResObj" : {
+        "properties" : {
+          "userId" : {
+            "type" : "integer",
+            "example" : 17,
+            "description" : "id of user/fieldrep"
+          },
+          "firstName" : {
+            "type" : "string",
+            "example" : "Mayowa",
+            "description" : "first name of user/fieldrep"
+          },
+          "lastName" : {
+            "type" : "string",
+            "example" : "Ade",
+            "description" : "last name of user/fieldrep"
+          },
+          "outletName" : {
+            "type" : "string",
+            "example" : "Magodo Supermarket",
+            "description" : "name of outlet attached to the visit"
+          },
+          "outletsVisited" : {
+            "type" : "string",
+            "example" : "34",
+            "description" : "number of outlets visited"
+          },
+          "locationsVisited" : {
+            "type" : "string",
+            "example" : "34",
+            "description" : "number of locations visited"
+          },
+          "totalTimeSpentInSeconds" : {
+            "type" : "integer",
+            "example" : 28920,
+            "description" : "time spent in visit"
+          },
+          "sales" : {
+            "type" : "integer",
+            "example" : 8262000,
+            "description" : "sales amount value"
+          },
+          "quantityInUnits" : {
+            "type" : "string",
+            "example" : "12450",
+            "description" : "total quantity of items sold"
+          },
+          "status" : {
+            "type" : "integer",
+            "example" : 1,
+            "description" : "fieldrep status"
+          }
+        }
       }
     }
   }
