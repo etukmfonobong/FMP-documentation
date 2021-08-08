@@ -5215,6 +5215,31 @@
       },
       "ProductiveVisitsResObj" : {
         "properties" : {
+          "outletId" : {
+            "type" : "integer",
+            "example" : 1730,
+            "description" : "id of outlet"
+          },
+          "outletName" : {
+            "type" : "string",
+            "example" : "Magodo Supermarket",
+            "description" : "name of outlet attached to the visit"
+          },
+          "locationId" : {
+            "type" : "integer",
+            "example" : 121,
+            "description" : "id of outlet location"
+          },
+          "locationName" : {
+            "type" : "string",
+            "example" : "Magodo Phase 2",
+            "description" : "name of outlet location"
+          },
+          "visitId" : {
+            "type" : "integer",
+            "example" : 164,
+            "description" : "id of visit"
+          },
           "userId" : {
             "type" : "integer",
             "example" : 17,
@@ -5230,40 +5255,30 @@
             "example" : "Ade",
             "description" : "last name of user/fieldrep"
           },
-          "outletName" : {
-            "type" : "string",
-            "example" : "Magodo Supermarket",
-            "description" : "name of outlet attached to the visit"
-          },
-          "outletsVisited" : {
-            "type" : "string",
-            "example" : "34",
-            "description" : "number of outlets visited"
-          },
-          "locationsVisited" : {
-            "type" : "string",
-            "example" : "34",
-            "description" : "number of locations visited"
-          },
-          "totalTimeSpentInSeconds" : {
-            "type" : "integer",
-            "example" : 28920,
-            "description" : "time spent in visit"
-          },
-          "sales" : {
+          "totalSales" : {
             "type" : "integer",
             "example" : 8262000,
             "description" : "sales amount value"
           },
-          "quantityInUnits" : {
+          "dateVisited" : {
             "type" : "string",
-            "example" : "12450",
-            "description" : "total quantity of items sold"
+            "example" : "2020-10-13T10:42:36.000Z",
+            "description" : "date visit occurred"
           },
-          "status" : {
-            "type" : "integer",
-            "example" : 1,
-            "description" : "fieldrep status"
+          "startTime" : {
+            "type" : "string",
+            "example" : "1602585756",
+            "description" : "start time of visit"
+          },
+          "stopTime" : {
+            "type" : "string",
+            "example" : "1602586830",
+            "description" : "stop time of visit"
+          },
+          "durationInSeconds" : {
+            "type" : "string",
+            "example" : "1074",
+            "description" : "duration of visit"
           }
         }
       }
