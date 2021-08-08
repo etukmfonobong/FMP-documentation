@@ -5194,6 +5194,15 @@
             "description" : "total number of actvie field reps"
           }
         }
+      },
+      "visitsCoverageCountResObj" : {
+        "properties" : {
+          "outletsCovered" : {
+            "type" : "integer",
+            "example" : 10,
+            "description" : "total number of outlets covered/visited"
+          }
+        }
       }
     }
   }
