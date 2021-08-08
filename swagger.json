@@ -5311,15 +5311,34 @@
             "properties" : {
               "value" : {
                 "type" : "integer",
-                "example" : 478,
+                "example" : 295,
                 "description" : "number of productive visits"
               },
               "percentage" : {
                 "type" : "integer",
-                "example" : 861,
+                "example" : 62,
                 "description" : "percentage of productive visits relative to total visits"
               }
             }
+          },
+          "nonProductiveVisits" : {
+            "properties" : {
+              "value" : {
+                "type" : "integer",
+                "example" : 178,
+                "description" : "number of non productive visits"
+              },
+              "percentage" : {
+                "type" : "integer",
+                "example" : 37,
+                "description" : "percentage of non productive visits relative to total visits"
+              }
+            }
+          },
+          "totalVisits" : {
+            "type" : "integer",
+            "example" : 473,
+            "description" : "total number of visits"
           }
         }
       }
