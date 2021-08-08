@@ -5304,6 +5304,24 @@
             "description" : "number of productive visits"
           }
         }
+      },
+      "ProductiveVsNonproductiveVisitsResObj" : {
+        "properties" : {
+          "productiveVisits" : {
+            "properties" : {
+              "value" : {
+                "type" : "integer",
+                "example" : 478,
+                "description" : "number of productive visits"
+              },
+              "percentage" : {
+                "type" : "integer",
+                "example" : 861,
+                "description" : "percentage of productive visits relative to total visits"
+              }
+            }
+          }
+        }
       }
     }
   }
