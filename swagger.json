@@ -64,8 +64,14 @@
     "name" : "outlets aggregation",
     "description" : "Routes for aggregated data on outlets"
   }, {
+    "name" : "visits",
+    "description" : "Routes for visit details"
+  }, {
     "name" : "visits aggregation",
     "description" : "Routes for aggregated data on visits"
+  }, {
+    "name" : "visits charts",
+    "description" : "Routes for visit charts"
   }, {
     "name" : "schedules",
     "description" : "Routes for schedules"
@@ -5177,6 +5183,15 @@
             "type" : "integer",
             "example" : 1,
             "description" : "fieldrep status"
+          }
+        }
+      },
+      "ActiveFieldRepsCountResObj" : {
+        "properties" : {
+          "activeFieldReps" : {
+            "type" : "integer",
+            "example" : 14,
+            "description" : "total number of actvie field reps"
           }
         }
       }
