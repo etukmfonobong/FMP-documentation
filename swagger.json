@@ -5213,6 +5213,20 @@
           }
         }
       },
+      "ProductiveVisitsPaginatedResObj" : {
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ProductiveVisitsResObj"
+            }
+          },
+          "meta" : {
+            "$ref" : "#/components/schemas/PaginationMetaObj"
+          }
+        }
+      },
       "ProductiveVisitsResObj" : {
         "properties" : {
           "outletId" : {
@@ -5279,6 +5293,15 @@
             "type" : "string",
             "example" : "1074",
             "description" : "duration of visit"
+          }
+        }
+      },
+      "ProductiveVisitsCountResObj" : {
+        "properties" : {
+          "productiveVisitsCount" : {
+            "type" : "integer",
+            "example" : 295,
+            "description" : "number of productive visits"
           }
         }
       }
