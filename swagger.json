@@ -5341,6 +5341,30 @@
             "description" : "total number of visits"
           }
         }
+      },
+      "OutletRankingBySalesResObj" : {
+        "properties" : {
+          "outletId" : {
+            "type" : "integer",
+            "example" : 1730,
+            "description" : "id of outlet"
+          },
+          "outletName" : {
+            "type" : "string",
+            "example" : "Magodo Supermarket",
+            "description" : "name of outlet attached to the visit"
+          },
+          "totalSales" : {
+            "type" : "integer",
+            "example" : 8262000,
+            "description" : "sales amount value"
+          },
+          "productCount" : {
+            "type" : "integer",
+            "example" : 300,
+            "description" : "number of products sold"
+          }
+        }
       }
     }
   }
