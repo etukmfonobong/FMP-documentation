@@ -481,8 +481,8 @@
           }
         },
         "responses" : {
-          "201" : {
-            "description" : "object containing required access token",
+          "200" : {
+            "description" : "success",
             "content" : {
               "application/json" : {
                 "schema" : {
