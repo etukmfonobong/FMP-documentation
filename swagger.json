@@ -4672,7 +4672,7 @@
         "properties" : {
           "parentcategoryid" : {
             "type" : "integer",
-            "example" : 0,
+            "example" : 55,
             "description" : "id of product category that this product brand belongs to"
           },
           "productcategoryname" : {
