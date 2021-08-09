@@ -475,7 +475,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/UpdateCompanyReqObj"
+                "$ref" : "#/components/schemas/DistributorReqObj"
               }
             }
           }
@@ -486,7 +486,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CompanyResObj"
+                  "$ref" : "#/components/schemas/DistributorResObj"
                 }
               }
             }
