@@ -2267,7 +2267,7 @@
     },
     "/visits/schedules" : {
       "get" : {
-        "tags" : [ "visits aggregation" ],
+        "tags" : [ "visits" ],
         "summary" : "gets visit schedules",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -2314,10 +2314,10 @@
         }
       }
     },
-    "/visits/coverage" : {
+    "/visits/coverage/count" : {
       "get" : {
         "tags" : [ "visits aggregation" ],
-        "summary" : "gets visit coverage",
+        "summary" : "gets visit coverage count",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
@@ -2348,7 +2348,7 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/VisitsCoveragePaginatedResObj"
+                    "$ref" : "#/components/schemas/VisitsCoverageCountResObj"
                   }
                 }
               }
@@ -2365,7 +2365,7 @@
     },
     "/visits/exceptions" : {
       "get" : {
-        "tags" : [ "visits aggregation" ],
+        "tags" : [ "visits" ],
         "summary" : "gets visit exceptions",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -2414,7 +2414,56 @@
     },
     "/visits/active-field-reps" : {
       "get" : {
-        "tags" : [ "visits aggregation" ],
+        "tags" : [ "visits" ],
+        "summary" : "gets active field reps",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ActiveFieldRepsPaginatedResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/visits/coverage" : {
+      "get" : {
+        "tags" : [ "visits" ],
         "summary" : "gets active field reps",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -5195,7 +5244,7 @@
           }
         }
       },
-      "visitsCoverageCountResObj" : {
+      "VisitsCoverageCountResObj" : {
         "properties" : {
           "outletsCovered" : {
             "type" : "integer",
