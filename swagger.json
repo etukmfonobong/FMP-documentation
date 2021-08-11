@@ -2464,7 +2464,7 @@
     "/visits/coverage" : {
       "get" : {
         "tags" : [ "visits" ],
-        "summary" : "gets active field reps",
+        "summary" : "gets outlets visited",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
@@ -2495,7 +2495,7 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/ActiveFieldRepsPaginatedResObj"
+                    "$ref" : "#/components/schemas/VisitsCoveragePaginatedResObj"
                   }
                 }
               }
