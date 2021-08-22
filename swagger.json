@@ -5807,6 +5807,89 @@
             }
           }
         }
+      },
+      "RecentVisitsPaginatedResObj" : {
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/RecentVisitsResObj"
+            }
+          },
+          "meta" : {
+            "$ref" : "#/components/schemas/PaginationMetaObj"
+          }
+        }
+      },
+      "RecentVisitsResObj" : {
+        "properties" : {
+          "visitId" : {
+            "type" : "integer",
+            "example" : 49,
+            "description" : "visist id of schedule"
+          },
+          "visitType" : {
+            "type" : "string",
+            "example" : "Sales",
+            "description" : "visist type of schedule"
+          },
+          "outletId" : {
+            "type" : "integer",
+            "example" : 1471,
+            "description" : "outlet id of schedule"
+          },
+          "outletName" : {
+            "type" : "string",
+            "example" : "Zulu Stores Limited",
+            "description" : "name of outlet the schedule is attached to"
+          },
+          "locationName" : {
+            "type" : "string",
+            "example" : "Magodo Phase 1",
+            "description" : "name of the location the scheduled outlet belongs to"
+          },
+          "userId" : {
+            "type" : "integer",
+            "example" : 20,
+            "description" : "id of user that the schedule was created for"
+          },
+          "firstName" : {
+            "type" : "string",
+            "example" : "Oluwaseun",
+            "description" : "first name of user that the schedule was created for"
+          },
+          "lastName" : {
+            "type" : "string",
+            "example" : "Oludele",
+            "description" : "last name of user that the schedule was created for"
+          },
+          "dateVisited" : {
+            "type" : "string",
+            "example" : "2020-10-13T10:42:36.000Z",
+            "description" : "date a visit was made for the schedule"
+          },
+          "startTime" : {
+            "type" : "string",
+            "example" : "1602585756",
+            "description" : "start time of visit attached to the schedule"
+          },
+          "stopTime" : {
+            "type" : "string",
+            "example" : "1602586830",
+            "description" : "stop time of visit attached to the schedule"
+          },
+          "durationInSeconds" : {
+            "type" : "string",
+            "example" : "1074",
+            "description" : "duration of visit attached to the schedule"
+          },
+          "distanceInMeters" : {
+            "type" : "integer",
+            "example" : 51,
+            "description" : "disitance from outlet in meters"
+          }
+        }
       }
     }
   }
