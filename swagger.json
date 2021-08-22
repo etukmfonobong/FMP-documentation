@@ -2363,6 +2363,55 @@
         }
       }
     },
+    "/visits/active-field-reps/count" : {
+      "get" : {
+        "tags" : [ "visits aggregation" ],
+        "summary" : "gets active field reps count",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ActiveFieldRepsCountResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
     "/visits/exceptions" : {
       "get" : {
         "tags" : [ "visits" ],
@@ -2462,6 +2511,55 @@
       }
     },
     "/visits/coverage" : {
+      "get" : {
+        "tags" : [ "visits" ],
+        "summary" : "gets outlets visited",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/VisitsCoveragePaginatedResObj"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/visits/exceptio" : {
       "get" : {
         "tags" : [ "visits" ],
         "summary" : "gets outlets visited",
