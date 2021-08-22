@@ -5939,6 +5939,54 @@
             "description" : "disitance from outlet in meters"
           }
         }
+      },
+      "VisitImagesPaginatedResObj" : {
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/VisitImagesResObj"
+            }
+          },
+          "meta" : {
+            "$ref" : "#/components/schemas/PaginationMetaObj"
+          }
+        }
+      },
+      "VisitImagesResObj" : {
+        "properties" : {
+          "visitId" : {
+            "type" : "integer",
+            "example" : 49,
+            "description" : "visist id of Image"
+          },
+          "imageLink" : {
+            "type" : "string",
+            "example" : "https://fieldmaxpro.s3-us-west-2.amazonaws.com/fmp_10002/visits/03-2021/2403EBC352.jpg",
+            "description" : "Link to omage"
+          },
+          "outletId" : {
+            "type" : "integer",
+            "example" : 1471,
+            "description" : "outlet id of Image"
+          },
+          "outletName" : {
+            "type" : "string",
+            "example" : "Zulu Stores Limited",
+            "description" : "name of outlet the Image was taken"
+          },
+          "locationId" : {
+            "type" : "integer",
+            "example" : 49,
+            "description" : "location id of Image"
+          },
+          "locationName" : {
+            "type" : "string",
+            "example" : "Magodo Phase 1",
+            "description" : "name of the location the Image was taken"
+          }
+        }
       }
     }
   }
