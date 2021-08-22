@@ -6036,6 +6036,50 @@
             "description" : "name of the location the Image was taken"
           }
         }
+      },
+      "VisitMapCoverageResObj" : {
+        "properties" : {
+          "outletId" : {
+            "type" : "integer",
+            "example" : 1471,
+            "description" : "outlet id"
+          },
+          "outletName" : {
+            "type" : "string",
+            "example" : "Zulu Stores Limited",
+            "description" : "name of outlet"
+          },
+          "geoLocation" : {
+            "type" : "string",
+            "example" : "[3.3867144,6.6323854]",
+            "description" : "outlet geo location"
+          },
+          "phoneNumber" : {
+            "type" : "string",
+            "example" : "08032530126",
+            "description" : "outlet contact phone number"
+          },
+          "outletTypes" : {
+            "type" : "string",
+            "example" : "Retailers",
+            "description" : "outlet type"
+          },
+          "outletChannel" : {
+            "type" : "string",
+            "example" : "Neighbourhood",
+            "description" : "outlet channel"
+          },
+          "location" : {
+            "type" : "string",
+            "example" : "Omole Phase 2",
+            "description" : "name of outlet location"
+          },
+          "timesVisited" : {
+            "type" : "string",
+            "example" : "1",
+            "description" : "number of times outlet was visited"
+          }
+        }
       }
     }
   }
