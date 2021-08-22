@@ -2608,10 +2608,10 @@
         }
       }
     },
-    "/visits/exceptio" : {
+    "/visits/productive-visits" : {
       "get" : {
         "tags" : [ "visits" ],
-        "summary" : "gets outlets visited",
+        "summary" : "gets productive visits (visits with sales)",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
@@ -2642,7 +2642,7 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/VisitsCoveragePaginatedResObj"
+                    "$ref" : "#/components/schemas/ProductiveVisitsPaginatedResObj"
                   }
                 }
               }
