@@ -4465,6 +4465,87 @@
           }
         }
       }
+    },
+    "/products/availabilitysharemap" : {
+      "get" : {
+        "tags" : [ "availability", "products", "share", "map" ],
+        "summary" : "Returns a JSON Object containing the availability share map for all states.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the availability share map for all states",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "availability_share_map" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "id" : {
+                                "type" : "integer",
+                                "example" : 105
+                              },
+                              "state" : {
+                                "type" : "string",
+                                "example" : "Lagos"
+                              },
+                              "availability_statistics" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "result" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                      "uniquely_visited_outlets" : {
+                                        "type" : "integer",
+                                        "example" : 0
+                                      }
+                                    }
+                                  },
+                                  "availability_summary" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                      "outlets_with_products" : {
+                                        "type" : "integer",
+                                        "example" : 4
+                                      },
+                                      "outlets_without_products" : {
+                                        "type" : "integer",
+                                        "example" : 43
+                                      }
+                                    }
+                                  },
+                                  "percentage_of_outlets_visted_to_outlets_with_products" : {
+                                    "type" : "number",
+                                    "example" : 9.30232558139535
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
     }
   },
   "components" : {
