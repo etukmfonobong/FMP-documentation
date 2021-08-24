@@ -4247,6 +4247,114 @@
           }
         }
       }
+    },
+    "/products/topCompetitorProducts" : {
+      "get" : {
+        "tags" : [ "top", "products", "competitor" ],
+        "summary" : "Returns a JSON Object containing the top competitor products.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the top competitor products",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "topAvailableProducts" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "brandname" : {
+                                "type" : "string",
+                                "example" : "Anix Limited"
+                              },
+                              "brandcolor" : {
+                                "type" : "string",
+                                "example" : "#2c3175"
+                              },
+                              "outlets" : {
+                                "type" : "string",
+                                "example" : "80"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/products/availabilitystatistics" : {
+      "get" : {
+        "tags" : [ "top", "products", "competitor" ],
+        "summary" : "Returns a JSON Object containing the top competitor products.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the top competitor products",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "topAvailableProducts" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "brandname" : {
+                                "type" : "string",
+                                "example" : "Anix Limited"
+                              },
+                              "brandcolor" : {
+                                "type" : "string",
+                                "example" : "#2c3175"
+                              },
+                              "outlets" : {
+                                "type" : "string",
+                                "example" : "80"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
     }
   },
   "components" : {
