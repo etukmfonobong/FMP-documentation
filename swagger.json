@@ -4193,6 +4193,60 @@
           }
         }
       }
+    },
+    "/products/brandAvailabilityShare" : {
+      "get" : {
+        "tags" : [ "brand", "availability", "share" ],
+        "summary" : "Returns a JSON Object containing the brand availability share.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the brand availability share",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "brandAvailabilityShare" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "brandname" : {
+                                "type" : "string",
+                                "example" : "Anix Limited"
+                              },
+                              "brandcolor" : {
+                                "type" : "string",
+                                "example" : "#2c3175"
+                              },
+                              "outlets" : {
+                                "type" : "string",
+                                "example" : "80"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
     }
   },
   "components" : {
