@@ -4085,6 +4085,38 @@
           }
         }
       }
+    },
+    "/products/summary" : {
+      "get" : {
+        "tags" : [ "products", "availability", "summary" ],
+        "summary" : "Returns a JSON Object containing the availability summary.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the outlet's contacts",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "$ref" : "#/components/schemas/OutletContactsResObj"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
     }
   },
   "components" : {
