@@ -4095,14 +4095,28 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "object containing the outlet's contacts",
+            "description" : "object containing the availability summary",
             "content" : {
               "application/json" : {
                 "schema" : {
                   "type" : "object",
                   "properties" : {
                     "data" : {
-                      "$ref" : "#/components/schemas/OutletContactsResObj"
+                      "type" : "object",
+                      "properties" : {
+                        "outlets_with_products" : {
+                          "type" : "integer",
+                          "example" : 47
+                        },
+                        "outlets_without_products" : {
+                          "type" : "integer",
+                          "example" : 167
+                        },
+                        "availability_share" : {
+                          "type" : "number",
+                          "example" : 21.962616822429908
+                        }
+                      }
                     }
                   }
                 }
