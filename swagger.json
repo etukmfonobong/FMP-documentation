@@ -4302,6 +4302,60 @@
         }
       }
     },
+    "/products/topAvailableProducts" : {
+      "get" : {
+        "tags" : [ "top", "products", "available" ],
+        "summary" : "Returns a JSON Object containing the top available products.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the top available products",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "topAvailableProducts" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "brandname" : {
+                                "type" : "string",
+                                "example" : "Anix Limited"
+                              },
+                              "brandcolor" : {
+                                "type" : "string",
+                                "example" : "#2c3175"
+                              },
+                              "outlets" : {
+                                "type" : "string",
+                                "example" : "80"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
     "/products/availabilitystatistics" : {
       "get" : {
         "tags" : [ "availability", "products", "statistics" ],
@@ -4343,6 +4397,56 @@
                             "percentage_of_outlets_visted_to_outlets_with_products" : {
                               "type" : "number",
                               "example" : 9.30232558139535
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
+    },
+    "/products/productavailabilitymap" : {
+      "get" : {
+        "tags" : [ "availability", "products", "map" ],
+        "summary" : "Returns a JSON Object containing the availability map.",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the product availability map",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "product_availability_map" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "id" : {
+                                "type" : "integer",
+                                "example" : 105
+                              },
+                              "state" : {
+                                "type" : "string",
+                                "example" : "Lagos"
+                              }
                             }
                           }
                         }
