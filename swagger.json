@@ -4578,7 +4578,7 @@
                 }
               }
             },
-            "description" : "Schedules have been successfully created"
+            "description" : "visit exception successfully returned"
           },
           "400" : {
             "description" : "Cannot take action on document that does not exist!."
@@ -4587,7 +4587,7 @@
             "description" : "Unauthorized."
           },
           "500" : {
-            "description" : "Internal server error while creating schedules"
+            "description" : "Internal server error while getting visit exceptions"
           }
         }
       }
