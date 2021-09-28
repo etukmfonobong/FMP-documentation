@@ -4725,6 +4725,72 @@
           }
         }
       }
+    },
+    "/summary/outletgrowth" : {
+      "get" : {
+        "tags" : [ "summary", "outlets", "growth", "weekly" ],
+        "summary" : "Returns a JSON containing the weekly outlet growth trend",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "criteria",
+          "description" : "filter to group the growth (yearly, monthly or weekly)",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "WEEKLY" ],
+            "example" : "WEEKLY"
+          }
+        }, {
+          "in" : "query",
+          "name" : "month",
+          "description" : "month of the year to be filtered by and is required if criteria is MONTHLY OR WEEKLY",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "minimum" : 1,
+            "maximum" : 12,
+            "example" : 4
+          }
+        }, {
+          "in" : "query",
+          "name" : "year",
+          "description" : "year to be filtered by and is required if criteria is YEARLY, MONTHLY OR WEEKLY",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "2021"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the outlets growth.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/OutletsGrowthResObj"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          }
+        }
+      }
     }
   },
   "components" : {
