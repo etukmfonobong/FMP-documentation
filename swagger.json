@@ -4836,6 +4836,42 @@
           }
         }
       }
+    },
+    "/summary/getTotalPaymentsBalance" : {
+      "get" : {
+        "tags" : [ "summary", "payments", "balance" ],
+        "summary" : "Returns a JSON containing the total payments balance",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "total_balance" : {
+                      "type" : "integer",
+                      "example" : 11264376
+                    }
+                  }
+                }
+              }
+            },
+            "description" : "total payments balance successfully returned"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          },
+          "500" : {
+            "description" : "Internal server error while getting total payments balance summary."
+          }
+        }
+      }
     }
   },
   "components" : {
