@@ -4872,6 +4872,37 @@
           }
         }
       }
+    },
+    "/summary/productive-vs-non-productive-visits" : {
+      "get" : {
+        "tags" : [ "summary", "payments", "balance" ],
+        "summary" : "Returns a JSON containing the total payments balance",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "schema",
+                  "$ref" : "#/components/schemas/ProductiveVsNonproductiveVisitsResObj"
+                }
+              }
+            },
+            "description" : "total productive to non-productive visits summary"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          },
+          "500" : {
+            "description" : "Internal server error while getting total productive visits summary."
+          }
+        }
+      }
     }
   },
   "components" : {
