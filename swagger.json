@@ -5012,6 +5012,63 @@
           }
         }
       }
+    },
+    "/summary/visitsmapdata" : {
+      "get" : {
+        "tags" : [ "summary", "visits", "map" ],
+        "summary" : "Returns a JSON containing the map data for outlets visited",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "visits_map_data" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "outlet_id" : {
+                                "type" : "string",
+                                "example" : "112"
+                              },
+                              "geolocation" : {
+                                "type" : "string",
+                                "example" : "[3.2849799,6.6206138]"
+                              },
+                              "duration" : {
+                                "type" : "string",
+                                "example" : "451"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description" : "visits map data successfully returned"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          },
+          "500" : {
+            "description" : "Internal server error while getting visits map data."
+          }
+        }
+      }
     }
   },
   "components" : {
