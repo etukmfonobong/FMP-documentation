@@ -4546,6 +4546,51 @@
           }
         }
       }
+    },
+    "/summary/visitexceptions" : {
+      "get" : {
+        "tags" : [ "summary", "visits", "exceptions" ],
+        "summary" : "Returns a JSON containing the total visit exceptions",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "visitExceptions" : {
+                      "type" : "object",
+                      "properties" : {
+                        "value" : {
+                          "type" : "integer",
+                          "example" : 62
+                        },
+                        "percentage" : {
+                          "type" : "integer",
+                          "example" : 11.83206106870229
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description" : "Schedules have been successfully created"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          },
+          "500" : {
+            "description" : "Internal server error while creating schedules"
+          }
+        }
+      }
     }
   },
   "components" : {
