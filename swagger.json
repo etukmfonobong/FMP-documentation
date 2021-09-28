@@ -4875,8 +4875,8 @@
     },
     "/summary/productive-vs-non-productive-visits" : {
       "get" : {
-        "tags" : [ "summary", "payments", "balance" ],
-        "summary" : "Returns a JSON containing the total payments balance",
+        "tags" : [ "summary", "visits", "productive", "non-productive" ],
+        "summary" : "Returns a JSON containing the productive to non-productive visits",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
@@ -4891,6 +4891,55 @@
               }
             },
             "description" : "total productive to non-productive visits summary"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          },
+          "500" : {
+            "description" : "Internal server error while getting total productive visits summary."
+          }
+        }
+      }
+    },
+    "/summary/productAvailabilitySummary" : {
+      "get" : {
+        "tags" : [ "summary", "products", "availability" ],
+        "summary" : "Returns a JSON containing the products availability summary",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "outlets_with_products" : {
+                          "type" : "integer",
+                          "example" : 112
+                        },
+                        "outlets_without_products" : {
+                          "type" : "integer",
+                          "example" : 102
+                        },
+                        "availability_share" : {
+                          "type" : "integer",
+                          "example" : 52.336448598130836
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description" : "products availability summary"
           },
           "400" : {
             "description" : "Cannot take action on document that does not exist!."
