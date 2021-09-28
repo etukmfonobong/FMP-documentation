@@ -4555,7 +4555,7 @@
           "bearerAuth" : [ ]
         } ],
         "responses" : {
-          "201" : {
+          "200" : {
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -4600,7 +4600,7 @@
           "bearerAuth" : [ ]
         } ],
         "responses" : {
-          "201" : {
+          "200" : {
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -4649,7 +4649,7 @@
           "bearerAuth" : [ ]
         } ],
         "responses" : {
-          "201" : {
+          "200" : {
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -4694,7 +4694,7 @@
           "bearerAuth" : [ ]
         } ],
         "responses" : {
-          "201" : {
+          "200" : {
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -4800,7 +4800,7 @@
           "bearerAuth" : [ ]
         } ],
         "responses" : {
-          "201" : {
+          "200" : {
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -4845,7 +4845,7 @@
           "bearerAuth" : [ ]
         } ],
         "responses" : {
-          "201" : {
+          "200" : {
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -4881,7 +4881,7 @@
           "bearerAuth" : [ ]
         } ],
         "responses" : {
-          "201" : {
+          "200" : {
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -4912,7 +4912,7 @@
           "bearerAuth" : [ ]
         } ],
         "responses" : {
-          "201" : {
+          "200" : {
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -4948,7 +4948,67 @@
             "description" : "Unauthorized."
           },
           "500" : {
-            "description" : "Internal server error while getting total productive visits summary."
+            "description" : "Internal server error while getting products availability share summary."
+          }
+        }
+      }
+    },
+    "/summary/availabilityStatistics" : {
+      "get" : {
+        "tags" : [ "summary", "products", "availability", "statistics" ],
+        "summary" : "Returns a JSON containing the products availability statistics",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "object containing the availability statistics",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "result" : {
+                          "type" : "object",
+                          "properties" : {
+                            "uniquely_visited_outlets" : {
+                              "type" : "integer",
+                              "example" : 2
+                            },
+                            "availability_summary" : {
+                              "type" : "object",
+                              "properties" : {
+                                "outlets_with_products" : {
+                                  "type" : "integer",
+                                  "example" : 4
+                                },
+                                "outlets_without_products" : {
+                                  "type" : "integer",
+                                  "example" : 43
+                                }
+                              }
+                            },
+                            "percentage_of_outlets_visted_to_outlets_with_products" : {
+                              "type" : "number",
+                              "example" : 9.30232558139535
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
           }
         }
       }
