@@ -4791,6 +4791,51 @@
           }
         }
       }
+    },
+    "/summary/getTotalPayments" : {
+      "get" : {
+        "tags" : [ "summary", "payments", "sales" ],
+        "summary" : "Returns a JSON containing the total payment and percentage to sales",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "total_payments" : {
+                      "type" : "object",
+                      "properties" : {
+                        "payment" : {
+                          "type" : "integer",
+                          "example" : 54029229
+                        }
+                      }
+                    },
+                    "percentage_to_sales" : {
+                      "type" : "integer",
+                      "example" : 82.74811752238217
+                    }
+                  }
+                }
+              }
+            },
+            "description" : "total payment and percentage to sales successfully returned"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          },
+          "500" : {
+            "description" : "Internal server error while getting total payments summary."
+          }
+        }
+      }
     }
   },
   "components" : {
