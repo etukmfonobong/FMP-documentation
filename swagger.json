@@ -4636,7 +4636,7 @@
             "description" : "Unauthorized."
           },
           "500" : {
-            "description" : "Internal server error while getting visit exceptions"
+            "description" : "Internal server error while getting actual vs planned visits summary."
           }
         }
       }
@@ -4644,7 +4644,7 @@
     "/summary/actualvstargetvisits" : {
       "get" : {
         "tags" : [ "summary", "visits", "planned", "actual" ],
-        "summary" : "Returns a JSON containing the total planned and actual visits",
+        "summary" : "Returns a JSON containing the total target and actual visits",
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
@@ -4672,7 +4672,7 @@
                 }
               }
             },
-            "description" : "visits summary for planned vs target visits successfully returned"
+            "description" : "visits summary for actual vs target successfully returned"
           },
           "400" : {
             "description" : "Cannot take action on document that does not exist!."
@@ -4681,7 +4681,47 @@
             "description" : "Unauthorized."
           },
           "500" : {
-            "description" : "Internal server error while getting visit exceptions"
+            "description" : "Internal server error while getting actual vs target visits summary."
+          }
+        }
+      }
+    },
+    "/summary/totalsales" : {
+      "get" : {
+        "tags" : [ "summary", "sales", "total" ],
+        "summary" : "Returns a JSON containing the total sales and percentage to orders",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "total_sales" : {
+                      "type" : "integer",
+                      "example" : 65293605
+                    },
+                    "percentage" : {
+                      "type" : "integer",
+                      "example" : 187512.1478418196
+                    }
+                  }
+                }
+              }
+            },
+            "description" : "total sales and percentage to orders successfully returned"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          },
+          "500" : {
+            "description" : "Internal server error while getting total sales summary."
           }
         }
       }
