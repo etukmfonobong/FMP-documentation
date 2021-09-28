@@ -4640,6 +4640,51 @@
           }
         }
       }
+    },
+    "/summary/actualvstargetvisits" : {
+      "get" : {
+        "tags" : [ "summary", "visits", "planned", "actual" ],
+        "summary" : "Returns a JSON containing the total planned and actual visits",
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "actualVsTargetVisits" : {
+                      "type" : "object",
+                      "properties" : {
+                        "actualVisits" : {
+                          "type" : "integer",
+                          "example" : 524
+                        },
+                        "targetVisits" : {
+                          "type" : "integer",
+                          "example" : 213
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description" : "visits summary for planned vs target visits successfully returned"
+          },
+          "400" : {
+            "description" : "Cannot take action on document that does not exist!."
+          },
+          "401" : {
+            "description" : "Unauthorized."
+          },
+          "500" : {
+            "description" : "Internal server error while getting visit exceptions"
+          }
+        }
+      }
     }
   },
   "components" : {
