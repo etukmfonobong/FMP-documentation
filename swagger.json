@@ -3099,6 +3099,25 @@
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
+        } ],
         "responses" : {
           "200" : {
             "description" : "object containing outlets locations and its count",
@@ -3135,6 +3154,24 @@
             "type" : "integer",
             "example" : 121
           }
+        }, {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
         } ],
         "responses" : {
           "200" : {
@@ -3198,6 +3235,24 @@
             "type" : "string",
             "example" : "2021"
           }
+        }, {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
         } ],
         "responses" : {
           "200" : {
@@ -3762,6 +3817,25 @@
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
+        } ],
         "responses" : {
           "200" : {
             "description" : "object containing the outlets type distribution",
@@ -3796,6 +3870,25 @@
         "summary" : "Returns a JSON Object containing the distribution of outlets with reference to their channel.",
         "security" : [ {
           "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
         } ],
         "responses" : {
           "200" : {
@@ -3993,14 +4086,23 @@
           "bearerAuth" : [ ]
         } ],
         "parameters" : [ {
-          "in" : "query",
-          "name" : "date",
-          "description" : "date range to get the schedule details.",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "2021-03-28,2021-05-09"
-          }
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
         } ],
         "responses" : {
           "200" : {
@@ -4035,14 +4137,23 @@
           "bearerAuth" : [ ]
         } ],
         "parameters" : [ {
-          "in" : "query",
-          "name" : "date",
-          "description" : "date range to get the schedule list.",
-          "required" : true,
-          "schema" : {
-            "type" : "string",
-            "example" : "2021-03-28,2021-05-09"
-          }
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
         } ],
         "responses" : {
           "200" : {
@@ -5336,6 +5447,16 @@
         "schema" : {
           "type" : "integer",
           "example" : 8
+        }
+      },
+      "product" : {
+        "name" : "productid",
+        "in" : "query",
+        "description" : "product id to filter by",
+        "required" : false,
+        "schema" : {
+          "type" : "integer",
+          "example" : 116
         }
       }
     },
