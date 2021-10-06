@@ -4151,6 +4151,8 @@
         }, {
           "$ref" : "#/components/parameters/date"
         }, {
+          "$ref" : "#/components/parameters/product"
+        }, {
           "$ref" : "#/components/parameters/page"
         }, {
           "$ref" : "#/components/parameters/limit"
@@ -5450,7 +5452,7 @@
         }
       },
       "product" : {
-        "name" : "productid",
+        "name" : "productId",
         "in" : "query",
         "description" : "product id to filter by",
         "required" : false,
