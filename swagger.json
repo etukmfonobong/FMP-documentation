@@ -4263,6 +4263,27 @@
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/product"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
+        } ],
         "responses" : {
           "200" : {
             "description" : "object containing the availability summary",
@@ -4308,6 +4329,27 @@
         "summary" : "Returns a JSON Object containing the product availability share.",
         "security" : [ {
           "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/product"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
         } ],
         "responses" : {
           "200" : {
@@ -4425,6 +4467,27 @@
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/product"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
+        } ],
         "responses" : {
           "200" : {
             "description" : "object containing the top competitor products",
@@ -4479,6 +4542,27 @@
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/product"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
+        } ],
         "responses" : {
           "200" : {
             "description" : "object containing the top available products",
@@ -4532,6 +4616,27 @@
         "summary" : "Returns a JSON Object containing the availability statistics.",
         "security" : [ {
           "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/product"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
         } ],
         "responses" : {
           "200" : {
@@ -4593,6 +4698,27 @@
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/product"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
+        } ],
         "responses" : {
           "200" : {
             "description" : "object containing the product availability map",
@@ -4642,6 +4768,27 @@
         "summary" : "Returns a JSON Object containing the availability share map for all states.",
         "security" : [ {
           "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/product"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
         } ],
         "responses" : {
           "200" : {
@@ -4724,6 +4871,27 @@
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/product"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
+        } ],
         "responses" : {
           "200" : {
             "content" : {
@@ -4768,6 +4936,27 @@
         "summary" : "Returns a JSON containing the total planned and actual visits",
         "security" : [ {
           "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/product"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
         } ],
         "responses" : {
           "200" : {
@@ -4818,6 +5007,27 @@
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/product"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
+        } ],
         "responses" : {
           "200" : {
             "content" : {
@@ -4862,6 +5072,27 @@
         "summary" : "Returns a JSON containing the total sales and percentage to orders",
         "security" : [ {
           "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/product"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
         } ],
         "responses" : {
           "200" : {
@@ -4987,6 +5218,27 @@
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/product"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
+        } ],
         "responses" : {
           "200" : {
             "content" : {
@@ -5032,6 +5284,27 @@
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/product"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
+        } ],
         "responses" : {
           "200" : {
             "content" : {
@@ -5068,6 +5341,27 @@
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/product"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
+        } ],
         "responses" : {
           "200" : {
             "content" : {
@@ -5098,6 +5392,27 @@
         "summary" : "Returns a JSON containing the products availability summary",
         "security" : [ {
           "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/product"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
         } ],
         "responses" : {
           "200" : {
@@ -5147,6 +5462,27 @@
         "summary" : "Returns a JSON containing the products availability statistics",
         "security" : [ {
           "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/product"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
         } ],
         "responses" : {
           "200" : {
@@ -5208,6 +5544,27 @@
         "security" : [ {
           "bearerAuth" : [ ]
         } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/product"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
+        } ],
         "responses" : {
           "200" : {
             "content" : {
@@ -5264,6 +5621,27 @@
         "summary" : "Returns a JSON containing the map data for sales",
         "security" : [ {
           "bearerAuth" : [ ]
+        } ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/location"
+        }, {
+          "$ref" : "#/components/parameters/user"
+        }, {
+          "$ref" : "#/components/parameters/outletType"
+        }, {
+          "$ref" : "#/components/parameters/outletChannel"
+        }, {
+          "$ref" : "#/components/parameters/distributor"
+        }, {
+          "$ref" : "#/components/parameters/salesTeam"
+        }, {
+          "$ref" : "#/components/parameters/date"
+        }, {
+          "$ref" : "#/components/parameters/product"
+        }, {
+          "$ref" : "#/components/parameters/page"
+        }, {
+          "$ref" : "#/components/parameters/limit"
         } ],
         "responses" : {
           "200" : {
