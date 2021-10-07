@@ -4411,7 +4411,7 @@
     },
     "/products/brandAvailabilityShare" : {
       "get" : {
-        "tags" : [ "brand", "availability", "share" ],
+        "tags" : [ "products" ],
         "summary" : "Returns a JSON Object containing the brand availability share.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -4465,7 +4465,7 @@
     },
     "/products/topCompetitorProducts" : {
       "get" : {
-        "tags" : [ "top", "products", "competitor" ],
+        "tags" : [ "products" ],
         "summary" : "Returns a JSON Object containing the top competitor products.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -4540,7 +4540,7 @@
     },
     "/products/topAvailableProducts" : {
       "get" : {
-        "tags" : [ "top", "products", "available" ],
+        "tags" : [ "products" ],
         "summary" : "Returns a JSON Object containing the top available products.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -4615,7 +4615,7 @@
     },
     "/products/availabilitystatistics" : {
       "get" : {
-        "tags" : [ "availability", "products", "statistics" ],
+        "tags" : [ "products" ],
         "summary" : "Returns a JSON Object containing the availability statistics.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -4696,7 +4696,7 @@
     },
     "/products/productavailabilitymap" : {
       "get" : {
-        "tags" : [ "availability", "products", "map" ],
+        "tags" : [ "products" ],
         "summary" : "Returns a JSON Object containing the availability map.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -4767,7 +4767,7 @@
     },
     "/products/availabilitysharemap" : {
       "get" : {
-        "tags" : [ "availability", "products", "share", "map" ],
+        "tags" : [ "products" ],
         "summary" : "Returns a JSON Object containing the availability share map for all states.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -4869,7 +4869,7 @@
     },
     "/summary/visitexceptions" : {
       "get" : {
-        "tags" : [ "summary", "visits", "exceptions" ],
+        "tags" : [ "summary" ],
         "summary" : "Returns a JSON containing the total visit exceptions",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -4935,7 +4935,7 @@
     },
     "/summary/plannedvsactualvisits" : {
       "get" : {
-        "tags" : [ "summary", "visits", "planned", "actual" ],
+        "tags" : [ "summary" ],
         "summary" : "Returns a JSON containing the total planned and actual visits",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -5005,7 +5005,7 @@
     },
     "/summary/actualvstargetvisits" : {
       "get" : {
-        "tags" : [ "summary", "visits", "planned", "actual" ],
+        "tags" : [ "summary" ],
         "summary" : "Returns a JSON containing the total target and actual visits",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -5071,7 +5071,7 @@
     },
     "/summary/totalsales" : {
       "get" : {
-        "tags" : [ "summary", "sales", "total" ],
+        "tags" : [ "summary" ],
         "summary" : "Returns a JSON containing the total sales and percentage to orders",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -5132,7 +5132,7 @@
     },
     "/summary/outletgrowth" : {
       "get" : {
-        "tags" : [ "summary", "outlets", "growth", "weekly" ],
+        "tags" : [ "summary" ],
         "summary" : "Returns a JSON containing the weekly outlet growth trend",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -5216,7 +5216,7 @@
     },
     "/summary/getTotalPayments" : {
       "get" : {
-        "tags" : [ "summary", "payments", "sales" ],
+        "tags" : [ "summary" ],
         "summary" : "Returns a JSON containing the total payment and percentage to sales",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -5282,7 +5282,7 @@
     },
     "/summary/getTotalPaymentsBalance" : {
       "get" : {
-        "tags" : [ "summary", "payments", "balance" ],
+        "tags" : [ "summary" ],
         "summary" : "Returns a JSON containing the total payments balance",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -5339,7 +5339,7 @@
     },
     "/summary/productive-vs-non-productive-visits" : {
       "get" : {
-        "tags" : [ "summary", "visits", "productive", "non-productive" ],
+        "tags" : [ "summary" ],
         "summary" : "Returns a JSON containing the productive to non-productive visits",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -5391,7 +5391,7 @@
     },
     "/summary/productAvailabilitySummary" : {
       "get" : {
-        "tags" : [ "summary", "products", "availability" ],
+        "tags" : [ "summary" ],
         "summary" : "Returns a JSON containing the products availability summary",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -5461,7 +5461,7 @@
     },
     "/summary/availabilityStatistics" : {
       "get" : {
-        "tags" : [ "summary", "products", "availability", "statistics" ],
+        "tags" : [ "summary" ],
         "summary" : "Returns a JSON containing the products availability statistics",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -5542,7 +5542,7 @@
     },
     "/summary/visitsmapdata" : {
       "get" : {
-        "tags" : [ "summary", "visits", "map" ],
+        "tags" : [ "summary" ],
         "summary" : "Returns a JSON containing the map data for outlets visited",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -5620,7 +5620,7 @@
     },
     "/summary/salesmapdata" : {
       "get" : {
-        "tags" : [ "summary", "sales", "map" ],
+        "tags" : [ "summary" ],
         "summary" : "Returns a JSON containing the map data for sales",
         "security" : [ {
           "bearerAuth" : [ ]
