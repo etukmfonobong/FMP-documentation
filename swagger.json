@@ -4261,7 +4261,7 @@
     },
     "/products/summary" : {
       "get" : {
-        "tags" : [ "products", "availability", "summary" ],
+        "tags" : [ "products" ],
         "summary" : "Returns a JSON Object containing the availability summary.",
         "security" : [ {
           "bearerAuth" : [ ]
@@ -4328,7 +4328,7 @@
     },
     "/products/productAvailabilityShare" : {
       "get" : {
-        "tags" : [ "products", "availability", "share" ],
+        "tags" : [ "products" ],
         "summary" : "Returns a JSON Object containing the product availability share.",
         "security" : [ {
           "bearerAuth" : [ ]
