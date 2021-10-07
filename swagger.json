@@ -75,6 +75,9 @@
   }, {
     "name" : "schedules",
     "description" : "Routes for schedules"
+  }, {
+    "name" : "summary",
+    "description" : "Routes for summary"
   } ],
   "paths" : {
     "/auth/login" : {
