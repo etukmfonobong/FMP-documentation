@@ -3490,7 +3490,7 @@
         }
       }
     },
-    "/outlets/shelfimages/{id}" : {
+    "/outlets/shelf-images/{id}" : {
       "get" : {
         "tags" : [ "outlets images" ],
         "summary" : "Returns a JSON Object containing the shelf images of an outlet",
@@ -3557,7 +3557,7 @@
         }
       }
     },
-    "/outlets/merchandisingimages/{id}" : {
+    "/outlets/merchandising-images/{id}" : {
       "get" : {
         "tags" : [ "outlets images" ],
         "summary" : "Returns a JSON Object containing the merchandising images of an outlet",
@@ -3624,7 +3624,7 @@
         }
       }
     },
-    "/outlets/getproductfacing/{id}" : {
+    "/outlets/get-product-facing/{id}" : {
       "get" : {
         "tags" : [ "outlets" ],
         "summary" : "Returns a JSON Object containing the product facing of a product",
@@ -3764,7 +3764,7 @@
         }
       }
     },
-    "/outlets/getmapdistribution" : {
+    "/outlets/get-map-distribution" : {
       "get" : {
         "tags" : [ "outlets" ],
         "summary" : "Returns a JSON Object containing the map distribution of outlets",
@@ -4005,7 +4005,7 @@
         }
       }
     },
-    "/outlets/bulkcreate" : {
+    "/outlets/bulk-create" : {
       "post" : {
         "tags" : [ "outlets" ],
         "summary" : "upload a list of outlets to be created via a csv template file.",
@@ -4043,7 +4043,7 @@
         }
       }
     },
-    "/outlets/bulkedit" : {
+    "/outlets/bulk-edit" : {
       "patch" : {
         "tags" : [ "outlets" ],
         "summary" : "upload a list of outlets to be edited via a csv template file.",
@@ -4867,7 +4867,7 @@
         }
       }
     },
-    "/summary/visitexceptions" : {
+    "/summary/visit-exceptions" : {
       "get" : {
         "tags" : [ "summary" ],
         "summary" : "Returns a JSON containing the total visit exceptions",
@@ -4902,16 +4902,33 @@
                 "schema" : {
                   "type" : "object",
                   "properties" : {
-                    "visitExceptions" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
+                    },
+                    "code" : {
+                      "type" : "integer",
+                      "example" : 200
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "planned vs actual visits summary"
+                    },
+                    "data" : {
                       "type" : "object",
                       "properties" : {
-                        "value" : {
-                          "type" : "integer",
-                          "example" : 62
-                        },
-                        "percentage" : {
-                          "type" : "integer",
-                          "example" : 11.83206106870229
+                        "visitExceptions" : {
+                          "type" : "object",
+                          "properties" : {
+                            "value" : {
+                              "type" : "integer",
+                              "example" : 62
+                            },
+                            "percentage" : {
+                              "type" : "integer",
+                              "example" : 11.83206106870229
+                            }
+                          }
                         }
                       }
                     }
@@ -4933,7 +4950,7 @@
         }
       }
     },
-    "/summary/plannedvsactualvisits" : {
+    "/summary/planned-vs-actual-visits" : {
       "get" : {
         "tags" : [ "summary" ],
         "summary" : "Returns a JSON containing the total planned and actual visits",
@@ -4968,20 +4985,37 @@
                 "schema" : {
                   "type" : "object",
                   "properties" : {
-                    "actualVsPlannedVisits" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
+                    },
+                    "code" : {
+                      "type" : "integer",
+                      "example" : 200
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "visit exceptions successfully retreived"
+                    },
+                    "data" : {
                       "type" : "object",
                       "properties" : {
-                        "actualVisits" : {
-                          "type" : "integer",
-                          "example" : 524
-                        },
-                        "plannedVisits" : {
-                          "type" : "integer",
-                          "example" : 933
-                        },
-                        "visitCompletionPercentage" : {
-                          "type" : "integer",
-                          "example" : 56.162915326902464
+                        "actualVsPlannedVisits" : {
+                          "type" : "object",
+                          "properties" : {
+                            "actualVisits" : {
+                              "type" : "integer",
+                              "example" : 524
+                            },
+                            "plannedVisits" : {
+                              "type" : "integer",
+                              "example" : 933
+                            },
+                            "visitCompletionPercentage" : {
+                              "type" : "integer",
+                              "example" : 56.162915326902464
+                            }
+                          }
                         }
                       }
                     }
