@@ -5120,7 +5120,7 @@
         }
       }
     },
-    "/summary/totalsales" : {
+    "/summary/total-sales" : {
       "get" : {
         "tags" : [ "summary" ],
         "summary" : "Returns a JSON containing the total sales and percentage to orders",
@@ -5155,13 +5155,30 @@
                 "schema" : {
                   "type" : "object",
                   "properties" : {
-                    "total_sales" : {
-                      "type" : "integer",
-                      "example" : 65293605
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
                     },
-                    "percentage" : {
+                    "code" : {
                       "type" : "integer",
-                      "example" : 187512.1478418196
+                      "example" : 200
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "total sales summary"
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "total_sales" : {
+                          "type" : "integer",
+                          "example" : 65293605
+                        },
+                        "percentage" : {
+                          "type" : "integer",
+                          "example" : 187512.1478418196
+                        }
+                      }
                     }
                   }
                 }
