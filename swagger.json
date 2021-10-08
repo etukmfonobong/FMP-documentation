@@ -5294,7 +5294,7 @@
         }
       }
     },
-    "/summary/getTotalPayments" : {
+    "/summary/get-total-payments" : {
       "get" : {
         "tags" : [ "summary" ],
         "summary" : "Returns a JSON containing the total payment and percentage to sales",
@@ -5329,18 +5329,35 @@
                 "schema" : {
                   "type" : "object",
                   "properties" : {
-                    "total_payments" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
+                    },
+                    "code" : {
+                      "type" : "integer",
+                      "example" : 200
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "total payment summary"
+                    },
+                    "data" : {
                       "type" : "object",
                       "properties" : {
-                        "payment" : {
+                        "total_payments" : {
+                          "type" : "object",
+                          "properties" : {
+                            "payment" : {
+                              "type" : "integer",
+                              "example" : 54029229
+                            }
+                          }
+                        },
+                        "percentage_to_sales" : {
                           "type" : "integer",
-                          "example" : 54029229
+                          "example" : 82.74811752238217
                         }
                       }
-                    },
-                    "percentage_to_sales" : {
-                      "type" : "integer",
-                      "example" : 82.74811752238217
                     }
                   }
                 }
@@ -5360,7 +5377,7 @@
         }
       }
     },
-    "/summary/getTotalPaymentsBalance" : {
+    "/summary/get-total-payments-balance" : {
       "get" : {
         "tags" : [ "summary" ],
         "summary" : "Returns a JSON containing the total payments balance",
@@ -5395,9 +5412,25 @@
                 "schema" : {
                   "type" : "object",
                   "properties" : {
-                    "total_balance" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
+                    },
+                    "code" : {
                       "type" : "integer",
-                      "example" : 11264376
+                      "example" : 200
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "total payment balance summary"
+                    },
+                    "data" : {
+                      "properties" : {
+                        "total_balance" : {
+                          "type" : "integer",
+                          "example" : 11264376
+                        }
+                      }
                     }
                   }
                 }
