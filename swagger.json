@@ -5824,7 +5824,7 @@
                     },
                     "message" : {
                       "type" : "string",
-                      "example" : "outlets sales mapp data"
+                      "example" : "outlets sales map data"
                     },
                     "data" : {
                       "type" : "object",
