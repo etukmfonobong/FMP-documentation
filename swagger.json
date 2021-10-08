@@ -3308,7 +3308,24 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/OutletObj"
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
+                    },
+                    "code" : {
+                      "type" : "integer",
+                      "example" : 200
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "outlet successfully returned"
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/OutletObj"
+                    }
+                  }
                 }
               }
             }
