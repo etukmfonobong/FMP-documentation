@@ -5483,8 +5483,25 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "schema",
-                  "$ref" : "#/components/schemas/ProductiveVsNonproductiveVisitsResObj"
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
+                    },
+                    "code" : {
+                      "type" : "integer",
+                      "example" : 200
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "outlet growth summary"
+                    },
+                    "data" : {
+                      "type" : "schema",
+                      "$ref" : "#/components/schemas/ProductiveVsNonproductiveVisitsResObj"
+                    }
+                  }
                 }
               }
             },
