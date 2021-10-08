@@ -5198,7 +5198,7 @@
         }
       }
     },
-    "/summary/outletgrowth" : {
+    "/summary/outlet-growth" : {
       "get" : {
         "tags" : [ "summary" ],
         "summary" : "Returns a JSON containing the weekly outlet growth trend",
@@ -5262,6 +5262,18 @@
                 "schema" : {
                   "type" : "object",
                   "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
+                    },
+                    "code" : {
+                      "type" : "integer",
+                      "example" : 200
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "outlet growth summary"
+                    },
                     "data" : {
                       "type" : "array",
                       "items" : {
