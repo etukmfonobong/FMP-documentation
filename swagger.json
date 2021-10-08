@@ -5037,7 +5037,7 @@
         }
       }
     },
-    "/summary/actualvstargetvisits" : {
+    "/summary/actual-vs-target-visits" : {
       "get" : {
         "tags" : [ "summary" ],
         "summary" : "Returns a JSON containing the total target and actual visits",
@@ -5072,16 +5072,33 @@
                 "schema" : {
                   "type" : "object",
                   "properties" : {
-                    "actualVsTargetVisits" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
+                    },
+                    "code" : {
+                      "type" : "integer",
+                      "example" : 200
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "actual vs target visits summary"
+                    },
+                    "data" : {
                       "type" : "object",
                       "properties" : {
-                        "actualVisits" : {
-                          "type" : "integer",
-                          "example" : 524
-                        },
-                        "targetVisits" : {
-                          "type" : "integer",
-                          "example" : 213
+                        "actualVsTargetVisits" : {
+                          "type" : "object",
+                          "properties" : {
+                            "actualVisits" : {
+                              "type" : "integer",
+                              "example" : 524
+                            },
+                            "targetVisits" : {
+                              "type" : "integer",
+                              "example" : 213
+                            }
+                          }
                         }
                       }
                     }
