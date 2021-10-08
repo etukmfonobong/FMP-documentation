@@ -5601,7 +5601,7 @@
         }
       }
     },
-    "/summary/availabilityStatistics" : {
+    "/summary/availability-statistics" : {
       "get" : {
         "tags" : [ "summary" ],
         "summary" : "Returns a JSON containing the products availability statistics",
@@ -5637,34 +5637,41 @@
                 "schema" : {
                   "type" : "object",
                   "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
+                    },
+                    "code" : {
+                      "type" : "integer",
+                      "example" : 200
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "productive availability statistics"
+                    },
                     "data" : {
                       "type" : "object",
                       "properties" : {
-                        "result" : {
+                        "uniquely_visited_outlets" : {
+                          "type" : "integer",
+                          "example" : 2
+                        },
+                        "availability_summary" : {
                           "type" : "object",
                           "properties" : {
-                            "uniquely_visited_outlets" : {
+                            "outlets_with_products" : {
                               "type" : "integer",
-                              "example" : 2
+                              "example" : 4
                             },
-                            "availability_summary" : {
-                              "type" : "object",
-                              "properties" : {
-                                "outlets_with_products" : {
-                                  "type" : "integer",
-                                  "example" : 4
-                                },
-                                "outlets_without_products" : {
-                                  "type" : "integer",
-                                  "example" : 43
-                                }
-                              }
-                            },
-                            "percentage_of_outlets_visted_to_outlets_with_products" : {
-                              "type" : "number",
-                              "example" : 9.30232558139535
+                            "outlets_without_products" : {
+                              "type" : "integer",
+                              "example" : 43
                             }
                           }
+                        },
+                        "percentage_of_outlets_visted_to_outlets_with_products" : {
+                          "type" : "number",
+                          "example" : 9.30232558139535
                         }
                       }
                     }
