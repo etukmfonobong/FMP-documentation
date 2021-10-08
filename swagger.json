@@ -3374,7 +3374,7 @@
                     },
                     "message" : {
                       "type" : "string",
-                      "example" : "outlet successfully returned"
+                      "example" : "outlet type successfully returned"
                     },
                     "data" : {
                       "$ref" : "#/components/schemas/OutletTypeResObj"
@@ -3418,7 +3418,19 @@
                 "schema" : {
                   "type" : "object",
                   "properties" : {
-                    "OutletChannel" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
+                    },
+                    "code" : {
+                      "type" : "integer",
+                      "example" : 200
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "outlet channel successfully returned"
+                    },
+                    "data" : {
                       "$ref" : "#/components/schemas/OutletChannelResObj"
                     }
                   }
@@ -3460,6 +3472,18 @@
                 "schema" : {
                   "type" : "object",
                   "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
+                    },
+                    "code" : {
+                      "type" : "integer",
+                      "example" : 200
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "outlet contact email successfully returned"
+                    },
                     "data" : {
                       "$ref" : "#/components/schemas/OutletEmailResObj"
                     }
@@ -6323,7 +6347,7 @@
             "type" : "integer",
             "example" : 4
           },
-          "outlet_Type" : {
+          "outlet_type" : {
             "type" : "string",
             "example" : "Supermarket"
           }
@@ -6343,7 +6367,7 @@
             "type" : "integer",
             "example" : 1
           },
-          "outlet_Channel" : {
+          "outlet_channel" : {
             "type" : "string",
             "example" : "Retail"
           }
@@ -6407,6 +6431,10 @@
           "id" : {
             "type" : "integer",
             "example" : 5
+          },
+          "outlet_name" : {
+            "type" : "string",
+            "example" : "Immaculate Store"
           },
           "email" : {
             "type" : "string",
