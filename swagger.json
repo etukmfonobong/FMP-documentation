@@ -5689,7 +5689,7 @@
         }
       }
     },
-    "/summary/visitsmapdata" : {
+    "/summary/visits-map-data" : {
       "get" : {
         "tags" : [ "summary" ],
         "summary" : "Returns a JSON containing the map data for outlets visited",
@@ -5724,6 +5724,18 @@
                 "schema" : {
                   "type" : "object",
                   "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
+                    },
+                    "code" : {
+                      "type" : "integer",
+                      "example" : 200
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "outlets visit map data "
+                    },
                     "data" : {
                       "type" : "object",
                       "properties" : {
@@ -5802,6 +5814,18 @@
                 "schema" : {
                   "type" : "object",
                   "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
+                    },
+                    "code" : {
+                      "type" : "integer",
+                      "example" : 200
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "outlets sales mapp data"
+                    },
                     "data" : {
                       "type" : "object",
                       "properties" : {
