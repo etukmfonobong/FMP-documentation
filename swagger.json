@@ -3364,7 +3364,19 @@
                 "schema" : {
                   "type" : "object",
                   "properties" : {
-                    "OutletType" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
+                    },
+                    "code" : {
+                      "type" : "integer",
+                      "example" : 200
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "outlet successfully returned"
+                    },
+                    "data" : {
                       "$ref" : "#/components/schemas/OutletTypeResObj"
                     }
                   }
