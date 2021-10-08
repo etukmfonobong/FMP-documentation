@@ -6488,6 +6488,10 @@
             "type" : "integer",
             "example" : 111
           },
+          "product_name" : {
+            "type" : "string",
+            "example" : "INSUMAN COMBO 1000IU/10ML INJSU"
+          },
           "product_facing" : {
             "type" : "integer",
             "example" : 0
