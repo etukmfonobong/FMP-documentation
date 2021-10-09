@@ -3501,9 +3501,9 @@
         }
       }
     },
-    "/outlets/images/{id}" : {
+    "/outlets/image/{id}" : {
       "get" : {
-        "tags" : [ "outlets images" ],
+        "tags" : [ "outlets image" ],
         "summary" : "Returns a JSON Object containing the image url of an outlet",
         "security" : [ {
           "bearerAuth" : [ ]
