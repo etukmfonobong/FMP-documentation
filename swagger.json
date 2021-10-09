@@ -3770,6 +3770,9 @@
                     },
                     "data" : {
                       "$ref" : "#/components/schemas/OutletProductAvailabilityResObj"
+                    },
+                    "meta" : {
+                      "$ref" : "#/components/schemas/PaginationMetaObj"
                     }
                   }
                 }
@@ -3820,7 +3823,7 @@
                     },
                     "message" : {
                       "type" : "string",
-                      "example" : "outlet geo-location"
+                      "example" : "outlet geolocation"
                     },
                     "data" : {
                       "type" : "object",
@@ -3885,9 +3888,29 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/OutletMapDistributionResObj"
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
+                    },
+                    "code" : {
+                      "type" : "integer",
+                      "example" : 200
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "outlets map distribution"
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/OutletMapDistributionResObj"
+                      }
+                    },
+                    "meta" : {
+                      "$ref" : "#/components/schemas/PaginationMetaObj"
+                    }
                   }
                 }
               }
