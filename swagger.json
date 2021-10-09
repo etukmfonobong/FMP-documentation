@@ -3810,6 +3810,18 @@
                 "schema" : {
                   "type" : "object",
                   "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
+                    },
+                    "code" : {
+                      "type" : "integer",
+                      "example" : 200
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "outlet geo-location"
+                    },
                     "data" : {
                       "type" : "object",
                       "properties" : {
