@@ -3526,6 +3526,18 @@
                 "schema" : {
                   "type" : "object",
                   "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
+                    },
+                    "code" : {
+                      "type" : "integer",
+                      "example" : 200
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "outlet image"
+                    },
                     "data" : {
                       "$ref" : "#/components/schemas/OutletImageResObj"
                     }
@@ -6572,6 +6584,10 @@
           "id" : {
             "type" : "integer",
             "example" : 5
+          },
+          "outlet_name" : {
+            "type" : "string",
+            "example" : "Praise Super Mart"
           },
           "image" : {
             "type" : "string",
