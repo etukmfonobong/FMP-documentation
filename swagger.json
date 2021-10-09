@@ -3035,7 +3035,24 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/OutletsCountResObj"
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
+                    },
+                    "code" : {
+                      "type" : "integer",
+                      "example" : 200
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "outlets total count"
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/OutletsCountResObj"
+                    }
+                  }
                 }
               }
             }
@@ -6404,7 +6421,7 @@
       },
       "OutletsCountResObj" : {
         "properties" : {
-          "outlets_Count" : {
+          "outlets_count" : {
             "type" : "integer",
             "example" : 186
           }
