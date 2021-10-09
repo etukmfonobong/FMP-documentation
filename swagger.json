@@ -4058,6 +4058,18 @@
                 "schema" : {
                   "type" : "object",
                   "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
+                    },
+                    "code" : {
+                      "type" : "integer",
+                      "example" : 200
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "outlet contact"
+                    },
                     "data" : {
                       "$ref" : "#/components/schemas/OutletContactResObj"
                     }
@@ -6518,6 +6530,10 @@
           "id" : {
             "type" : "integer",
             "example" : 5
+          },
+          "outlet_name" : {
+            "type" : "string",
+            "example" : "Mfon Stores"
           },
           "contact_name" : {
             "type" : "string",
