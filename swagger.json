@@ -4165,7 +4165,28 @@
         },
         "responses" : {
           "201" : {
-            "description" : "Outlets have been successfully created"
+            "description" : "Outlets have been successfully created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
+                    },
+                    "code" : {
+                      "type" : "integer",
+                      "example" : 201
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "operation successful"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400" : {
             "description" : "Cannot take action on document that does not exist!."
@@ -4203,7 +4224,28 @@
         },
         "responses" : {
           "201" : {
-            "description" : "Outlets have been successfully edited"
+            "description" : "Outlets have been successfully edited",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "status" : {
+                      "type" : "string",
+                      "example" : "success"
+                    },
+                    "code" : {
+                      "type" : "integer",
+                      "example" : 201
+                    },
+                    "message" : {
+                      "type" : "string",
+                      "example" : "operation successful"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400" : {
             "description" : "Cannot take action on document that does not exist!."
