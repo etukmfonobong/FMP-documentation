@@ -1,0 +1,6317 @@
+openapi: 3.0.0
+info:
+  title: FieldMaxPro v3 Api
+  description: FieldMaxPro v3 Api reworked in nodejs
+  version: 1.0.0
+  
+servers: 
+  - url: https://fmp-node-api.herokuapp.com
+    description: Temporary Internal staging server for testing; hosted on Heroku
+
+security:
+    - bearerAuth : []
+    
+tags: 
+  - name: auth
+    description: Everything about Authentication
+  - name: test
+    description: Test routes for use in development only
+  - name: setup
+    description: Routes for company setup details  
+  - name: setup distributors
+    description: Routes to setup company's distributor details  
+  - name: setup locations
+    description: Routes to setup company's location details 
+  - name: setup sale teams
+    description: Routes to setup company's sale team details  
+  - name: setup outlet channels
+    description: Routes to setup company's outlet channel details  
+  - name: setup outlet types
+    description: Routes to setup company's outlet type details 
+  - name: setup contact titles
+    description: Routes to setup company's contact title details  
+  - name: setup contact categories
+    description: Routes to setup company's contact category details 
+  - name: setup product categories
+    description: Routes to setup company's product category details  
+  - name: setup product brands
+    description: Routes to setup company's product brand details  
+  - name: setup note category
+    description: Routes to setup note category
+  - name: setup brand elements
+    description: Routes to setup brand elements 
+  - name: setup payment types
+    description: Routes to setup payment types  
+  - name: outlets
+    description: Routes for outlet details
+  - name: outlets images
+    description: Routes for outlet images  
+  - name: outlets aggregation
+    description: Routes for aggregated data on outlets  
+  - name: visits
+    description: Routes for visit details  
+  - name: visits aggregation
+    description: Routes for aggregated data on visits  
+  - name: visits charts
+    description: Routes for visit charts  
+  - name: schedules
+    description: Routes for schedules   
+  - name: summary
+    description: Routes for summary  
+    
+    
+paths:
+  #
+  #login routes
+  #
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: Returns a json web token for authorization on other endpoints.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string  
+              example:
+                username: demo.superadmin2
+                password: password1234  
+             
+      responses:
+        '200':
+          description: object containing required access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessToken' 
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.
+          
+  /auth/login/mobile:
+    post:
+      tags:
+        - auth
+      summary: Returns a json web token for authorization on other endpoints for mobile devices.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginReqObjMobile'
+            example:
+              username: demo.fieldrep
+              password: password1234
+              versionnumber: '1002'
+              googledeviceid: AI023883dgfue8383n323b34234dh48h8590201
+              deviceimei: '334283949950505095989895'
+              devicename: SM953
+                 
+      responses:
+        '200':
+          description: object containing required access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessToken' 
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.
+        '406':
+          description: You can only be logged in from one device at a time
+          
+  /auth/logout/mobile:
+    post:
+      tags:
+        - auth
+      summary: safely logs out mobile devices.
+      security:
+        - bearerAuth: []        
+      responses:
+        '200':
+          description: object containing status info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+        '401':
+          description: Invalid Jwt Token.        
+          
+  #
+  #test routes
+  #        
+  /auth/test/jwt:
+    get:
+      tags:
+        - test
+      summary: Returns user decoded from jwt.
+      security:
+        - bearerAuth: []        
+      responses:
+        '200':
+          description: object containing basuc user info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserObject' 
+        '400':
+          description: Bad Request.
+        '401':
+          description: Invalid Jwt Token.        
+                  
+  /auth/test/roles:
+    get:
+      tags:
+        - test
+      summary: Returns user decoded from jwt, if user has premission to view outlets.
+      security:
+        - bearerAuth: []        
+      responses:
+        '200':
+          description: object containing basuc user info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserObject' 
+        '401':
+          description: Invalid permissions, you do not have the required permissions to complete this request/action.     
+          
+  #        
+  #setup routes        
+  #
+  /setup/company:
+    get:
+      tags:
+        - setup
+      summary: gets all companies
+      security:
+        - bearerAuth: []
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/CompanyResObj' 
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.
+  
+    post:
+      tags:
+        - setup
+      summary: creates a new company
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddCompanyReqObj'
+             
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyResObj' 
+ 
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.
+  
+  /setup/company/{id}:        
+    patch:
+      tags:
+        - setup
+      summary: updates an existing company
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of company to be updated
+          required: true
+          schema:
+            type: integer
+            example: 12
+            
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyReqObj'
+             
+      responses:
+        '201':
+          description: object containing required access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyResObj' 
+  
+        '400':
+          description: Cannot take action on document that does not exist!
+        '401':
+          description: Unauthorized.        
+          
+    delete:
+      tags:
+        - setup
+      summary: deletes a company
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of company to be deleted
+          required: true
+          schema:
+            type: integer
+            example: 12
+             
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Cannot take action on document that does not exist!
+        '401':
+          description: Unauthorized.              
+          
+  /setup/distributor:
+    get:
+      tags:
+        - setup distributors
+      summary: gets all distributors.
+      security:
+        - bearerAuth: []
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/DistributorResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.
+  
+    post:
+      tags:
+        - setup distributors
+      summary: creates a distributor
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DistributorReqObj'
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DistributorResObj' 
+ 
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+          
+  /setup/distributor/{id}:        
+    patch:
+      tags:
+        - setup distributors
+      summary: updates a distributor
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of company to be updated
+          required: true
+          schema:
+            type: integer
+            example: 12
+            
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DistributorReqObj'
+             
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DistributorResObj' 
+  
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.        
+          
+    delete:
+      tags:
+        - setup distributors
+      summary: deletes a distributor.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of company to be updated
+          required: true
+          schema:
+            type: integer
+            example: 12
+             
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.      
+          
+  /setup/location:
+    get:
+      tags:
+        - setup locations
+      summary: gets all locations, based on query parameters
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/parentLocation'
+        - $ref: '#/components/parameters/locationName'
+        - $ref: '#/components/parameters/locationType'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+        
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationPaginatedResObj' 
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.    
+          
+    post:
+      tags:
+        - setup locations
+      summary: creates a new location
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddLocationReqObj'
+             
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationResObj' 
+ 
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.      
+          
+  /setup/location/{id}:        
+    patch:
+      tags:
+        - setup locations
+      summary: updates an existing location
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of location to be updated
+          required: true
+          schema:
+            type: integer
+            example: 12
+            
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLocationReqObj'
+             
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationResObj' 
+  
+        '400':
+          description: Cannot take action on document that does not exist!
+        '401':
+          description: Unauthorized.        
+          
+    delete:
+      tags:
+        - setup locations
+      summary: deletes a location
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of location to be deleted
+          required: true
+          schema:
+            type: integer
+            example: 12
+             
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Cannot take action on document that does not exist!
+        '401':
+          description: Unauthorized.      
+          
+  /setup/sale-team:
+    get:
+      tags:
+        - setup sale teams
+      summary: gets all sales teams.
+      security:
+        - bearerAuth: []
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/SaleTeamResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.
+  
+    post:
+      tags:
+        - setup sale teams
+      summary: creates a sale team
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaleTeamReqObj'
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaleTeamResObj' 
+ 
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized   
+          
+  /setup/sale-team/{id}:        
+    patch:
+      tags:
+        - setup sale teams
+      summary: updates a sale team
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of sale team to be updated
+          required: true
+          schema:
+            type: integer
+            example: 12
+            
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaleTeamReqObj'
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaleTeamResObj' 
+  
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.        
+          
+    delete:
+      tags:
+        - setup sale teams
+      summary: deletes a sale team.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of sale team to be deleted
+          required: true
+          schema:
+            type: integer
+            example: 12
+             
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.      
+          
+  /setup/outlet/channel:
+    get:
+      tags:
+        - setup outlet channels
+      summary: gets all outlet channels.
+      security:
+        - bearerAuth: []
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/SetupOutletChannelResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.
+  
+    post:
+      tags:
+        - setup outlet channels
+      summary: creates an outlet channel
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetupOutletChannelReqObj'
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetupOutletChannelResObj' 
+ 
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized        
+          
+  /setup/outlet/channel/{id}:        
+    patch:
+      tags:
+        - setup outlet channels
+      summary: updates an existing outlet channel
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of outlet channel to be updated
+          required: true
+          schema:
+            type: integer
+            example: 12
+            
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetupOutletChannelReqObj'
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetupOutletChannelResObj' 
+  
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.        
+          
+    delete:
+      tags:
+        - setup outlet channels
+      summary: deletes an outlet channel.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of outlet channel to be deleted
+          required: true
+          schema:
+            type: integer
+            example: 12
+             
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.     
+          
+  /setup/outlet/type:
+    get:
+      tags:
+        - setup outlet types
+      summary: gets all outlet type.
+      security:
+        - bearerAuth: []
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/SetupOutletTypeResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.
+  
+    post:
+      tags:
+        - setup outlet types
+      summary: creates an outlet type
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetupOutletTypeReqObj'
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetupOutletTypeResObj' 
+ 
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorize   
+          
+  /setup/outlet/type/{id}:        
+    patch:
+      tags:
+        - setup outlet types
+      summary: updates an existing outlet type
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of outlet type to be updated
+          required: true
+          schema:
+            type: integer
+            example: 12
+            
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetupOutletTypeReqObj'
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetupOutletTypeResObj' 
+  
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.        
+          
+    delete:
+      tags:
+        - setup outlet types
+      summary: deletes an outlet type.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of outlet type to be deleted
+          required: true
+          schema:
+            type: integer
+            example: 12
+             
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.  
+          
+  /setup/contact/title:
+    get:
+      tags:
+        - setup contact titles
+      summary: gets all contact titles.
+      security:
+        - bearerAuth: []
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/ContactTitleResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.
+  
+    post:
+      tags:
+        - setup contact titles
+      summary: creates a contact title
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactTitleReqObj'
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactTitleResObj' 
+ 
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized   
+          
+  /setup/contact/title/{id}:        
+    patch:
+      tags:
+        - setup contact titles
+      summary: updates an existing contact title
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of contact title to be updated
+          required: true
+          schema:
+            type: integer
+            example: 12
+            
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactTitleReqObj'
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactTitleResObj' 
+  
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.        
+          
+    delete:
+      tags:
+        - setup contact titles
+      summary: deletes a contact title.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of contact title to be deleted
+          required: true
+          schema:
+            type: integer
+            example: 12
+             
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.      
+          
+  /setup/contact/category:
+    get:
+      tags:
+        - setup contact categories
+      summary: gets all contact categories.
+      security:
+        - bearerAuth: []
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/ContactCategoryResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.
+  
+    post:
+      tags:
+        - setup contact categories
+      summary: creates a contact category
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactCategoryReqObj'
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactCategoryResObj' 
+ 
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized   
+          
+  /setup/contact/category/{id}:        
+    patch:
+      tags:
+        - setup contact categories
+      summary: updates an existing contact category
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of contact category to be updated
+          required: true
+          schema:
+            type: integer
+            example: 12
+            
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactCategoryReqObj'
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactCategoryResObj' 
+  
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.        
+          
+    delete:
+      tags:
+        - setup contact categories
+      summary: deletes a contact category.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of contact category to be deleted
+          required: true
+          schema:
+            type: integer
+            example: 12
+             
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.     
+          
+  /setup/product/category:
+    get:
+      tags:
+        - setup product categories
+      summary: gets all product categories.
+      security:
+        - bearerAuth: []
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/ProductCategoryResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.
+  
+    post:
+      tags:
+        - setup product categories
+      summary: creates a product category
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductCategoryReqObj'
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCategoryResObj' 
+ 
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized   
+          
+  /setup/product/category/{id}:        
+    patch:
+      tags:
+        - setup product categories
+      summary: updates an existing product category
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of product category to be updated
+          required: true
+          schema:
+            type: integer
+            example: 12
+            
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductCategoryReqObj'
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductCategoryResObj' 
+  
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.        
+          
+    delete:
+      tags:
+        - setup product categories
+      summary: deletes a product category.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of product category to be deleted
+          required: true
+          schema:
+            type: integer
+            example: 12
+             
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.     
+          
+          
+  /setup/product/brand:
+    get:
+      tags:
+        - setup product brands
+      summary: gets all product brands.
+      security:
+        - bearerAuth: []
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/ProductBrandsResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.        
+          
+    post:
+      tags:
+        - setup product brands
+      summary: creates a product brand
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductBrandsReqObj'
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductBrandsResObj' 
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized       
+          
+  /setup/product/brand/{id}:        
+    get:
+      tags:
+        - setup product brands
+      summary: gets a specific product brand
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of product brand to fetch
+          required: true
+          schema:
+            type: integer
+            example: 12
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductBrandsResObj' 
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.  
+          
+    patch:
+        tags:
+          - setup product brands
+        summary: updates an existing product brand
+        security:
+          - bearerAuth: []
+        parameters: 
+          - name: id
+            in: path
+            description: id of product brand to be updated
+            required: true
+            schema:
+              type: integer
+              example: 12
+              
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductBrandsReqObj'
+               
+        responses:
+          '201':
+            description: successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ProductBrandsResObj' 
+    
+          '400':
+            description: Cannot take action on document that does not exist!.
+          '401':
+            description: Unauthorized.        
+          
+    delete:
+        tags:
+          - setup product brands
+        summary: deletes a product brand.
+        security:
+          - bearerAuth: []
+        parameters: 
+          - name: id
+            in: path
+            description: id of product brand to be deleted
+            required: true
+            schema:
+              type: integer
+              example: 12
+               
+        responses:
+          '204':
+            description: No Content
+          '400':
+            description: Cannot take action on document that does not exist!.
+          '401':
+            description: Unauthorized.   
+            
+  /setup/note/category:
+    get:
+      tags:
+        - setup note category
+      summary: gets all note categories.
+      security:
+        - bearerAuth: []
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/NoteCategoryResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.        
+          
+    post:
+      tags:
+        - setup note category
+      summary: creates a note category
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoteCategoryReqObj'
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteCategoryResObj' 
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized       
+          
+  /setup/note/category/{id}:        
+    get:
+      tags:
+        - setup note category
+      summary: gets a specific note category
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of note category to fetch
+          required: true
+          schema:
+            type: integer
+            example: 12
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteCategoryResObj' 
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.  
+          
+    patch:
+        tags:
+          - setup note category
+        summary: updates an existing note category
+        security:
+          - bearerAuth: []
+        parameters: 
+          - name: id
+            in: path
+            description: id of note category to be updated
+            required: true
+            schema:
+              type: integer
+              example: 12
+              
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteCategoryReqObj'
+               
+        responses:
+          '201':
+            description: successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/NoteCategoryResObj' 
+    
+          '400':
+            description: Cannot take action on document that does not exist!.
+          '401':
+            description: Unauthorized.        
+          
+    delete:
+        tags:
+          - setup note category
+        summary: deletes a note category.
+        security:
+          - bearerAuth: []
+        parameters: 
+          - name: id
+            in: path
+            description: id of note category to be deleted
+            required: true
+            schema:
+              type: integer
+              example: 12
+               
+        responses:
+          '204':
+            description: No Content
+          '400':
+            description: Cannot take action on document that does not exist!.
+          '401':
+            description: Unauthorized.  
+            
+  /setup/brand-elements:
+    get:
+      tags:
+        - setup brand elements
+      summary: gets all brand elements.
+      security:
+        - bearerAuth: []
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/BrandElementsResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.        
+          
+    post:
+      tags:
+        - setup brand elements
+      summary: creates a brand element
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BrandElementsReqObj'
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrandElementsResObj' 
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized       
+          
+  /setup/brand-elements/{id}:        
+    get:
+      tags:
+        - setup brand elements
+      summary: gets a specific brand element
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of brand element to fetch
+          required: true
+          schema:
+            type: integer
+            example: 12
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrandElementsResObj' 
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.  
+          
+    patch:
+        tags:
+          - setup brand elements
+        summary: updates an existing brand element
+        security:
+          - bearerAuth: []
+        parameters: 
+          - name: id
+            in: path
+            description: id of brand element to be updated
+            required: true
+            schema:
+              type: integer
+              example: 12
+              
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrandElementsReqObj'
+               
+        responses:
+          '201':
+            description: successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/BrandElementsResObj' 
+    
+          '400':
+            description: Cannot take action on document that does not exist!.
+          '401':
+            description: Unauthorized.        
+          
+    delete:
+        tags:
+          - setup brand elements
+        summary: deletes a brand element.
+        security:
+          - bearerAuth: []
+        parameters: 
+          - name: id
+            in: path
+            description: id of brand element to be deleted
+            required: true
+            schema:
+              type: integer
+              example: 12
+               
+        responses:
+          '204':
+            description: No Content
+          '400':
+            description: Cannot take action on document that does not exist!.
+          '401':
+            description: Unauthorized.   
+            
+  /setup/payment-types:
+    get:
+      tags:
+        - setup payment types
+      summary: gets all payment types.
+      security:
+        - bearerAuth: []
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/PaymentTypesReqObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.        
+          
+    post:
+      tags:
+        - setup payment types
+      summary: creates a payment type
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentTypesReqObj'
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentTypesResObj' 
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized       
+          
+  /setup/payment-types/{id}:        
+    get:
+      tags:
+        - setup payment types
+      summary: gets a specific payment type
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of payment type to fetch
+          required: true
+          schema:
+            type: integer
+            example: 12
+             
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentTypesResObj' 
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.  
+          
+    patch:
+        tags:
+          - setup payment types
+        summary: updates an existing payment type
+        security:
+          - bearerAuth: []
+        parameters: 
+          - name: id
+            in: path
+            description: id of payment type to be updated
+            required: true
+            schema:
+              type: integer
+              example: 12
+              
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentTypesReqObj'
+               
+        responses:
+          '201':
+            description: successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/PaymentTypesResObj' 
+    
+          '400':
+            description: Cannot take action on document that does not exist!.
+          '401':
+            description: Unauthorized.        
+          
+    delete:
+        tags:
+          - setup payment types
+        summary: deletes a payment type.
+        security:
+          - bearerAuth: []
+        parameters: 
+          - name: id
+            in: path
+            description: id of payment type to be deleted
+            required: true
+            schema:
+              type: integer
+              example: 12
+               
+        responses:
+          '204':
+            description: No Content
+          '400':
+            description: Cannot take action on document that does not exist!.
+          '401':
+            description: Unauthorized.      
+            
+  #
+  # Visits routes
+  #        
+  /visits/summary:
+    get:
+      tags:
+        - visits aggregation
+      summary: gets visit summary stats (actual/planned visits, outlets visited, visit exceptions).
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'  
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/VisitSummaryResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.   
+          
+  /visits/schedules:
+    get:
+      tags:
+        - visits
+      summary: gets visit schedules
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'    
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/VisitsSchedulesPaginatedResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.      
+          
+  /visits/coverage/count:
+    get:
+      tags:
+        - visits aggregation
+      summary: gets visit coverage count
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'    
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/VisitsCoverageCountResObj'
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.  
+          
+  /visits/active-field-reps/count:
+    get:
+      tags:
+        - visits aggregation
+      summary: gets active field reps count
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'    
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/ActiveFieldRepsCountResObj'
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.          
+          
+  /visits/target-visits:
+    get:
+      tags:
+        - visits aggregation
+      summary: gets target visits count
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'    
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/TargetVisitsCountResObj'
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.                  
+          
+  /visits/exceptions:
+    get:
+      tags:
+        - visits
+      summary: gets visit exceptions
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'    
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/VisitsExceptionsPaginatedResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized. 
+          
+  /visits/active-field-reps:
+    get:
+      tags:
+        - visits
+      summary: gets active field reps
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'    
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/ActiveFieldRepsPaginatedResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized. 
+          
+  /visits/coverage:
+    get:
+      tags:
+        - visits
+      summary: gets outlets visited
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'    
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/VisitsCoveragePaginatedResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.       
+     
+  /visits/productive-visits:
+    get:
+      tags:
+        - visits
+      summary: gets productive visits (visits with sales)
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'    
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/ProductiveVisitsPaginatedResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.               
+          
+  /visits/outlet-ranking-by-sales:
+    get:
+      tags:
+        - visits
+      summary: gets outlet ranking by sales
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'    
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/OutletRankingBySalesPaginatedResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.                       
+          
+  /visits/recent:
+    get:
+      tags:
+        - visits
+      summary: gets most recent visits
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'    
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/RecentVisitsPaginatedResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.                               
+          
+  /visits/images:
+    get:
+      tags:
+        - visits
+      summary: gets visit images
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'    
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/VisitImagesPaginatedResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.                                       
+          
+  /visits/coverage/map:
+    get:
+      tags:
+        - visits
+      summary: gets visit map coverage
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'    
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/VisitMapCoverageResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.                                               
+          
+  /visits/productive-visits/count:
+    get:
+      tags:
+        - visits aggregation
+      summary: gets productive visits count
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'    
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/ProductiveVisitsCountResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.                       
+          
+  /visits/charts/productive-vs-non-productive-visits:
+    get:
+      tags:
+        - visits charts
+      summary: gets productive vs non-productive visits data for chart
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'    
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/ProductiveVsNonproductiveVisitsResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.                               
+          
+  /visits/charts/visits-performance-trend:
+    get:
+      tags:
+        - visits charts
+      summary: gets visits performance trend
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'    
+             
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/VisitPerformanceTrendResObj'
+                      
+        '400':
+          description: Bad Request.
+        '401':
+          description: Unauthorized.                                       
+          
+  #
+  # Outlet routes
+  #
+  /outlets/count:
+    get:
+      tags:
+        - outlets aggregation
+      summary: Returns a JSON object that contains total outlets filtered or unfiltered belonging to a company.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      
+      responses:
+        '200':
+          description: object containing required access token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message: 
+                    type: string
+                    example: 'outlets total count'
+                  data:
+                    $ref: '#/components/schemas/OutletsCountResObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.      
+          
+          
+  /outlets/most-covered:
+    get:
+      tags:
+        - outlets aggregation
+      summary: Returns a JSON object that contains the locations with the good oulets coverage and its count.
+      security: 
+      - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      
+      responses:
+        '200':
+          description: object containing outlets locations and its count
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message: 
+                    type: string
+                    example: 'most covered locations'
+                  data:
+                    $ref: '#/components/schemas/OutletsMostCovered' 
+                  
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+    
+  /outlets/least-covered:
+    get:
+      tags:
+        - outlets aggregation
+      summary: Returns a JSON objects that contains the locations with poor outlets coverage and its count.
+      security:
+      - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      
+      responses:
+        '200':
+          description: object containing outlets locations and its count
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message: 
+                    type: string
+                    example: 'least covered locations'
+                  data:
+                    $ref: '#/components/schemas/OutletsLeastCovered' 
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+    
+
+   
+          
+  /outlets/location:
+    get:
+      tags:
+        - outlets aggregation
+      summary: Returns a json object that contains details of all outlets in a locaton.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: location
+          in: query
+          description: id of the location
+          required: true
+          schema:
+            type: integer
+            example: 121
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: object containing outlets locations and its count
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message: 
+                    type: string
+                    example: 'outlets in the location'
+                  data:
+                    type: object
+                    properties:
+                      outlets:
+                        $ref: '#/components/schemas/OutletObj'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMetaObj' 
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+
+
+         
+  /outlets/growth-trend:
+    get:
+      tags:
+        - outlets aggregation
+      summary: Returns a JSON Object containing the growth trend of outlets.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - in: query
+          name: criteria
+          description: filter to group the growth (yearly, monthly or weekly)
+          required: true
+          schema:
+            type: string
+            enum: ['', YEARLY, MONTHLY, WEEKLY]
+            example: 'YEARLY'
+        
+        - in: query  
+          name: month
+          description: month of the year to be filtered by and is required if criteria is MONTHLY OR WEEKLY
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 12
+            example: 4
+        
+        - in: query  
+          name: year
+          description: year to be filtered by and is required if criteria is YEARLY, MONTHLY OR WEEKLY
+          required: false
+          schema:
+            type: string
+            example: '2021'
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+            
+      responses:
+        '200':
+          description: object containing the outlets growth.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code: 
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'outlets growth trend'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/OutletsGrowthResObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.        
+          
+  /outlets/{id}:
+    get:
+      tags:
+        - outlets
+      summary: Returns a json object that contains details of an outlet.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - name: id
+          in: path
+          description: id of the outlet
+          required: true
+          schema:
+            type: integer
+            example: 1337
+      responses:
+        '200':
+          description: object containing outlets locations and its count
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'outlet successfully returned'
+                  data:
+                    $ref: '#/components/schemas/OutletObj'
+                 
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+  
+  /outlets/{id}/type:
+    get:
+      tags:
+        - outlets
+      summary: Returns a JSON Object containing the type of an outlet
+      security:
+        - bearerAuth: []
+      parameters: 
+        - in: path
+          name: id
+          description: id of the outlet
+          required: true
+          schema:
+            type: integer
+            example: 5
+      responses:
+        '200':
+          description: object containing the outlet type
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'outlet type successfully returned'
+                  data:
+                    $ref: '#/components/schemas/OutletTypeResObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+  
+  /outlets/{id}/channel:
+    get:
+      tags:
+        - outlets
+      summary: Returns a JSON Object containing the channel of an outlet
+      security:
+        - bearerAuth: []
+      parameters: 
+        - in: path
+          name: id
+          description: id of the outlet
+          required: true
+          schema:
+            type: integer
+            example: 5
+      responses:
+        '200':
+          description: object containing the outlet channel
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'outlet channel successfully returned'
+                  data:
+                      $ref: '#/components/schemas/OutletChannelResObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+  
+  /outlets/email/{id}:
+
+    get:
+      tags:
+        - outlets
+      summary: Returns a JSON Object containing the contact email of an outlet
+      security:
+        - bearerAuth: []
+      parameters: 
+        - in: path
+          name: id
+          description: id of the outlet
+          required: true
+          schema:
+            type: integer
+            example: 5
+      responses:
+        '200':
+          description: object containing the outlet email
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: 
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'outlet contact email successfully returned'
+                  data:
+                    $ref: '#/components/schemas/OutletEmailResObj'
+               
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized. 
+          
+  /outlets/image/{id}:
+
+    get:
+      tags:
+        - outlets image
+      summary: Returns a JSON Object containing the image url of an outlet
+      security:
+        - bearerAuth: []
+      parameters: 
+        - in: path
+          name: id
+          description: id of the outlet
+          required: true
+          schema:
+            type: integer
+            example: 5
+      responses:
+        '200':
+          description: object containing the outlet image url
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message: 
+                    type: string
+                    example: 'outlet image'
+                  data:
+                    $ref: '#/components/schemas/OutletImageResObj'
+               
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+    
+
+  /outlets/shelf-images/{id}:
+
+    get:
+      tags:
+        - outlets images
+      summary: Returns a JSON Object containing the shelf images of an outlet 
+      security:
+        - bearerAuth: []
+      parameters: 
+        - in: path
+          name: id
+          description: id of the outlet
+          required: true
+          schema:
+            type: integer
+            example: 5
+      responses:
+        '200':
+          description: object containing the outlet's available shelf images
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message: 
+                    type: string
+                    example: 'outlet shelf images'
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        outlet_id:
+                          type: string
+                          example: 1335
+                        image_type:
+                          type: string
+                          example:  'shelf'
+                        description:
+                          type: string
+                          example: 'Sample visit image'
+                        filename: 
+                          type: string
+                          example: "https://fieldmaxpro-gdm.s3-us-west-2.amazonaws.com/11-2020/13111C486A.jpg"
+                        thumb_filename:
+                          type: string
+                          example: "https://fieldmaxpro-gdm.s3-us-west-2.amazonaws.com/11-2020/thumb_13111C486A.jpg"
+               
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+          
+          
+  /outlets/merchandising-images/{id}:
+
+    get:
+      tags:
+        - outlets images
+      summary: Returns a JSON Object containing the merchandising images of an outlet 
+      security:
+        - bearerAuth: []
+      parameters: 
+        - in: path
+          name: id
+          description: id of the outlet
+          required: true
+          schema:
+            type: integer
+            example: 5
+      responses:
+        '200':
+          description: object containing the outlet's available merchandising images
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message: 
+                    type: string
+                    example: 'outlet merchandizing image'
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        outlet_id:
+                          type: string
+                          example: 1335
+                        image_type:
+                          type: string
+                          example:  'merchandising'
+                        description:
+                          type: string
+                          example: 'Sample visit image'
+                        filename: 
+                          type: string
+                          example: "https://fieldmaxpro-gdm.s3-us-west-2.amazonaws.com/11-2020/13111C486A.jpg"
+                        thumb_filename:
+                          type: string
+                          example: "https://fieldmaxpro-gdm.s3-us-west-2.amazonaws.com/11-2020/thumb_13111C486A.jpg"
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+                              
+                    
+  /outlets/get-product-facing/{id}:
+
+    get:
+      tags:
+        - outlets
+      summary: Returns a JSON Object containing the product facing of a product
+      security:
+        - bearerAuth: []
+      parameters: 
+        - in: path
+          name: id
+          description: id of the outlet
+          required: true
+          schema:
+            type: integer
+            example: 5
+      responses:
+        '200':
+          description: object containing the outlet product's facing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'product facing successfully returned'
+                  data:
+                    $ref: '#/components/schemas/OutletProductFacingResObj'
+               
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+         
+  /outlets/products/{id}:
+
+    get:
+      tags:
+        - outlets
+      summary: Returns a JSON Object containing the available products of an outlet 
+      security:
+        - bearerAuth: []
+      parameters: 
+        - in: path
+          name: id
+          description: id of the outlet
+          required: true
+          schema:
+            type: integer
+            example: 5
+      responses:
+        '200':
+          description: object containing the outlet's available products
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'outlet products'
+                  data:
+                    $ref: '#/components/schemas/OutletProductAvailabilityResObj'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMetaObj' 
+               
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+                 
+  /outlets/geo-location/{id}:
+
+    get:
+      tags:
+        - outlets
+      summary: Returns a JSON Object containing the geo-location co-ordinates of an outlet
+      security:
+        - bearerAuth: []
+      parameters: 
+        - in: path
+          name: id
+          description: id of the outlet
+          required: true
+          schema:
+            type: integer
+            example: 5
+      responses:
+        '200':
+          description: object containing the outlet's geo-location
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'outlet geolocation'
+                  data:
+                    type: object
+                    properties:
+                      id: 
+                        type: integer
+                        example: 5
+                      outlet_name:
+                        type: string
+                        example: 'Immaculate Store'
+                      location:
+                        type: string
+                        example: 'Kubwa'
+                      geo-location:
+                        type: string
+                        example: "[7.3167383,9.1452654]"
+               
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+              
+  /outlets/get-map-distribution:
+
+    get:
+      tags:
+        - outlets
+      summary: Returns a JSON Object containing the map distribution of outlets
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: object containing an array of map's distribution of outlets
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'outlets map distribution'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/OutletMapDistributionResObj'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMetaObj' 
+                 
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.        
+          
+  
+  /outlets/distribution-type:
+    get:
+      tags:
+        - outlets aggregation
+      summary: Returns a JSON Object containing the distribution of outlets with reference to their type.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: object containing the outlets type distribution
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                      type: string
+                      example: 'success'
+                  code: 
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'outlets distribution by type'
+                  data:
+                    type: object
+                    properties:
+                      outlets_distribution:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/OutletTypeDistributionResObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+      
+        
+  /outlets/distribution-channel:
+    get:
+      tags:
+        - outlets aggregation
+      summary: Returns a JSON Object containing the distribution of outlets with reference to their channel.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: object containing the outlets channel distribution
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                      type: string
+                      example: 'success'
+                  code: 
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'outlets distribution by channel'
+                  data:
+                    type: object
+                    properties:
+                      outlets_distribution:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/OutletChannelDistributionResObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+  /outlets/{id}/outlet-contact:
+    get:
+      tags:
+        - outlets
+      summary: Returns a JSON Object containing the outlet's contact.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - in: path
+          name: id
+          description: id of the outlet
+          required: true
+          schema:
+            type: integer
+            example: 5
+      responses:
+        '200':
+          description: object containing the outlets contact
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'outlet contact'
+                  data:
+                    $ref: '#/components/schemas/OutletContactResObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+  /outlets/{id}/outlet-contacts:
+    get:
+      tags:
+        - outlets
+      summary: Returns a JSON Object containing a list of the outlet's contacts.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - in: path
+          name: id
+          description: id of the outlet
+          required: true
+          schema:
+            type: integer
+            example: 5
+      responses:
+        '200':
+          description: object containing the outlet's contacts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'outlet contacts'
+                  data:
+                    $ref: '#/components/schemas/OutletContactsResObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+          
+  /outlets/bulk-create:
+    post:
+      tags:
+        - outlets
+      summary: upload a list of outlets to be created via a csv template file.
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Outlets have been successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: 
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 201
+                  message: 
+                    type: string
+                    example: 'operation successful'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+        '500':
+          description: Internal server error while creating outlets
+
+  /outlets/bulk-edit:
+    patch:
+      tags:
+        - outlets
+      summary: upload a list of outlets to be edited via a csv template file.
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Outlets have been successfully edited
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: 
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 201
+                  message: 
+                    type: string
+                    example: 'operation successful'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+        '500':
+          description: Internal server error while editing outlets
+        
+  
+      
+      
+#
+# Calendar routes
+#
+  
+  /calendar/details:
+    get:
+      tags:
+        - schedules
+      summary: get the details of the schedules for a selected date range.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: object containing the calendar details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                      type: string
+                      example: 'success'
+                  code: 
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'calendar details'
+                  data:
+                    $ref: '#/components/schemas/CalendarDetailsResObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+
+  /calendar/schedules:
+    get:
+      tags:
+        - schedules
+      summary: get the list of schedules and their respective detals for a selected date range.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: object containing the schedules
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                      type: string
+                      example: 'success'
+                  code: 
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'schedule list'
+                  data:
+                    $ref: '#/components/schemas/ScheduleListResObj'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMetaObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+  /calendar/schedule:
+    post:
+      tags:
+        - schedules
+      summary: create a schedule for a field rep.
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateScheduleObj'
+            
+      responses:
+        '201':
+          description: object containing the created schedule
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateScheduleResObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+
+  /calendar/upload-schedules:
+    post:
+      tags:
+        - schedules
+      summary: upload a list of schedules to be created via a csv template file.
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Schedules have been successfully created
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+        '500':
+          description: Internal server error while creating schedules
+
+  #
+  # Product Availability Routes
+  #
+  
+  /products/summary:
+    get:
+      tags:
+        - products 
+      summary: Returns a JSON Object containing the availability summary.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: object containing the availability summary
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'products summary'
+                  data:
+                    type: object
+                    properties:
+                      outlets_with_products:
+                        type: integer
+                        example: 47
+                      outlets_without_products:
+                        type: integer
+                        example: 167
+                      availability_share:
+                        type: number
+                        example: 21.962616822429908
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+  
+  /products/product-availability-share:
+    get:
+      tags:
+        - products 
+      summary: Returns a JSON Object containing the product availability share.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: object containing the product availability share
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'products availability share'
+                  data:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                            type: object
+                            properties:
+                              product_name:
+                                type: string
+                                example: "Accu-Chek Active 25 Str."
+                              product_description:
+                                type: string
+                                example: "Accu-Chek Active 25 Str."
+                              brand_name:
+                                type: string
+                                example: "Anix Limited"
+                              brand_color:
+                                type: string
+                                example: "#2c3175"
+                              outlets_count: 
+                                type: string
+                                example: "80"
+                  meta:
+                    $ref: '#/components/schemas/PaginationMetaObj'    
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+   
+          
+  /products/brand-availability-share:
+    get:
+      tags:
+        - products
+      summary: Returns a JSON Object containing the brand availability share.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: object containing the brand availability share
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'brand availability share'
+                  data:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                            type: object
+                            properties:
+                              brand_name:
+                                type: string
+                                example: "Anix Limited"
+                              brand_color:
+                                type: string
+                                example: "#2c3175"
+                              outlets_count: 
+                                type: string
+                                example: "80"
+                  meta:
+                    $ref: '#/components/schemas/PaginationMetaObj'               
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+          
+  /products/top-competitor-products:
+    get:
+      tags:
+        - products
+      summary: Returns a JSON Object containing the top competitor products.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: object containing the top competitor products
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'top competitor products'
+                  data:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                            type: object
+                            properties:
+                              id: 
+                                type: integer
+                                example: 450
+                              product_name: 
+                                type: string
+                                example: "Competitor 1"
+                              product_description: 
+                                type: string
+                                example: "Competitor 1"
+                              brand_name:
+                                type: string
+                                example: "Anix Limited"
+                              brand_color:
+                                type: string
+                                example: "#2c3175"
+                              outlets_count: 
+                                type: string
+                                example: "5"
+                              quantity: 
+                                type: string
+                                example: "17"
+                              facing: 
+                                type: string
+                                example: "8"
+                      meta:
+                        $ref: '#/components/schemas/PaginationMetaObj'          
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+  
+  /products/top-available-products:
+    get:
+      tags:
+        - products
+      summary: Returns a JSON Object containing the top available products.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: object containing the top available products
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'top available products'
+                  data:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                            type: object
+                            properties:
+                              id: 
+                                type: integer
+                                example: 115
+                              product_name: 
+                                type: string
+                                example: "Mintal 450"
+                              brand_name:
+                                type: string
+                                example: "Anix Limited"
+                              brand_color:
+                                type: string
+                                example: "#2c3175"
+                              outlets_count: 
+                                type: string
+                                example: "80"
+                              quantity: 
+                                type: string
+                                example: "17"
+                              facing: 
+                                type: string
+                                example: "8"
+                      meta:
+                        $ref: '#/components/schemas/PaginationMetaObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+    
+    
+    
+  /products/availability-statistics:
+    get:
+      tags:
+        - products
+      summary: Returns a JSON Object containing the availability statistics.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: object containing the availability statistics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'availability statistics'
+                  data:
+                    type: object
+                    properties:
+                  
+                        uniquely_visited_outlets:
+                          type: integer
+                          example: 2
+                        availability_summary:
+                          type: object
+                          properties:
+                            outlets_with_products:
+                              type: integer
+                              example: 4
+                            outlets_without_products:
+                              type: integer
+                              example: 43
+                        percentage_of_outlets_visted_to_outlets_with_products:
+                          type: number
+                          example: 9.30232558139535
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+  
+  
+  
+  /products/product-availability-map:
+    get:
+      tags:
+        - products
+      summary: Returns a JSON Object containing the availability map.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: object containing the product availability map
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'product availability map'
+                  data:
+                    type: object
+                    properties:
+                      product_availability_map:
+                        type: array
+                        items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 105
+                              state:
+                                type: string
+                                example: "Lagos"
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+          
+  
+  /products/availability-share-map:
+    get:
+      tags:
+        - products
+      summary: Returns a JSON Object containing the availability share map for all states.
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: object containing the availability share map for all states
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'availability share map'
+                  data:
+                    type: object
+                    properties:
+                      availability_share_map:
+                        type: array
+                        items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 105
+                              state:
+                                type: string
+                                example: "Lagos"
+                              availability_statistics:
+                                type: object
+                                properties:
+                                  result:
+                                    type: object
+                                    properties:
+                                      uniquely_visited_outlets:
+                                        type: integer
+                                        example: 0
+                                  availability_summary:
+                                    type: object
+                                    properties:
+                                      outlets_with_products:
+                                        type: integer
+                                        example: 4
+                                      outlets_without_products:
+                                        type: integer
+                                        example: 43
+                                  percentage_of_outlets_visted_to_outlets_with_products:
+                                    type: number
+                                    example: 9.30232558139535  
+                            
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+          
+          
+  #
+  #summary routes
+  #   
+  
+  /summary/visit-exceptions:
+    get:
+      tags: 
+        - summary
+      summary: Returns a JSON containing the total visit exceptions 
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties :
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'planned vs actual visits summary'
+                  data:
+                    type: object
+                    properties:
+                      visitExceptions :
+                          type: object
+                          properties:
+                            value:
+                              type: integer
+                              example: 62
+                            percentage:
+                              type: integer
+                              example: 11.83206106870229
+                
+          description: visit exception successfully returned
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+        '500':
+          description: Internal server error while getting visit exceptions
+  
+  
+  /summary/planned-vs-actual-visits:
+    get:
+      tags: 
+        - summary
+      summary: Returns a JSON containing the total planned and actual visits 
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties :
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'visit exceptions successfully retreived'
+                  data:
+                    type: object
+                    properties:
+                      actualVsPlannedVisits :
+                        type: object
+                        properties:
+                          actualVisits:
+                            type: integer
+                            example: 524
+                          plannedVisits:
+                            type: integer
+                            example: 933
+                          visitCompletionPercentage:
+                            type: integer
+                            example: 56.162915326902464
+          description: visits summary for planned vs actual successfully returned
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+        '500':
+          description: Internal server error while getting actual vs planned visits summary.
+  
+  /summary/actual-vs-target-visits:
+    get:
+      tags: 
+        - summary
+      summary: Returns a JSON containing the total target and actual visits 
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties :
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'actual vs target visits summary'
+                  data:
+                    type: object
+                    properties:
+                      actualVsTargetVisits :
+                          type: object
+                          properties:
+                            actualVisits:
+                              type: integer
+                              example: 524
+                            targetVisits:
+                              type: integer
+                              example: 213
+
+          description: visits summary for actual vs target successfully returned
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+        '500':
+          description: Internal server error while getting actual vs target visits summary.
+ 
+  /summary/total-sales:
+    get:
+      tags: 
+        - summary
+      summary: Returns a JSON containing the total sales and percentage to orders 
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties :
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'total sales summary'
+                  data:
+                    type: object
+                    properties:
+                      total_sales:
+                        type: integer
+                        example: 65293605
+                      percentage:
+                        type: integer
+                        example: 2.0849487378306195
+
+          description: total sales and percentage to orders successfully returned
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+        '500':
+          description: Internal server error while getting total sales summary.
+ 
+  /summary/outlet-growth:
+    get:
+      tags: 
+        - summary
+      summary: Returns a JSON containing the weekly outlet growth trend   
+      security:
+        - bearerAuth: []
+      parameters: 
+        - in: query
+          name: criteria
+          description: filter to group the growth (yearly, monthly or weekly)
+          required: true
+          schema:
+            type: string
+            enum: [ WEEKLY,MONTHLY,YEARLY]
+            example: 'WEEKLY'
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+        
+        - in: query  
+          name: month
+          description: month of the year to be filtered by and is required if criteria is MONTHLY OR WEEKLY
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 12
+            example: 4
+        
+        - in: query  
+          name: year
+          description: year to be filtered by and is required if criteria is YEARLY, MONTHLY OR WEEKLY
+          required: false
+          schema:
+            type: string
+            example: '2021'
+            
+      responses:
+        '200':
+          description: object containing the outlets growth.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties :
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'outlet growth summary'
+                  data:
+                    $ref: '#/components/schemas/OutletsGrowthResObj'
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.  
+          
+          
+  /summary/get-total-payments:
+    get:
+      tags: 
+        - summary
+      summary: Returns a JSON containing the total payment and percentage to sales
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties :
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'total payment summary'
+                  data:
+                    type: object
+                    properties:
+                      total_payments:
+                        type: integer
+                        example: 54029229
+                      percentage_to_sales:
+                        type: integer
+                        example: 82.74811752238217
+
+          description: total payment and percentage to sales successfully returned
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+        '500':
+          description: Internal server error while getting total payments summary.
+
+
+  /summary/get-total-payments-balance:
+    get:
+      tags: 
+        - summary
+      summary: Returns a JSON containing the total payments balance
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties :
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'total payment balance summary'
+                  data:
+                    properties:
+                      total_balance:
+                        type: integer
+                        example: 11264376
+          description: total payments balance successfully returned
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+        '500':
+          description: Internal server error while getting total payments balance summary.
+
+  
+  /summary/productive-vs-non-productive-visits:
+    get:
+      tags: 
+        - summary
+      summary: Returns a JSON containing the productive to non-productive visits
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties :
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'productive vs non-productive visits summary'
+                  data:
+                    $ref: '#/components/schemas/ProductiveVsNonproductiveVisitsResObj'
+          description: total productive to non-productive visits summary
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+        '500':
+          description: Internal server error while getting total productive visits summary.
+  
+  
+  /summary/product-availability-summary:
+    get:
+      tags: 
+        - summary
+      summary: Returns a JSON containing the products availability summary
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'product availability summary'
+                  data: 
+                    type: object
+                    properties:
+                      outlets_with_products:
+                        type: integer
+                        example: 112
+                      outlets_without_products:
+                        type: integer
+                        example: 102
+                      availability_share:
+                        type: integer
+                        example: 52.336448598130836
+          description: products availability summary
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+        '500':
+          description: Internal server error while getting products availability share summary.
+        
+          
+  /summary/availability-statistics:
+    get:
+      tags: 
+        - summary
+      summary: Returns a JSON containing the products availability statistics
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          description: object containing the availability statistics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties :
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'productive availability statistics'
+                  data:
+                    type: object
+                    properties:
+                        uniquely_visited_outlets:
+                          type: integer
+                          example: 2
+                        availability_summary:
+                          type: object
+                          properties:
+                            outlets_with_products:
+                              type: integer
+                              example: 4
+                            outlets_without_products:
+                              type: integer
+                              example: 43
+                        percentage_of_outlets_visted_to_outlets_with_products:
+                          type: number
+                          example: 9.30232558139535
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+
+  /summary/visits-map-data:
+    get:
+      tags: 
+        - summary
+      summary: Returns a JSON containing the map data for outlets visited
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties :
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'outlets visit map data '
+                  data:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items: 
+                          type: object
+                          properties:
+                            outlet_id:
+                              type: string
+                              example: '112'
+                            outlet_name:
+                              type: string
+                              example: 'Praise stores'
+                            fieldrep_id:
+                              type: integer
+                              example: 30
+                            fieldrep_name:
+                              type: string
+                              example: 'Etuk Mfon'
+                            geolocation:
+                              type: string
+                              example: "[3.2849799,6.6206138]"
+                            date:
+                              type: string
+                              example: "2021-01-28T09:23:19.000Z"
+                            duration:
+                              type: string
+                              example: "451"
+                      meta:
+                        $ref: '#/components/schemas/PaginationMetaObj' 
+          description: visits map data successfully returned
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+        '500':
+          description: Internal server error while getting visits map data.
+
+  /summary/sales-map-data:
+    get:
+      tags: 
+        - summary
+      summary: Returns a JSON containing the map data for sales
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties :
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'outlets sales map data'
+                  data:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items: 
+                          type: object
+                          properties:
+                            outlet_id:
+                              type: string
+                              example: '112'
+                            outlet_name:
+                              type: string
+                              example: 'Praise stores'
+                            fieldrep_id:
+                              type: integer
+                              example: 30
+                            fieldrep_name:
+                              type: string
+                              example: 'Etuk Mfon'
+                            sales_value:
+                              type: integer
+                              example: 234000
+                            geolocation:
+                              type: string
+                              example: "[3.2849799,6.6206138]"
+                            date:
+                              type: string
+                              example: "2021-01-28T09:23:19.000Z"
+                            duration:
+                              type: string
+                              example: "451"
+                      meta:
+                        $ref: '#/components/schemas/PaginationMetaObj' 
+          description: sales map data successfully returned
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+        '500':
+          description: Internal server error while getting sales map data.
+  
+  /summary/visits-coverage:
+    get:
+      tags: 
+        - summary
+        - visits coverage
+      summary: Returns a JSON containing the total visits coverage
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties :
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'total visits'
+                  data:
+                    type: object
+                    properties:
+                      outlets_covered:
+                        type: integer
+                        example: 147
+          description: total visits returned
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+        '500':
+          description: Internal server error while getting visits coverage  
+                 
+  /summary/active-field-reps:
+    get:
+      tags: 
+        - summary
+        - active sales rep
+      summary: Returns a JSON containing active sales reps
+      security:
+        - bearerAuth: []
+      parameters: 
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/outletType'
+        - $ref: '#/components/parameters/outletChannel'
+        - $ref: '#/components/parameters/distributor'
+        - $ref: '#/components/parameters/salesTeam'
+        - $ref: '#/components/parameters/date'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/limit'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties :
+                  status:
+                    type: string
+                    example: 'success'
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'active-field-reps'
+                  data:
+                    type: object
+                    properties:
+                      items:
+                        type: array
+                        items: 
+                          type: object
+                          properties:
+                            user_id:
+                              type: integer
+                              example: 29
+                            first_name:
+                              type: string
+                              example: 'Ogechukwu'
+                            last_name:
+                              type: string
+                              example: 'Oside'
+                            outlets_visited:
+                              type: string
+                              example: '158'
+                            locations:
+                              type: string
+                              example: '158'
+                            total_time_spent_in_seconds:
+                              type: integer
+                              example: 188521
+                            sales:
+                              type: integer
+                              example: 6770082
+                            quantity_in_units:
+                              type: string
+                              example: "7908"
+                            status:
+                              type: integer
+                              example: 1
+                      meta:
+                        $ref: '#/components/schemas/PaginationMetaObj'       
+          description: active sales reps returned successfully
+        '400':
+          description: Cannot take action on document that does not exist!.
+        '401':
+          description: Unauthorized.
+        '500':
+          description: Internal server error while getting active sales rep.
+
+components:
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      
+  parameters:
+    parentLocation:
+      name: parentlocationid
+      in: query
+      description: id of parent location to filter by
+      required: false
+      schema:
+        type: integer
+        example: 105  
+    locationName:   
+      name: locationname
+      in: query
+      description: location name to filter by
+      required: false
+      schema:
+        type: string
+        example: 'volta'
+    locationType:    
+      name: locationtypesid
+      in: query
+      description: id of location type to filter by
+      required: false
+      schema:
+        type: integer
+        example: 8
+    location:    
+      name: location
+      in: query
+      description: id of location to filter by
+      required: false
+      schema:
+        type: integer
+        example: 131    
+    outletType:    
+      name: outletType
+      in: query
+      description: id of outletType to filter by
+      required: false
+      schema:
+        type: integer
+        example: 5  
+    outletChannel:    
+      name: outletChannel
+      in: query
+      description: id of outletChannel to filter by
+      required: false
+      schema:
+        type: integer
+        example: 4    
+    user:    
+      name: user
+      in: query
+      description: id of user to filter by
+      required: false
+      schema:
+        type: integer
+        example: 29
+    distributor:    
+      name: distributor
+      in: query
+      description: id of distributor to filter by
+      required: false
+      schema:
+        type: integer
+        example: 2  
+    salesTeam:    
+      name: salesTeam
+      in: query
+      description: id of salesteam to filter by
+      required: false
+      schema:
+        type: integer
+        example: 2 
+    products:    
+      name: products
+      in: query
+      description: id of product to filter by
+      required: false
+      schema:
+        type: integer
+        example: 2 
+    date:    
+      name: date
+      in: query
+      description: date range to filter by expected in fomart "YYYY-MM-DD,YYYY-MM-DD" with the start date on the left and the end date on the right
+      required: false
+      schema:
+        type: string
+        example: '2020-11-01,2020-11-05'    
+    page:    
+      name: page
+      in: query
+      description: page number to view
+      required: false
+      schema:
+        type: integer
+        example: 2   
+    limit:    
+      name: limit
+      in: query
+      description: number of results per page
+      required: false
+      schema:
+        type: integer
+        example: 8
+    product:
+      name: products
+      in: query
+      description: product id to filter by
+      required: false
+      schema:
+        type: integer
+        example: 116
+      
+  schemas:
+    AccessToken:
+      properties:
+        access_token:
+          type: string
+      required:  
+        - access_token
+        
+    UserObject:
+      properties:
+        id:
+          type: integer
+        userRoleId:
+          type: string
+        fieldRepUser:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        emailAddress:
+          type: string
+        locationId:
+          type: string
+        locationType:
+          type: string
+        fmpCompanyId:
+          type: string
+          
+    LoginReqObjMobile:
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        versionnumber:
+          type: string
+        googledeviceid:
+          type: string
+        deviceimei:
+          type: string
+        devicename:
+          type: string
+          
+    AddCompanyReqObj:
+      properties:
+        brandname:
+          type: string
+          example: 'new test company'
+        current:
+          type: integer
+          example: 1
+        brandcolor:
+          type: string
+          example: '#fff'
+          
+    UpdateCompanyReqObj:
+      properties:
+        brandname:
+          type: string
+          example: 'Test Company'
+        brandcolor:
+          type: string     
+          example: '#fff'
+    
+    CompanyResObj:
+      properties:
+        id:
+          type: integer
+          example: 21
+        brandName:
+          type: string
+          example: 'Anix Limited'
+        current:
+          type: integer 
+          example: 1
+        brandColor:
+          type: string
+          example: '#fff'
+        fmpCompanyId:
+          type: integer
+          example: 10002
+          
+    DistributorReqObj:
+      properties:
+        distributorname:
+          type: string
+          example: 'Anix Limited'
+        distributordescription:
+          type: string
+          example: 'Anix Limited description'  
+        operatinglocation:
+          type: integer
+          example: 105
+        distributorerpcode:
+          type: string
+          example: 'sap-345677'      
+               
+          
+    DistributorResObj:
+      properties:
+        id:
+          type: integer
+          example: 21
+        distributorname:
+          type: string
+          example: 'Anix Limited'
+        distributordescription:
+          type: string
+          example: 'Anix Limited description'  
+        operatinglocation:
+          type: integer
+          example: 105
+        parentdistributorid:
+          type: integer
+          example: 14  
+        distributorerpcode:
+          type: string
+          example: 'sap-345677'  
+        fmpCompanyId:
+          type: integer
+          example: 10002
+          
+    
+    OutletsCountResObj:
+      properties:
+        outlets_count:
+          type: integer
+          example: 186
+     
+    OutletObj:
+      properties:
+        outlet:
+          $ref: '#/components/schemas/OutletResObj'
+          
+          
+          
+          
+    OutletResObj:
+      properties:
+        id:
+          type: integer
+          example: 6413
+        outlet_name:
+          type: string
+          example: "Wendy's mart"
+        contact_name:
+          type: string
+          example: "Wendy Mart"
+        contact_phone:
+          type: string
+          example: '09066331244'
+        contact_email:
+          type: string
+          example: 'mfon@papyrus.com.ng'
+        field_rep: 
+          type: string
+          example: "Wendy Etafo"
+        outlet_type: 
+          type: string
+          example: 'Retailers'
+        outlet_channel:
+          type: string
+          example: 'Neighbourhood'
+        location:
+          type: string
+          example: "Magodo Phase 2"
+          
+    OutletsCoverageResObj:
+      properties:
+        outlet_town:
+          type: string
+          example: 'Lagos '
+        outlets_location:
+          type: string
+          example: "Ago Palace - Lagos"
+        location_id:
+          type: integer
+          example: 108
+        outlets_count:
+          type: string 
+          example: '25'
+          
+    OutletsMostCovered:
+      properties:
+        most_covered_locations:
+            type: array
+            items:
+              $ref: '#/components/schemas/OutletsCoverageResObj'
+        meta:
+          $ref: '#/components/schemas/PaginationMetaObj' 
+    
+    
+    OutletsLeastCovered:
+      properties:
+        least_covered_locations:
+            type: array
+            items:
+              $ref: '#/components/schemas/OutletsCoverageResObj'
+        meta:
+          $ref: '#/components/schemas/PaginationMetaObj'  
+    
+    
+    OutletTypeResObj:
+      properties:
+        outlets_id:
+          type: integer
+          example: 5
+        outlets_outletname:
+          type: string
+          example: 'Immaculate Store'
+        outlettype_id:
+          type: integer
+          example: 4
+        outlet_type:
+          type: string
+          example: "Supermarket"
+          
+    OutletChannelResObj:
+      properties:
+        outlets_id:
+          type: integer
+          example: 5
+        outlets_outletname:
+          type: string
+          example: 'Immaculate Store'
+        outletchannel_id:
+          type: integer
+          example: 1
+        outlet_channel:
+          type: string
+          example: "Retail"
+          
+    OutletTypeDistributionResObj:
+      properties:
+        count:
+          type: string
+          example: '68'
+        outlet_type:
+          type: string
+          example: 'Wholesalers'
+          
+    
+    OutletChannelDistributionResObj:
+      properties:
+        count:
+          type: string
+          example: '186'
+        outlet_channel:
+          type: string
+          example: 'Neighbourhood'
+          
+    
+    OutletsGrowthResObj:
+      required: ['outlets_Count', 'month', 'quarter', 'year']
+      properties:
+        outlet_growth_trend:
+          type: object
+          properties:
+            growth: 
+              type: array
+              items: 
+                type: string
+                example: "35"
+            label:
+              type: array
+              items:
+                type: integer
+                example: 2021
+            
+          
+    OutletEmailResObj:
+      properties:
+        id:
+          type: integer
+          example: 5
+        outlet_name:
+          type: string
+          example: 'Immaculate Store'
+        email:
+          type: string
+          example: 'outlets@test.com'
+          
+    OutletImageResObj:
+      properties:
+        id:
+          type: integer
+          example: 5
+        outlet_name:
+          type: string
+          example: 'Praise Super Mart'
+        image:
+          type: string
+          example: 'https://fieldmaxpro-gdm.s3-us-west-2.amazonaws.com/09-2020/2209EAA427.jpg'
+          
+    OutletContactResObj:
+      properties:
+        id:
+          type: integer
+          example: 5
+        outlet_name:
+          type: string
+          example: 'Mfon Stores'
+        contact_name:
+          type: string
+          example: 'Mr Imma'
+        contact_phone:
+          type: string
+          example: '08037516750'
+          
+    OutletProductFacingResObj:
+      properties:
+        product_id:
+          type: integer
+          example: 111
+        product_name:
+          type: string
+          example: "INSUMAN COMBO 1000IU/10ML INJSU"
+        product_facing:
+          type: integer
+          example: 0
+          
+    OutletMapDistributionResObj:
+      properties:
+        product_id:
+          type: integer
+          example: 111
+        outlet_name:
+          type: string
+          example: 'Demo Alh. Nuru Outlet'
+        geo_location:
+          type: string
+          example: "[3.2798375,6.6203598]"
+          
+    OutletContactsResObj:
+      properties:
+        contacts:
+          type: array
+          items:
+            $ref : '#/components/schemas/OutletContactsObj'
+            
+          
+    OutletContactsObj:
+      properties:
+        id:
+          type: integer
+          example: 1524
+        outlet_name:
+          type: string
+          example: "Ojugbo Holdings Ltd"
+        title:
+          type: string
+          example: 'Dr.'
+        last_name:
+          type: string
+          example: 'Acholonu'
+        other_names:
+          type: string
+          example: 'Kufrey James'
+        phone_number:
+          type: string
+          example: '08453123456'
+        gender:
+          type: string
+          example: 'M'
+        image_url:
+          type: string
+          example: 'https://fieldmaxpro-gdm.s3-us-west-2.amazonaws.com/09-2020/2209EAA427.jpg'
+        
+          
+    OutletProductAvailabilityResObj:
+      properties:
+        outlet_info:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 6413
+            outlet_name:
+              type: string
+              example: "Wendy's mart"
+        total_products: 
+          type: integer
+          example: 14
+        outlet_products:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 111
+              product_name:
+                type: string
+                example: "INSUMAN COMBO 1000IU/10ML INJSU"
+              quantity_available:
+                type: integer
+                example: 0
+              unit_price:
+                type: integer
+                example: 500
+              retail_price:
+                type: integer
+                example: 450
+              date_added:
+                type: string
+                example: "2021-06-17T10:55:44.000Z"
+          
+    CalendarDetailsResObj:
+      properties:
+        date_range:
+          type: string
+          example: '2021-03-28,2021-05-09'
+        scheduled_visits:
+          type: integer
+          example: 14
+        completed_visits:
+          type: integer
+          example: 8
+        total_unvisited:
+          type: integer
+          example: 6
+          
+    ScheduleListObj:
+      properties:
+        first_name:
+          type: string
+          example: 'Oluwaseun'
+        last_name:
+          type: string
+          example: 'Oludele'
+        outlet_name:
+          type: string
+          example: 'Ambrose Nigeria Limited'
+        schedule_date:
+          type: string
+          example: '2021-05-07T08:39:00.000Z'
+        visited:
+          type: integer
+          example: 1
+    
+    ScheduleListResObj:
+      properties:
+        schedule_list:
+          type: array
+          items:
+            $ref : '#/components/schemas/ScheduleListObj'
+      
+    CreateScheduleObj:
+      properties:
+        fieldStaffId:
+          type: string
+          example: '49'
+        outletId:
+          type: string
+          example: 1
+        scheduleDate:
+          type: string
+          example: "2021-06-17 13:03:00"
+          
+    PaginationMetaObj:
+      properties:
+        totalItems:
+          type: integer
+          example: 49
+        itemCount:
+          type: integer
+          example: 1
+        itemsPerPage:
+          type: integer
+          example: 1   
+        totalPages:
+          type: integer
+          example: 1 
+        currentPage:
+          type: integer
+          example: 1   
+          
+    AddLocationReqObj:
+      properties:
+        locationname:
+          type: string
+          example: 'volta' 
+        locationtypesid:
+          type: integer
+          example: 1 
+        parentlocationid:
+          type: integer
+          example: 1  
+          
+    UpdateLocationReqObj:
+      properties:
+        locationname:
+          type: string
+          example: 'volta' 
+        locationtypesid:
+          type: integer
+          example: 1 
+        parentlocationid:
+          type: integer
+          example: 1       
+          
+    LocationResObj:
+      properties:
+        id:
+          type: integer
+          example: 49
+        fmpcompanyid:
+          type: integer
+          example: 1
+        locationname:
+          type: string
+          example: 'volta' 
+        locationtypesid:
+          type: integer
+          example: 1 
+        parentlocationid:
+          type: integer
+          example: 1   
+        stateid:
+          type: integer
+          example: 1   
+    
+    CreateScheduleResObj:
+      properties:
+        id:
+          type: integer
+          example: 24826
+        outlet:
+          type: integer
+          example: 1
+        fmpCompanyId:
+          type: integer
+          example: 10004
+        fieldRepStaff:
+          type: integer
+          example: 49
+        scheduleDate:
+          type: string
+          example: "2021-06-17T12:03:00.000Z"
+          
+    LocationPaginatedResObj:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref : '#/components/schemas/LocationResObj'
+        meta:
+          $ref: '#/components/schemas/PaginationMetaObj'
+          
+    SaleTeamReqObj:
+      properties:
+        teamname:
+          type: string
+          example: 'volta' 
+        teamdescription:
+          type: string
+          example: 'volta description'
+          
+    SaleTeamResObj:
+      properties:
+        id:
+          type: integer
+          example: 49
+        fmpcompanyid:
+          type: integer
+          example: 1
+        teamname:
+          type: string
+          example: 'volta' 
+        teamdescription:
+          type: string
+          example: 'volta description'  
+        teamsalestarget:
+          type: integer
+          example: 177 
+        teampskutarget:
+          type: integer
+          example: 20   
+        teamoutlettarget:
+          type: integer
+          example: 100   
+        stateid:
+          type: integer
+          example: 1
+          
+    SetupOutletChannelReqObj:
+      properties:
+        outletchannelname:
+          type: string
+          example: 'Neighbourhood' 
+        outletchanneldescription:
+          type: string
+          example: 'Neighbourhood'      
+          
+    SetupOutletChannelResObj:
+      properties:
+        id:
+          type: integer
+          example: 49
+        fmpcompanyid:
+          type: integer
+          example: 10002
+        outletchannelname:
+          type: string
+          example: 'Neighbourhood' 
+        outletchanneldescription:
+          type: string
+          example: 'Neighbourhood'
+          
+    SetupOutletTypeReqObj:
+      properties:
+        outlettypename:
+          type: string
+          example: 'Store' 
+        outlettypedescription:
+          type: string
+          example: 'Store'
+        outletchannelid:
+          type: integer
+          example: 4  
+          
+    SetupOutletTypeResObj:
+      properties:
+        id:
+          type: integer
+          example: 49
+        fmpcompanyid:
+          type: integer
+          example: 10002
+        outlettypename:
+          type: string
+          example: 'Store' 
+        outlettypedescription:
+          type: string
+          example: 'Store'
+        outletchannelid:
+          type: integer
+          example: 4
+        monthlyvisits:
+          type: integer
+          example: 49
+        minimumpsku:
+          type: integer
+          example: 49
+        minimumnbsku:
+          type: integer
+          example: 49
+        minimumposm:
+          type: integer
+          example: 49 
+          
+    ContactTitleReqObj:
+      properties:
+        titlename:
+          type: string
+          example: 'Dr' 
+        longdescription:
+          type: string
+          example: 'Doctor'      
+          
+    ContactTitleResObj:
+      properties:
+        id:
+          type: integer
+          example: 49
+        fmpcompanyid:
+          type: integer
+          example: 10002
+        titlename:
+          type: string
+          example: 'Dr' 
+        longdescription:
+          type: string
+          example: 'Doctor'
+          
+    ContactCategoryReqObj:
+      properties:
+        contactcategoryname:
+          type: string
+          example: 'Doctors' 
+        contactcategorydescription:
+          type: string
+          example: 'Doctor Contacts'      
+          
+    ContactCategoryResObj:
+      properties:
+        id:
+          type: integer
+          example: 49
+        fmpcompanyid:
+          type: integer
+          example: 10002
+        contactcategoryname:
+          type: string
+          example: 'Doctors' 
+        contactcategorydescription:
+          type: string
+          example: 'Doctor Contacts'  
+          
+    ProductCategoryReqObj:
+      properties:
+        productcategoryname:
+          type: string
+          example: 'Diabetes' 
+          description: 'name of product category'
+        productcategorydescription:
+          type: string
+          example: 'Diabetes'    
+          description: 'description of product category'
+          
+    ProductCategoryResObj:
+      properties:
+        id:
+          type: integer
+          example: 49
+          description: 'id of product category'
+        fmpcompanyid:
+          type: integer
+          example: 10002
+          description: 'id of company that this product category belongs to'
+        parentcategoryid:
+          type: integer
+          example: 0  
+          description: 'id of the parent category that this product category falls under or belongs to; the value of 0 (zero) in this field, means that the product category has no parent '
+        productcategoryname:
+          type: string
+          example: 'Diabetes' 
+          description: 'name of product category'
+        productcategorydescription:
+          type: string
+          example: 'Diabetes'
+          description: 'description of product category'
+          
+    ProductBrandsReqObj:
+      properties:
+        parentcategoryid:
+          type: integer
+          example: 55  
+          description: 'id of product category that this product brand belongs to'
+        productcategoryname:
+          type: string
+          example: 'Accuchek' 
+          description: 'name of product brand'
+        productcategorydescription:
+          type: string
+          example: 'Accuchek'    
+          description: 'description of product brand'      
+          
+    ProductBrandsResObj:
+      properties:
+        id:
+          type: integer
+          example: 49
+          description: 'id of product brand'
+        fmpcompanyid:
+          type: integer
+          example: 10002
+          description: 'id of company that this product brand belongs to'
+        parentcategoryid:
+          type: integer
+          example: 55  
+          description: 'id of the product category that this product brand falls under or belongs to'
+        productcategoryname:
+          type: string
+          example: 'Accuchek' 
+          description: 'name of product brand'
+        productcategorydescription:
+          type: string
+          example: 'Accuchek'   
+          description: 'descrption of product brand'
+          
+    NoteCategoryReqObj:
+      properties:
+        notecategoryname:
+          type: string
+          example: 'Customer Feedback'  
+          description: 'name of note category'
+        notecategorydescription:
+          type: string
+          example: 'Customer Feedback' 
+          description: 'description of note category'
+              
+        
+    NoteCategoryResObj:
+      properties:
+        id:
+          type: integer
+          example: 49
+          description: 'id of note category'
+        fmpcompanyid:
+          type: integer
+          example: 10002
+          description: 'id of company that this note category belongs to'    
+        notecategoryname:
+          type: string
+          example: 'Customer Feedback'  
+          description: 'name of note category'
+        notecategorydescription:
+          type: string
+          example: 'Customer Feedback' 
+          description: 'description of note category'
+        notecategorytype:
+          type: string
+          
+    PaymentTypesReqObj:
+      properties:
+        paymenttypename:
+          type: string
+          example: 'POS'  
+          description: 'name of payment type'
+        paymenttypedescription:
+          type: string
+          example: 'POS' 
+          description: 'description of payment type'
+              
+        
+    PaymentTypesResObj:
+      properties:
+        id:
+          type: integer
+          example: 49
+          description: 'id of payment type'
+        fmpcompanyid:
+          type: integer
+          example: 10002
+          description: 'id of company that this payment type belongs to'    
+        paymenttypename:
+          type: string
+          example: 'POS'  
+          description: 'name of payment type'
+        paymenttypedescription:
+          type: string
+          example: 'POS' 
+          description: 'description of payment type'
+          
+    BrandElementsReqObj:
+      properties:
+        brandelementname:
+          type: string
+          example: 'Table'  
+          description: 'name of brand element'
+        weight:
+          type: integer
+          example: 10 
+          description: 'weigth this brand element carries'
+              
+        
+    BrandElementsResObj:
+      properties:
+        id:
+          type: integer
+          example: 49
+          description: 'id of brand element'
+        fmpcompanyid:
+          type: integer
+          example: 10002
+          description: 'id of company that this brand element belongs to'    
+        brandelementname:
+          type: string
+          example: 'Table'  
+          description: 'name of brand element'
+        weight:
+          type: integer
+          example: 10 
+          description: 'weigth this brand element carries'   
+          
+    VisitSummaryResObj:
+      properties:
+        actualVsPlannedVisits:
+          properties:
+            actualVisits:
+              type: integer
+              example: 478
+              description: 'number of visits completed'
+            plannedVisits:
+              type: integer
+              example: 861
+              description: 'number of visits scheduled/planned' 
+            visitCompletionPercentage:
+              type: integer
+              example: 55.51684088269454
+              description: 'id of brand element' 
+        outletsVisited:
+              type: integer
+              example: 129
+              description: 'number of outlets visited'    
+        averageTimeSpent:
+          properties:
+            minutes:
+              type: integer
+              example: 478
+              description: 'minutes of time spent'
+            seconds:
+              type: integer
+              example: 861
+              description: 'seconds of time spent' 
+        visitExceptions:
+          properties:
+            value:
+              type: integer
+              example: 54
+              description: 'number of visits with exceptions'
+            percentage:
+              type: integer
+              example: 11
+              description: 'percentage of visit exceptions relative to total completed visits'
+              
+    VisitsSchedulesPaginatedResObj:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref : '#/components/schemas/VisitsSchedulesResObj'
+        meta:
+          $ref: '#/components/schemas/PaginationMetaObj'          
+              
+    VisitsSchedulesResObj:
+      properties:
+        visitId:
+          type: integer
+          example: 49
+          description: 'visist id of schedule'
+        visitType:
+          type: string
+          example: 'Sales'
+          description: 'visist type of schedule'  
+        outletId:
+          type: integer
+          example: 1471
+          description: 'outlet id of schedule'  
+        outletName:
+          type: string
+          example: 'Zulu Stores Limited'  
+          description: 'name of outlet the schedule is attached to'
+        locationName:
+          type: string
+          example: 'Magodo Phase 1'  
+          description: 'name of the location the scheduled outlet belongs to'  
+        userId:
+          type: integer
+          example: 20
+          description: 'id of user that the schedule was created for'  
+        firstName:
+          type: string
+          example: 'Oluwaseun'  
+          description: 'first name of user that the schedule was created for'  
+        lastName:
+          type: string
+          example: 'Oludele'  
+          description: 'last name of user that the schedule was created for'
+        dateVisited:
+          type: string
+          example: '2020-10-13T10:42:36.000Z'  
+          description: 'date a visit was made for the schedule' 
+        startTime:
+          type: string
+          example: '1602585756'  
+          description: 'start time of visit attached to the schedule'
+        stopTime:
+          type: string
+          example: '1602586830'  
+          description: 'stop time of visit attached to the schedule'
+        durationInSeconds:
+          type: string
+          example: '1074'  
+          description: 'duration of visit attached to the schedule'  
+        distanceFromOutlet:
+          type: integer
+          example: 51 
+          description: 'disitance from outlet in miles'
+          
+    VisitsCoveragePaginatedResObj:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref : '#/components/schemas/VisitsCoverageResObj'
+        meta:
+          $ref: '#/components/schemas/PaginationMetaObj'      
+          
+    VisitsCoverageResObj:
+      properties:
+        outletId:
+          type: integer
+          example: 1326
+          description: 'id of outlet'
+        outletName:
+          type: string
+          example: 'Demo Alh. Nuru Outlet'
+          description: 'name of outlet'  
+        phoneNumber:
+          type: string
+          example: '08066643411'
+          description: 'phone number of outlet contact'  
+        firstName:
+          type: string
+          example: 'Moses'  
+          description: 'first name of outlet contact'  
+        lastName:
+          type: string
+          example: 'Emmanuel'  
+          description: 'last name of outlet contact'
+        outletTypes:
+          type: string
+          example: 'Wholesalers'  
+          description: 'type of outlet' 
+        outletChannel:
+          type: string
+          example: 'Neighbourhood'  
+          description: 'channel of outlet'  
+        location:
+          type: string
+          example: 'Akowonjo'  
+          description: 'outlet location name'
+        visits:
+          type: string
+          example: '1' 
+          description: 'number of visits'
+          
+    VisitsExceptionsPaginatedResObj:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref : '#/components/schemas/VisitsExceptionResObj'
+        meta:
+          $ref: '#/components/schemas/PaginationMetaObj'      
+          
+    VisitsExceptionResObj:
+      properties:
+        visitId:
+          type: integer
+          example: 164
+          description: 'id of visit'
+        visitType:
+          type: string
+          example: 'Sales'
+          description: 'type of visit'  
+        outletId:
+          type: integer
+          example: 1327
+          description: 'id of outlet attached to the visit'  
+        outletName:
+          type: string
+          example: 'Magodo Supermarket'  
+          description: 'name of outlet attached to the visit'  
+        locationName:
+          type: string
+          example: 'Dopemu'  
+          description: 'outlet location name'
+        userId:
+          type: integer
+          example: 17
+          description: 'id of user/fieldrep'  
+        firstName:
+          type: string
+          example: 'Mayowa'  
+          description: 'first name of user/fieldrep'  
+        lastName:
+          type: string
+          example: 'Ade'  
+          description: 'last name of user/fieldrep'  
+        dateVisited:
+          type: string
+          example: '2020-10-13T10:42:36.000Z'  
+          description: 'date visit occurred' 
+        startTime:
+          type: string
+          example: '1602585756'  
+          description: 'start time of visit'
+        stopTime:
+          type: string
+          example: '1602586830'  
+          description: 'stop time of visit'
+        durationInSeconds:
+          type: string
+          example: '1074'  
+          description: 'duration of visit'  
+        distanceFromOutlet:
+          type: integer
+          example: 13374600 
+          description: 'disitance from outlet in miles'     
+          
+    ActiveFieldRepsPaginatedResObj:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref : '#/components/schemas/ActiveFieldRepsResObj'
+        meta:
+          $ref: '#/components/schemas/PaginationMetaObj'            
+              
+    ActiveFieldRepsResObj:
+      properties:
+        userId:
+          type: integer
+          example: 17
+          description: 'id of user/fieldrep'  
+        firstName:
+          type: string
+          example: 'Mayowa'  
+          description: 'first name of user/fieldrep'  
+        lastName:
+          type: string
+          example: 'Ade'  
+          description: 'last name of user/fieldrep'  
+        outletName:
+          type: string
+          example: 'Magodo Supermarket'  
+          description: 'name of outlet attached to the visit'  
+        outletsVisited:
+          type: string
+          example: '34'  
+          description: 'number of outlets visited'
+        locationsVisited:
+          type: string
+          example: '34'  
+          description: 'number of locations visited'  
+        totalTimeSpentInSeconds:
+          type: integer
+          example: 28920
+          description: 'time spent in visit' 
+        sales:
+          type: integer
+          example: 8262000
+          description: 'sales amount value'  
+        quantityInUnits:
+          type: string
+          example: '12450'  
+          description: 'total quantity of items sold'  
+        status:
+          type: integer
+          example: 1  
+          description: 'fieldrep status'
+          
+    ActiveFieldRepsCountResObj:
+      properties:
+        activeFieldReps:
+          type: integer
+          example: 14
+          description: 'total number of actvie field reps'
+          
+    VisitsCoverageCountResObj:
+      properties:
+        outletsCovered:
+          type: integer
+          example: 10
+          description: 'total number of outlets covered/visited' 
+          
+    TargetVisitsCountResObj:
+      properties:
+        targetVisitsCount:
+          type: integer
+          example: 102
+          description: 'total number of target visits'    
+          
+    ProductiveVisitsPaginatedResObj:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref : '#/components/schemas/ProductiveVisitsResObj'
+        meta:
+          $ref: '#/components/schemas/PaginationMetaObj'      
+          
+    ProductiveVisitsResObj:
+      properties:
+        outletId:
+          type: integer
+          example: 1730
+          description: 'id of outlet'  
+        outletName:
+          type: string
+          example: 'Magodo Supermarket'  
+          description: 'name of outlet attached to the visit'  
+        locationId:
+          type: integer
+          example: 121
+          description: 'id of outlet location'  
+        locationName:
+          type: string
+          example: 'Magodo Phase 2'  
+          description: 'name of outlet location' 
+        visitId:
+          type: integer
+          example: 164
+          description: 'id of visit'  
+        userId:
+          type: integer
+          example: 17
+          description: 'id of user/fieldrep'  
+        firstName:
+          type: string
+          example: 'Mayowa'  
+          description: 'first name of user/fieldrep'  
+        lastName:
+          type: string
+          example: 'Ade'  
+          description: 'last name of user/fieldrep' 
+        totalSales:
+          type: integer
+          example: 8262000
+          description: 'sales amount value'  
+        dateVisited:
+          type: string
+          example: '2020-10-13T10:42:36.000Z'  
+          description: 'date visit occurred' 
+        startTime:
+          type: string
+          example: '1602585756'  
+          description: 'start time of visit'
+        stopTime:
+          type: string
+          example: '1602586830'  
+          description: 'stop time of visit'
+        durationInSeconds:
+          type: string
+          example: '1074'  
+          description: 'duration of visit'  
+          
+    ProductiveVisitsCountResObj:
+      properties:
+        productiveVisitsCount:
+          type: integer
+          example: 295
+          description: 'number of productive visits'  
+          
+    ProductiveVsNonproductiveVisitsResObj:
+      properties:
+        productiveVisits:
+          properties:
+            value:
+              type: integer
+              example: 295
+              description: 'number of productive visits'
+            percentage:
+              type: integer
+              example: 62
+              description: 'percentage of productive visits relative to total visits' 
+        nonProductiveVisits:
+          properties:
+            value:
+              type: integer
+              example: 178
+              description: 'number of non productive visits'
+            percentage:
+              type: integer
+              example: 37
+              description: 'percentage of non productive visits relative to total visits'  
+        totalVisits:
+              type: integer
+              example: 473
+              description: 'total number of visits'     
+              
+    OutletRankingBySalesPaginatedResObj:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref : '#/components/schemas/OutletRankingBySalesResObj'
+        meta:
+          $ref: '#/components/schemas/PaginationMetaObj'          
+              
+    OutletRankingBySalesResObj:
+      properties:
+        outletId:
+          type: integer
+          example: 1730
+          description: 'id of outlet'  
+        outletName:
+          type: string
+          example: 'Magodo Supermarket'  
+          description: 'name of outlet attached to the visit'  
+        totalSales:
+          type: integer
+          example: 8262000
+          description: 'sales amount value'  
+        productCount:
+          type: integer
+          example: 300
+          description: 'number of products sold'   
+          
+    VisitPerformanceTrendResObj:
+      properties:
+        labels:
+          type: array
+          items:
+            type: string
+            example: '2021-03-10T00:00:00.000+01:00'  
+            description: 'date label for each day'
+        targetVisits:
+          type: array
+          items:
+            type: integer
+            example: 17  
+            description: 'target visits for each day' 
+        actualVisits:
+          type: array
+          items:
+            type: integer
+            example: 17  
+            description: 'actual visits for each day'
+        productiveVisits:
+          type: array
+          items:
+            type: integer
+            example: 17  
+            description: 'productive visits for each day'
+            
+    RecentVisitsPaginatedResObj:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref : '#/components/schemas/RecentVisitsResObj'
+        meta:
+          $ref: '#/components/schemas/PaginationMetaObj'      
+          
+    RecentVisitsResObj:
+      properties:
+        visitId:
+          type: integer
+          example: 49
+          description: 'visist id of schedule'
+        visitType:
+          type: string
+          example: 'Sales'
+          description: 'visist type of schedule'  
+        outletId:
+          type: integer
+          example: 1471
+          description: 'outlet id of schedule'  
+        outletName:
+          type: string
+          example: 'Zulu Stores Limited'  
+          description: 'name of outlet the schedule is attached to'
+        locationName:
+          type: string
+          example: 'Magodo Phase 1'  
+          description: 'name of the location the scheduled outlet belongs to'  
+        userId:
+          type: integer
+          example: 20
+          description: 'id of user that the schedule was created for'  
+        firstName:
+          type: string
+          example: 'Oluwaseun'  
+          description: 'first name of user that the schedule was created for'  
+        lastName:
+          type: string
+          example: 'Oludele'  
+          description: 'last name of user that the schedule was created for'
+        dateVisited:
+          type: string
+          example: '2020-10-13T10:42:36.000Z'  
+          description: 'date a visit was made for the schedule' 
+        startTime:
+          type: string
+          example: '1602585756'  
+          description: 'start time of visit attached to the schedule'
+        stopTime:
+          type: string
+          example: '1602586830'  
+          description: 'stop time of visit attached to the schedule'
+        durationInSeconds:
+          type: string
+          example: '1074'  
+          description: 'duration of visit attached to the schedule'  
+        distanceInMeters:
+          type: integer
+          example: 51 
+          description: 'disitance from outlet in meters'          
+          
+    VisitImagesPaginatedResObj:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref : '#/components/schemas/VisitImagesResObj'
+        meta:
+          $ref: '#/components/schemas/PaginationMetaObj'      
+          
+    VisitImagesResObj:
+      properties:
+        visitId:
+          type: integer
+          example: 49
+          description: 'visist id of Image'
+        imageLink:
+          type: string
+          example: 'https://fieldmaxpro.s3-us-west-2.amazonaws.com/fmp_10002/visits/03-2021/2403EBC352.jpg'
+          description: 'Link to omage'  
+        outletId:
+          type: integer
+          example: 1471
+          description: 'outlet id of Image'  
+        outletName:
+          type: string
+          example: 'Zulu Stores Limited'  
+          description: 'name of outlet the Image was taken'
+        locationId:
+          type: integer
+          example: 49
+          description: 'location id of Image'  
+        locationName:
+          type: string
+          example: 'Magodo Phase 1'  
+          description: 'name of the location the Image was taken'  
+          
+    VisitMapCoverageResObj:
+      properties:
+        outletId:
+          type: integer
+          example: 1471
+          description: 'outlet id'  
+        outletName:
+          type: string
+          example: 'Zulu Stores Limited'  
+          description: 'name of outlet'
+        geoLocation:
+          type: string
+          example: '[3.3867144,6.6323854]'  
+          description: 'outlet geo location'  
+        phoneNumber:
+          type: string
+          example: '08032530126'  
+          description: 'outlet contact phone number'  
+        outletTypes:
+          type: string
+          example: 'Retailers'  
+          description: 'outlet type'  
+        outletChannel:
+          type: string
+          example: 'Neighbourhood'  
+          description: 'outlet channel'  
+        location:
+          type: string
+          example: 'Omole Phase 2'  
+          description: 'name of outlet location' 
+        timesVisited:
+          type: string
+          example: '1'  
+          description: 'number of times outlet was visited'
